@@ -14,10 +14,16 @@ add_executable( test1 ./tests/test1.cpp)
 
 add_executable( test_process ./tests/test_process.cpp)
 
+add_executable( testpid tests/test_pid_no_change.cpp)
+
 target_link_libraries(test1 ${Boost_LIBRARIES})
 
 target_link_libraries(test_process  ${Boost_LIBRARIES} core_process)
 
+target_link_libraries(testpid  ${Boost_LIBRARIES})
+
 add_test(NAME Test1 COMMAND test1)
+
+add_test(NAME Testpid COMMAND testpid)
 
 

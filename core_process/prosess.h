@@ -1,10 +1,37 @@
 
 #include<map>
+#include <unistd.h>
+#include <vector>
+namespace processes
+{
 class Process
 {
 	public:
-		std::map<Process* > childrens;
-			int pid;
+	~Process();
 
-
+	void strart(std::is_function<void()> f);
+    void stop();
+	void delete_self();
+	void run_file(std::string exe_file_name,const char* argv[]);
+	void fork();
+	private:
+	friend class ProcessFubric;
+	Process();
+	int group;
+	int user;
+    std::vector<Process> childrens;
+    Process* parent;	
 };
+
+class ProcessFubric
+{
+	public:
+		static Process rvCreateProcess();
+};
+
+Process FIRST_PROCCES = ProcessFubric::rvCreateProcess();
+
+}
+
+
+
