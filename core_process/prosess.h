@@ -3,8 +3,8 @@
 #include <unistd.h>
 #include <vector>
 #include <string>
-#include <functional>
-typedef std::function<int(int, char*)> MainFType;
+//#include <functional>
+//typedef std::function<int(int, char*)> MainFType;
 
 namespace processes
 {
@@ -20,11 +20,12 @@ class Process
 //	void fork();
 //	private:
 //	friend class ProcessFubric;
-    MainFType main;
-    auto get_pid(){return pid_;}
-	auto get_group(){return group_;}
-	auto get_user(){return user_;}
+//    MainFType main;
+    int get_pid()   noexcept    {return pid_;}
+	int get_group() noexcept    {return group_;}
+	int get_user()  noexcept    {return user_;}
 		Process();
+    private:		
 	int pid_;
 	int group_;
 	int user_;

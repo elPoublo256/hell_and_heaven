@@ -1,6 +1,12 @@
 #include "prosess.h"
 #include  <utility>
 using namespace processes;
+
+auto foo()
+{
+	return 0;
+}
+
 Process::Process()
 {
 	pid_ = getpid();
