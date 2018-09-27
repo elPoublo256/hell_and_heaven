@@ -1,4 +1,8 @@
 language: cpp
+
+addons:
+    apt:
+        packages: libboost-all-dev
 script:
-    - cmake CMakeLists.txt
-    - make testpid
+    - cmake 
+    - make 
