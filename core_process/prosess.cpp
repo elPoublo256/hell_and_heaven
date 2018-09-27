@@ -13,7 +13,7 @@ Process::~Process()
  Process ProcessFubric::rvCreateProcess()
 {
     Process p;
-	return std::move(Process());
+	return p;
 }
 
 /*void Process::run_file(std::string exe_file_name, const char* argv[])
