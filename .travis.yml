@@ -9,5 +9,6 @@ before_install:
 install:
   - sudo apt-get install -qq g++-6
   - sudo apt-get install -y libboost-all-dev
+env: COMPILER=g++-6
 script:
-  - cmake . && make
+  - cmake -DCMAKE_CXX_COMPILER=$COMPILER . && make
