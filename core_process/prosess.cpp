@@ -4,6 +4,8 @@ using namespace processes;
 Process::Process()
 {
 	pid_ = getpid();
+	user_ = getuid();
+	group_ = getgid();
 }
 
 Process::~Process()
