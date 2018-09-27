@@ -3,6 +3,7 @@
 using namespace processes;
 Process::Process()
 {
+	pid_ = getpid();
 }
 
 Process::~Process()
