@@ -1,7 +1,8 @@
-
+#pragma once
 #include<map>
 #include <unistd.h>
 #include <vector>
+#include <string>
 namespace processes
 {
 class Process
@@ -9,11 +10,11 @@ class Process
 	public:
 	~Process();
 
-	void strart(std::is_function<void()> f);
-    void stop();
-	void delete_self();
-	void run_file(std::string exe_file_name,const char* argv[]);
-	void fork();
+//	void strart(std::is_function<void()> f);
+//    void stop();
+//	void delete_self();
+//	void run_file(std::string exe_file_name,const char* argv[]);
+//	void fork();
 	private:
 	friend class ProcessFubric;
 	Process();
