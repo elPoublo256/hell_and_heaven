@@ -29,7 +29,6 @@ class ProcessFubric
 		static Process rvCreateProcess();
 };
 
-Process FIRST_PROCCES = ProcessFubric::rvCreateProcess();
 
 }
 

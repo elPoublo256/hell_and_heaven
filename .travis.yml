@@ -4,5 +4,5 @@ addons:
     apt:
         packages: libboost-all-dev
 script:
-    - cmake 
+    - cmake . 
     - make 

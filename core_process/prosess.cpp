@@ -16,9 +16,9 @@ Process::~Process()
 	return std::move(Process());
 }
 
-void Process::run_file(std::string exe_file_name, std::string argv)
+void Process::run_file(std::string exe_file_name, const char* argv[])
 {
-  if(execvp(exe_file_name.c_str(), argv) == -1)
+  //if(execvp(exe_file_name.c_str(), argv) == -1)
   {
 	  //print error
   }
