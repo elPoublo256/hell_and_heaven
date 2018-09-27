@@ -11,6 +11,8 @@ matrix:
             - ubuntu-toolchain-r-test
           packages:
             - g++-4.9
+            - libboost-all-dev
+
       env: COMPILER=g++-4.9
     - compiler: gcc
       addons:
