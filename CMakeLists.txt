@@ -4,7 +4,7 @@ project(hell_and_heaven)
 
 SET(CMAKE_CXX_STANDART 14)
 
-SET(CMAKE_CXX_STANDARD_REQUIRED ON)
+#SET(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_library(core_process ./core_process/prosess.cpp ./core_process/prosess.h)
 
