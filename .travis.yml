@@ -48,4 +48,4 @@ before_install:
   - sudo apt-get update -qq
   - sudo apt-get install -y libboost-all-dev
 script:
-  - cmake -DCMAKE_CXX_COMPILER=$COMPILER .. && make
+  - cmake -DCMAKE_CXX_COMPILER=$COMPILER . && make
