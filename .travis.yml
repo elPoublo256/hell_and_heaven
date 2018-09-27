@@ -3,7 +3,6 @@ language: generic
 
 cache:
   apt: true
-
 matrix:
   include:
     - env: CXX=g++-5 CC=gcc-5
@@ -16,6 +15,7 @@ matrix:
             - llvm-toolchain-precise
             - llvm-toolchain-precise-3.7
             - llvm-toolchain-precise-3.6
+            - libboost-all-dev  
     - env: CXX=g++-4.9 CC=gcc-4.9
       addons:
         apt:
