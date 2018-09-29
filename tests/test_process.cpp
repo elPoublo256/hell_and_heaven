@@ -8,4 +8,5 @@ BOOST_AUTO_TEST_CASE(test_test)
 //	auto pid1 = p.get_pid();
 	processes::Process p;
 	BOOST_CHECK(true);
+	BOOST_CHECK_EQUAL(p.get_pid(), getpid());
 }
