@@ -11,4 +11,5 @@ install:
   - sudo apt-get install -y libboost-all-dev
 env: COMPILER=g++-6
 script:
+  - mkdir builds 
   - cmake -DCMAKE_CXX_COMPILER=$COMPILER . && make
