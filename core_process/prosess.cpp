@@ -42,6 +42,7 @@ Process::~Process()
 void Process::start(const Exe_arg &arg)
 {
 	auto res = main(arg);
+	
 }
 
 void Process:: exe_programm(const std::string &file_name, const Exe_arg &args)
