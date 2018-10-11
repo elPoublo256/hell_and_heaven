@@ -10,6 +10,8 @@ SET(COMPILE_OPTIONS -Wpedantic -Wall -Wextra)
 
 add_library(core_process ./core_process/prosess.cpp ./core_process/prosess.h)
 
+add_library(core_files ./core_files/file_stream.cpp ./core_files/file_stream.h)
+
 find_package(Boost COMPONENTS unit_test_framework REQUIRED)
 
 add_executable( test1 ./tests/test1.cpp)
@@ -32,8 +34,8 @@ add_executable(test_exe_arg tests/test_exe_arg.cpp)
 
 target_link_libraries(test_exe_arg ${Boost_LIBRARIES} core_process)
 
-#add_test(NAME Test1 COMMAND test1)
+add_executable(test_fstream ./core_files/tests/test_filestreams.cpp)
 
-#add_test(NAME Testpid COMMAND testpid)
+target_link_libraries(test_fstream ${Boost_LIBRARIES} core_files)
 
 add_test(NAME Test_exe_arg COMMAND test_exe_arg)
