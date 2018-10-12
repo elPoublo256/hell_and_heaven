@@ -50,14 +50,16 @@ void write_base_ifstream()
 
   }
 
- //close(off.filedcripter());
 
-  Base_IFile_Stream iff(off.filedcripter());
 
+  Base_IFile_Stream iff(std::string("check2.txt"));
+if(iff.filedcripter() < 0)
+{
   std::cout<<"ERRNO = " << errno << std::endl;
+}
   for(int i = 0; i < 10; i++)
   {
-      std::cout << "fd = "<<iff.filedcripter()<<std::endl;
+
       int t;
       iff >> t;
       l2.push_back(t);

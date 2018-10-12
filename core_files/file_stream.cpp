@@ -7,19 +7,19 @@ Base_IFile_Stream::Base_IFile_Stream(int file_descriptor, int pos)
 
 Base_IFile_Stream::Base_IFile_Stream( std::string &file_name)
 {
-  set_filedcripter(open(file_name.c_str(), O_RDWR));
+  set_filedcripter(open(file_name.c_str(), O_RDONLY));
 
 }
 Base_IFile_Stream::Base_IFile_Stream(std::string && file_name)
 {
     std::string s = std::move(file_name);
-    set_filedcripter( open(s.c_str(), O_RDWR));
+    set_filedcripter( open(s.c_str(), O_RDONLY));
 
 }
 
 Base_IFile_Stream::Base_IFile_Stream(const char *c_name)
 {
-    set_filedcripter(open(c_name, O_RDWR));
+    set_filedcripter(open(c_name, O_RDONLY));
 }
 Base_OFile_Stream::Base_OFile_Stream(int file_descriptor)
 {
