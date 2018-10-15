@@ -3,12 +3,31 @@
 #include <boost/test/unit_test.hpp>
 #include <unistd.h>
 #include "../core_files/file_stream.h"
-#include <fstream>
+#include <list>
+
+void test_base_filestream()
+{
+    std::string filename("checkbasefilestream");
+    std::list<int> l1, l2;
+    Base_OFile_Stream ofsrt(filename);
+    for(int i = 0; i < 10; i++)
+    {
+        auto r = rand();
+        l1.push_back(r);
+        ofsrt << r;
+
+    }
+    Base_IFile_Stream ifsrt(filename);
+    for(int i = 0; i < 10; i++)
+    {
+        int r;
+        ifsrt >> r;
+        l2.push_back(r);
+    }
+    BOOST_CHECK_EQUAL_COLLECTIONS(l1.begin(), l1.end(), l2.begin(), l2.end());
+
+}
 BOOST_AUTO_TEST_CASE(test_test)
 {
-	std::ofstream stdstream("text.txt");
-	stdstream >> 1;
-	
-
-	
+    test_base_filestream();
 }

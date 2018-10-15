@@ -8,7 +8,7 @@
 #include <iterator>
 #include <cstdarg>
 #include <string.h>
-
+#include "../core_files/file_stream.h"
 namespace processes
 {
 ///this class provide a set of arguments for process

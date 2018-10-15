@@ -41,8 +41,15 @@ Process::~Process()
 
 void Process::start(const Exe_arg &arg)
 {
+    auto pid = fork();
+    if(pid > 0)
+    {
+
+    }
+    else
+    {
 	auto res = main(arg);
-	
+    }
 }
 
 void Process:: exe_programm(const std::string &file_name, const Exe_arg &args)
