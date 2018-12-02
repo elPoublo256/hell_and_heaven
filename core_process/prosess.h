@@ -9,17 +9,25 @@
 #include <cstdarg>
 #include <string.h>
 #include "../core_files/file_stream.h"
-namespace processes
-{
+
 ///this class provide a set of arguments for process
 ///this class consist int argc and const char* argv[]
 ///which we use int main(int argc, const char* argv[])
 class Exe_arg
 {
 	public:
+    Exe_arg(){}
+
 		std::vector<std::string> argv_;
  		auto argc(){return argv_.size() + 1;}
-		Exe_arg(int argc, ...);
+        Exe_arg(int argc, ...)
+        {
+            va_list ap;
+            va_start(ap,argc);
+            for(int i = 0; i< argc; i++)
+                argv_.push_back(va_arg(ap,std::string));
+            va_end(ap); //without va_end behavior undefined
+        }
 		char** cstr_argv();
 
 
@@ -68,8 +76,7 @@ class ProcessFubric
 		static Process rvCreateProcess();
 };
 
-//Process main_process;
-}
+
 
 
 

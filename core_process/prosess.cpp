@@ -1,22 +1,15 @@
 #include "prosess.h"
 #include  <utility>
-using namespace processes;
 
-Exe_arg::Exe_arg(int argc, ...)                                                                
-   {                                                                                         
-       va_list ap;                                                                           
-       va_start(ap,argc);                                                                    
-       for(int i = 0; i< argc; i++)                                                          
-           argv_.push_back(va_arg(ap,std::string));                                          
-                                                                                             
-       va_end(ap); //without va_end behavior undefined                                       
-   }                     
+
+
+
 
 char** Exe_arg::cstr_argv()
 {
 	int _argc = argc(); 
 	char** res = new char*[_argc];
-	for(int i = 0; i < _argc - 1; i++)
+    for(int i = 0; i < _argc; i++)
 	{
 		res[i] = new char[argv_[i].length()];
         strcpy(res[i], argv_[i].c_str());
