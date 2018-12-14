@@ -1,21 +1,17 @@
 #include "file_stream.h"
-Base_IFile_Stream::Base_IFile_Stream(int file_descriptor, int pos)
+Base_IFile_Stream::Base_IFile_Stream(const int& file_descriptor,
+                                     const int& pos)
 {
     set_filedcripter(file_descriptor);
     lseek(file_descriptor, pos, SEEK_SET);
 }
 
-Base_IFile_Stream::Base_IFile_Stream( std::string &file_name)
+Base_IFile_Stream::Base_IFile_Stream(const std::string &file_name)
 {
   set_filedcripter(open(file_name.c_str(), O_RDONLY));
 
 }
-Base_IFile_Stream::Base_IFile_Stream(std::string && file_name)
-{
-    std::string s = std::move(file_name);
-    set_filedcripter( open(s.c_str(), O_RDONLY));
 
-}
 
 Base_IFile_Stream::Base_IFile_Stream(const char *c_name)
 {

@@ -31,3 +31,8 @@ BOOST_AUTO_TEST_CASE(test_test)
 {
     test_base_filestream();
 }
+
+BOOST_AUTO_TEST_CASE(test_test2)
+{
+
+}

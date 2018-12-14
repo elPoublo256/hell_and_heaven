@@ -8,6 +8,7 @@
 #include <iterator>
 #include <cstdarg>
 #include <string.h>
+#include <memory>
 #include "../core_files/file_stream.h"
 
 ///this class provide a set of arguments for process
@@ -19,7 +20,7 @@ class Exe_arg
     Exe_arg(){}
 
 		std::vector<std::string> argv_;
- 		auto argc(){return argv_.size() + 1;}
+        int argc(){return argv_.size() + 1;}
         Exe_arg(int argc, ...)
         {
             va_list ap;
@@ -66,8 +67,8 @@ std::function<int(const Exe_arg&)> main = [](const Exe_arg& arg){return 0;};
     private:		
 	int pid_;
 	int group_;
-	int user_;
-    std::vector<Process> childrens;
+    int user_;
+
 };
 
 class ProcessFubric
