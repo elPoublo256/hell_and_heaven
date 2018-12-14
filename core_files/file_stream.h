@@ -11,11 +11,16 @@
 class PSX_File
 {
 public:
+    class OpenFileError : public std::exception
+    {
+    public:
+        decltype(EEXIST) error_open;
+        OpenFileError( decltype(errno) error_erno);
+    };
     PSX_File(){}
     virtual int filedcripter() const {return fd;}
 protected:
-    virtual void set_filedcripter(int fdr) {fd = fdr;}
-private:
+    void set_filedcripter(const int& fdr);
     int fd;
 
 };
@@ -25,8 +30,7 @@ class Base_IFile_Stream : public PSX_File
 {
 	public:
     Base_IFile_Stream(const int& file_descriptor, const int& pos = 0 );
-    Base_IFile_Stream( std::string &file_name);
-
+    Base_IFile_Stream(const std::string &file_name);
     Base_IFile_Stream(const Base_IFile_Stream &copy) = delete;
     Base_IFile_Stream(const char*  c_name);
     void operator = (const Base_IFile_Stream &copy) = delete;
