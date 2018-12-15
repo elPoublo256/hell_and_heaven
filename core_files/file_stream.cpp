@@ -1,7 +1,7 @@
 #include "file_stream.h"
 #include <libgen.h>
 
-
+using namespace hell_and_haven;
 void OpenFileError::set_error_what(const decltype(errno) &error_erno)
 {
     switch (error_erno) {

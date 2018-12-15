@@ -8,6 +8,8 @@
 #include <unistd.h>
 #include <iostream>
 
+namespace hell_and_haven {
+
 
 class OpenFileError : public std::exception
 {
@@ -59,10 +61,7 @@ Base_IFile_Stream& operator >> (T& arg) {
     {
         if(ret == -1)
         {
-            if(errno == EINTR)
-                continue;
-            std::cout <<"errno ="<<errno << std::endl;
-            break;
+         throw OpenFileError(errno);
         }
         len -= ret;
     }
@@ -96,4 +95,4 @@ protected:
 };
 
 
-
+}

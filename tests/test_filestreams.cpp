@@ -4,7 +4,7 @@
 #include <unistd.h>
 #include "../core_files/file_stream.h"
 #include <list>
-
+using namespace hell_and_haven;
 void test_base_filestream()
 {
     std::string filename("checkbasefilestream");
