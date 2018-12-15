@@ -40,8 +40,8 @@ BOOST_AUTO_TEST_CASE(test_OpenError)
     std::string should_be_what("A signal was caught during open().");
     try
     {
-        int err_int(EINTR);
-          throw OpenFileError(err_int);
+
+          throw OpenFileError(EINTR);
     }
     catch(OpenFileError &err)
     {

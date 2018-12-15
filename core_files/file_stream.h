@@ -17,7 +17,11 @@ public:
     std::string err_what;
     decltype(EEXIST) error_open;
     const char* what() {return err_what.c_str();}
-    OpenFileError( decltype(errno) error_erno);
+    OpenFileError(const decltype(errno) &error_erno);
+    OpenFileError(const int &&error_erno);
+
+private:
+    void set_error_what(const decltype(errno) &error_erno);
 };
 
 class PSX_File
@@ -30,7 +34,6 @@ public:
 
 
 protected:
-
     void set_filedcripter(const int& fdr);
     int _file_descriptor;
 

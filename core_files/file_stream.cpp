@@ -1,9 +1,9 @@
 #include "file_stream.h"
 #include <libgen.h>
 
-OpenFileError::OpenFileError(decltype(errno) error_erno)
+
+void OpenFileError::set_error_what(const decltype(errno) &error_erno)
 {
-    error_open = error_erno;
     switch (error_erno) {
     case EEXIST:
         err_what =std::string("O_CREAT and O_EXCL are set, and the named file exists.");
@@ -91,6 +91,20 @@ OpenFileError::OpenFileError(decltype(errno) error_erno)
     default:
         break;
     }
+
+
+}
+
+OpenFileError::OpenFileError(const decltype(errno) &error_erno)
+{
+    error_open = error_erno;
+    set_error_what(error_open);
+}
+
+OpenFileError::OpenFileError(const int &&error_erno)
+{
+    error_open = std::move(error_erno);
+    set_error_what(error_open);
 
 }
 
