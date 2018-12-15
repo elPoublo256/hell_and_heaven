@@ -32,7 +32,20 @@ BOOST_AUTO_TEST_CASE(test_test)
     test_base_filestream();
 }
 
-BOOST_AUTO_TEST_CASE(test_test2)
+BOOST_AUTO_TEST_CASE(test_OpenError)
 {
+
+
+
+    std::string should_be_what("A signal was caught during open().");
+    try
+    {
+        int err_int(EINTR);
+          throw OpenFileError(err_int);
+    }
+    catch(OpenFileError &err)
+    {
+      BOOST_CHECK_EQUAL(err.err_what, should_be_what);
+    }
 
 }

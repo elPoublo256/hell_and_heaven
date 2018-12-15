@@ -8,20 +8,31 @@
 #include <unistd.h>
 #include <iostream>
 
+
+class OpenFileError : public std::exception
+{
+public:
+    OpenFileError(){}
+    ~OpenFileError(){}
+    std::string err_what;
+    decltype(EEXIST) error_open;
+    const char* what() {return err_what.c_str();}
+    OpenFileError( decltype(errno) error_erno);
+};
+
 class PSX_File
 {
 public:
-    class OpenFileError : public std::exception
-    {
-    public:
-        decltype(EEXIST) error_open;
-        OpenFileError( decltype(errno) error_erno);
-    };
+
     PSX_File(){}
-    virtual int filedcripter() const {return fd;}
+    virtual ~PSX_File(){}
+
+
+
 protected:
+
     void set_filedcripter(const int& fdr);
-    int fd;
+    int _file_descriptor;
 
 };
 
@@ -35,12 +46,13 @@ class Base_IFile_Stream : public PSX_File
     Base_IFile_Stream(const char*  c_name);
     void operator = (const Base_IFile_Stream &copy) = delete;
 
+public:
 template <class T>
 Base_IFile_Stream& operator >> (T& arg) {
     int len = sizeof(T);
     void* dest = &arg;
     ssize_t ret = 0;
-    while (len != 0 && (ret = read(filedcripter(), dest, len)) != 0)
+    while (len != 0 && (ret = read(_file_descriptor, dest, len)) != 0)
     {
         if(ret == -1)
         {
@@ -69,16 +81,14 @@ public:
     void operator = (const Base_OFile_Stream &copy) = delete;
     std::list<int> list_errno;
     template <class T>
-    Base_OFile_Stream& operator << (T &arg)
+    Base_OFile_Stream& operator << (const T &arg)
     {
-      lseek(cure_descripter, 0, SEEK_END);
-      write(filedcripter(), &arg, sizeof(T) );
-      fsync(cure_descripter);
+      lseek(_file_descriptor, 0, SEEK_END);
+      write(_file_descriptor, &arg, sizeof(T) );
+      fsync(_file_descriptor);
       return *this;
     }
-
-
-private:
+protected:
  int cure_descripter;
 };
 
