@@ -1,5 +1,7 @@
 #include "hh_exceptions.h"
 
+using namespace hell_and_haven;
+
 ErrnoException::ErrnoException()
 {
 
@@ -53,7 +55,7 @@ const char* ErrnoException::what()
 
            case( EDEADLK        ) : return " Resource deadlock avoided (POSIX.1-2001).";
 
-           case( EDEADLOCK      ) : return " Synonym for EDEADLK.";
+           //case( EDEADLOCK      ) : return " Synonym for EDEADLK.";
 
            case( EDESTADDRREQ   ) : return " Destination address required (POSIX.1-2001).";
 
@@ -197,7 +199,7 @@ const char* ErrnoException::what()
 
            case( ENXIO          )  : return " No such device or address (POSIX.1-2001).";
 
-           case( EOPNOTSUPP     )  : return " Operation not supported on socket (POSIX.1-2001). (ENOTSUP and EOPNOTSUPP have the same value on Linux, but according to POSIX.1 these error values should be distinct.)";
+           //case( EOPNOTSUPP     )  : return " Operation not supported on socket (POSIX.1-2001). (ENOTSUP and EOPNOTSUPP have the same value on Linux, but according to POSIX.1 these error values should be distinct.)";
 
            case( EOVERFLOW      )  : return " Value too large to be stored in data type (POSIX.1-2001).";
 
@@ -255,7 +257,7 @@ const char* ErrnoException::what()
 
            case( EUSERS         )  : return " Too many users.";
 
-           case( EWOULDBLOCK    )  : return " Operation would block (may be same value as EAGAIN) (POSIX.1-2001).";
+           //case( EWOULDBLOCK    )  : return " Operation would block (may be same value as EAGAIN) (POSIX.1-2001).";
 
            case( EXDEV          )  : return " Improper link (POSIX.1-2001).";
 

@@ -1,4 +1,5 @@
 #include "prosess.h"
+#include "../hh_exceptions/hh_exceptions.h"
 using namespace hell_and_haven::process_core;
 
 char** Exe_arg::cstr_argv()
@@ -42,6 +43,11 @@ void Process::start_like_fork(const Exe_arg &arg)
         if(pid == 0)
         {
          this->fake_main(arg);
+        }
+
+        if(pid == -1)
+        {
+            throw hell_and_haven::ErrnoException();
         }
 
 }
