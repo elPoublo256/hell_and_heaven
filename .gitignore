@@ -1,1 +1,9 @@
 build/*
+*CMakeCache.txt
+*CMakeLists.txt.user
+*CTestTestfile.cmake
+*DartConfiguration.tcl
+*Makefile
+Testing/*
+*cmake_install.cmake
+
