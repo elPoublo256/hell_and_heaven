@@ -1,0 +1,14 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/elpoublo/Projects/hell_and_heaven/hh_exceptions/hh_exceptions.cpp
+hh_exceptions.h
+/home/elpoublo/Projects/hell_and_heaven/hh_exceptions/hh_exceptions.h
+
+/home/elpoublo/Projects/hell_and_heaven/hh_exceptions/hh_exceptions.h
+
