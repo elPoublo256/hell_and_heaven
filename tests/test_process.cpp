@@ -2,12 +2,36 @@
 #define BOOST_TEST_MODULE test1
 #include <boost/test/unit_test.hpp>
 #include "../core_process/prosess.h"
+#include "../core_files/file_stream.h"
+using namespace hell_and_haven::process_core;
+
+int test_pre_main = 0;
+
+
 BOOST_AUTO_TEST_CASE(test_test)
 {
-//	auto p =  processes::ProcessFubric::rvCreateProcess();
-//	auto pid1 = p.get_pid();
 
-	BOOST_CHECK(true);
-
-    //BOOST_CHECK_EQUAL(p.get_pid(), getpid());
 }
+
+BOOST_AUTO_TEST_CASE(two_processe)
+{
+    class MainProc : public Process
+    {
+    public:
+        class Proc2 : public Process
+        {
+        public:
+            int fake_main(const Exe_arg &arg = Exe_arg()) override
+            {
+              hell_and_haven::Base_OFile_Stream of("test_two_proc.dat");
+
+              for(int i = 0; i < 5; i++)
+              {
+                  of << i;
+              }
+            }
+        };
+
+
+};
+ }

@@ -1,59 +1,57 @@
 #include "prosess.h"
-#include  <utility>
-
-
-
-
+using namespace hell_and_haven::process_core;
 
 char** Exe_arg::cstr_argv()
 {
-	int _argc = argc(); 
-	char** res = new char*[_argc];
-    for(int i = 0; i < _argc; i++)
-	{
-		res[i] = new char[argv_[i].length()];
+    int _argc = argc();
+    char** res = new char*[_argc];
+    for(int i = 0; i < _argc - 1; i++)
+    {
+        res[i] = new char[argv_[i].length()];
         strcpy(res[i], argv_[i].c_str());
-	}
-	res[_argc - 1 ] = NULL;
+    }
+    res[_argc - 1 ] = NULL;
  return res;
 
 }
 
-Process::Process()
+Exe_arg::Exe_arg(int argc, char **argv)
 {
-	pid_ = getpid();
-	user_ = getuid();
-	group_ = getgid();
-}
-
-Process::~Process()
-{
-}
-
-
-
-void Process::start(const Exe_arg &arg)
-{
-    auto pid = fork();
-    if(pid > 0)
+    argv_.reserve(argc);
+    for(int i = 0; i < argc - 1; i++)
     {
-
-    }
-    else
-    {
-	auto res = main(arg);
+        argv_.push_back(std::string(argv[i]));
     }
 }
 
-void Process:: exe_programm(const std::string &file_name, const Exe_arg &args)
+
+Process::Process(std::shared_ptr<Process> parent_ptr)
 {
+
+     _parent_ptr = parent_ptr;
+
 }
 
-/*void Process::run_file(std::string exe_file_name, const char* argv[])
+void Process::start_like_fork(const Exe_arg &arg)
 {
-  //if(execvp(exe_file_name.c_str(), argv) == -1)
-  {
-	  //print error
-  }
+        auto pid = fork();
+        if(pid != 0 && pid != -1)
+        {
+            _parent_ptr->childrens_pids.push_back(pid);
+        }
+        if(pid == 0)
+        {
+         this->fake_main(arg);
+        }
+
 }
-	*/
+
+void Process::start_like_fork(int argc, char **argv)
+{
+    Exe_arg arg(argc, argv);
+    start_like_fork(arg);
+}
+
+
+
+

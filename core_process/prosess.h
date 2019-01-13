@@ -9,7 +9,18 @@
 #include <cstdarg>
 #include <string.h>
 #include <memory>
+#include <signal.h>
+#include <unordered_map>
 #include "../core_files/file_stream.h"
+#include <list>
+
+
+namespace hell_and_haven {
+namespace process_core {
+#define FINISHED_PID -3
+
+
+
 
 ///this class provide a set of arguments for process
 ///this class consist int argc and const char* argv[]
@@ -30,53 +41,49 @@ class Exe_arg
             va_end(ap); //without va_end behavior undefined
         }
 		char** cstr_argv();
-
+        Exe_arg(int argc, char** argv);
 
 };
-
+/*!
+ * \brief The Process class is abstract class of prosesses in UNIX-like systems
+ *
+ */
 class Process
 {
-	public:
-virtual ~Process();
-virtual void start(const Exe_arg &arg);
+public:
+
+virtual ~Process(){}
+
+/// construct object of Process
+Process(std::shared_ptr<Process> parent_ptr);
 Process(const Process &copy) = delete;
-Process(Process && rv_copy) = delete;
+
+Process(Process && lv_copy) = delete;
 void operator = (const Process &copy) = delete;
-void operator = (Process && rv_copy) = delete; 
-//    void stop();
-//	void delete_self();
-//	void run_file(std::string exe_file_name,const char* argv[]);
-//	void fork();
-//	private:
-//	friend class ProcessFubric;
+void operator = (Process && rv_copy) = delete;
+/// this functions start process using  using pid_t fork() from C POSIX library
+/// and add children`s PID in list
+void start_like_fork(const Exe_arg& arg);
+void start_like_fork(int argc, char** argv);
 
-std::function<int(const Exe_arg&)> main = [](const Exe_arg& arg){return 0;};
+//!this is abstract function, that emit, when process strart
+virtual int fake_main(const Exe_arg &arg = Exe_arg()) = 0;
 
-    int get_pid()   noexcept    {return pid_;}
-	int get_group() noexcept    {return group_;}
-	int get_user()  noexcept    {return user_;}
+/// get any signal that children process is finished
+///  and reset his pid in list to FINISHED_PID
+//TODO get
 
-		Process();
-	///load binar programm in memory,replace curent proccess image
-	///and run this program with arguments seted in Exe_arg args
- 	virtual void exe_programm(const std::string &file_name, const Exe_arg &args);
-//     auto get_ostream() {return *out_prt << "";}
-//     auto get_istrem() {return *in_prt << "";}
-//   	auto git_logstream() {return *log << start_log_str();}
-	
-    private:		
-	int pid_;
-	int group_;
-    int user_;
+
+protected:
+std::list<pid_t> childrens_pids;
+private:
+std::shared_ptr<Process> _parent_ptr;
 
 };
 
-class ProcessFubric
-{
-	public:
-		static Process rvCreateProcess();
-};
 
+}
+}
 
 
 

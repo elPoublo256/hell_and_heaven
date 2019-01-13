@@ -15,8 +15,8 @@ target_link_libraries(test_filestreams  ${Boost_LIBRARIES} core_filestream)
 target_link_libraries(test_exearg  ${Boost_LIBRARIES} core_filestream)
 
 
-add_test(NAME Test_process COMMAND test_process)
+add_test(Test_process COMMAND test_process)
 
-add_test(NAME Test_filestreams COMMAND test_filestreams)
+add_test(Test_filestreams COMMAND test_filestreams)
 
-add_test(NAME Test_exe_arg COMMAND test_exearg)
+add_test(Test_exe_arg COMMAND test_exearg)

@@ -71,6 +71,7 @@ Base_IFile_Stream& operator >> (T& arg) {
 	private:
 	int cure_descripter;
 
+
 };
 
 class Base_OFile_Stream : public PSX_File
