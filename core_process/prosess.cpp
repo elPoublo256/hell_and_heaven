@@ -26,14 +26,14 @@ Exe_arg::Exe_arg(int argc, char **argv)
 }
 
 
-Process::Process(std::shared_ptr<Process> parent_ptr)
+Fork_Process::Fork_Process(std::shared_ptr<Base_Process> parent_ptr)
 {
 
      _parent_ptr = parent_ptr;
 
 }
 
-void Process::start_like_fork(const Exe_arg &arg)
+void Fork_Process::start(const Exe_arg &arg)
 {
         auto pid = fork();
         if(pid != 0 && pid != -1)
@@ -52,12 +52,23 @@ void Process::start_like_fork(const Exe_arg &arg)
 
 }
 
-void Process::start_like_fork(int argc, char **argv)
+void Fork_Process::start(int argc, char **argv)
 {
     Exe_arg arg(argc, argv);
-    start_like_fork(arg);
+    start(arg);
 }
 
+
+bool is_Main_Process_Exist = false;
+
+MainProcess::MainProcess()
+{
+    if(is_Main_Process_Exist)
+    {
+        throw std::runtime_error("Main process allready exsist");
+    }
+
+}
 
 
 

@@ -15,10 +15,10 @@ BOOST_AUTO_TEST_CASE(test_test)
 
 BOOST_AUTO_TEST_CASE(two_processe)
 {
-    class MainProc : public Process
+    class MainProc : public Fork_Process
     {
     public:
-        class Proc2 : public Process
+        class Proc2 : public Fork_Process
         {
         public:
             int fake_main(const Exe_arg &arg = Exe_arg()) override

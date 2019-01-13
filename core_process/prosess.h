@@ -15,6 +15,7 @@
 #include <list>
 
 
+
 namespace hell_and_haven {
 namespace process_core {
 #define FINISHED_PID -3
@@ -46,41 +47,69 @@ class Exe_arg
 };
 /*!
  * \brief The Process class is abstract class of prosesses in UNIX-like systems
- *
+ *this is abstract class
  */
-class Process
+class Base_Process
+{
+public:
+    virtual void start(const Exe_arg& arg) = 0;
+    virtual void start(int argc, char** argv) {this->start(Exe_arg(argc, argv));}
+
+    //!this is abstract function, that emit, when process strart
+    virtual int fake_main(const Exe_arg &arg = Exe_arg()) = 0;
+std::list<pid_t> childrens_pids;
+
+};
+
+
+class Fork_Process : public Base_Process
 {
 public:
 
-virtual ~Process(){}
+virtual ~Fork_Process(){}
 
 /// construct object of Process
-Process(std::shared_ptr<Process> parent_ptr);
-Process(const Process &copy) = delete;
+Fork_Process(std::shared_ptr<Base_Process> parent_ptr);
+Fork_Process(const Fork_Process &copy) = delete;
 
-Process(Process && lv_copy) = delete;
-void operator = (const Process &copy) = delete;
-void operator = (Process && rv_copy) = delete;
+Fork_Process(Fork_Process && lv_copy) = delete;
+void operator = (const Fork_Process &copy) = delete;
+void operator = (Fork_Process && rv_copy) = delete;
 /// this functions start process using  using pid_t fork() from C POSIX library
 /// and add children`s PID in list
-void start_like_fork(const Exe_arg& arg);
-void start_like_fork(int argc, char** argv);
-
-//!this is abstract function, that emit, when process strart
-virtual int fake_main(const Exe_arg &arg = Exe_arg()) = 0;
+void start(const Exe_arg& arg) override;
+void start(int argc, char** argv) override ;
 
 /// get any signal that children process is finished
 ///  and reset his pid in list to FINISHED_PID
 //TODO get
-
-
-protected:
-std::list<pid_t> childrens_pids;
 private:
-std::shared_ptr<Process> _parent_ptr;
+std::shared_ptr<Base_Process> _parent_ptr;
+
+};
+//!
+//! \brief The MainProcess class
+//!this is abstract class of first process in full tree processes in program
+//! You can initialize only one object of realization of this class
+//! else Constructor of second object throw std::runtime_error
+class MainProcess : public Base_Process
+{
+public:
+protected:
+    MainProcess();
+    void start(const Exe_arg &arg) override final {this->fake_main(arg);}
+private:
+
 
 };
 
+//!
+//! \brief The Exe_Process class
+//!this calss start process using execl
+class Exe_Process : public Base_Process
+{
+
+};
 
 }
 }
