@@ -6,4 +6,4 @@ build/*
 *Makefile
 Testing/*
 *cmake_install.cmake
-
+*.a
