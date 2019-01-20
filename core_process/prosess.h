@@ -69,7 +69,7 @@ public:
 virtual ~Fork_Process(){}
 
 /// construct object of Process
-Fork_Process(std::shared_ptr<Base_Process> parent_ptr);
+Fork_Process(std::shared_ptr<Base_Process> parent_ptr = nullptr);
 Fork_Process(const Fork_Process &copy) = delete;
 
 Fork_Process(Fork_Process && lv_copy) = delete;
@@ -95,21 +95,25 @@ std::shared_ptr<Base_Process> _parent_ptr;
 class MainProcess : public Base_Process
 {
 public:
+static bool is_Main_Exist();
 protected:
+
     MainProcess();
     void start(const Exe_arg &arg) override final {this->fake_main(arg);}
+    int fake_main(const Exe_arg &arg) override{}
 private:
 
 
 };
 
+ std::shared_ptr<MainProcess> get_main_ptr();
+
+
+
 //!
 //! \brief The Exe_Process class
 //!this calss start process using execl
-class Exe_Process : public Base_Process
-{
 
-};
 
 }
 }

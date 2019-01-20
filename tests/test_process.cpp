@@ -31,7 +31,14 @@ BOOST_AUTO_TEST_CASE(two_processe)
               }
             }
         };
-
-
 };
- }
+
+}
+BOOST_AUTO_TEST_CASE(test_main_process)
+{
+    auto p = MainProcess::is_Main_Exist();
+    BOOST_CHECK_EQUAL(p, false);
+
+
+    //auto ptr = get_main_ptr(); //why undefined reference to get_main_ptr
+}

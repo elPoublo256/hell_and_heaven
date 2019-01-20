@@ -61,12 +61,18 @@ void Fork_Process::start(int argc, char **argv)
 
 bool is_Main_Process_Exist = false;
 
+bool MainProcess::is_Main_Exist() { return is_Main_Process_Exist;}
+std::shared_ptr<MainProcess> main_ptr;
+std::shared_ptr<MainProcess> get_main_ptr() {return main_ptr;}
+
 MainProcess::MainProcess()
 {
     if(is_Main_Process_Exist)
     {
         throw std::runtime_error("Main process allready exsist");
     }
+    main_ptr = std::shared_ptr<MainProcess>(this);
+
 
 }
 
