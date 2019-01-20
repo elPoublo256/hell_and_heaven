@@ -7,3 +7,4 @@ build/*
 Testing/*
 *cmake_install.cmake
 *.a
+tests/run_test*
