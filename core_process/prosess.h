@@ -80,6 +80,7 @@ static bool is_Main_Exist();
 protected:
 
     MainProcess();
+    friend std::shared_ptr<MainProcess> get_main_ptr();
     void start(const Exe_arg &arg) override final {this->fake_main(arg);}
     int fake_main(const Exe_arg &arg) override{}
 
@@ -111,7 +112,7 @@ void start(int argc, char** argv) override ;
 /// get any signal that children process is finished
 ///  and reset his pid in list to FINISHED_PID
 //TODO get
-private:
+protected:
 std::shared_ptr<Base_Process> _parent_ptr;
 
 };

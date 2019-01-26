@@ -68,7 +68,13 @@ bool is_Main_Process_Exist = false;
 
 bool MainProcess::is_Main_Exist() { return is_Main_Process_Exist;}
 std::shared_ptr<MainProcess> main_ptr;
-std::shared_ptr<MainProcess> hh::get_main_ptr() {return main_ptr;}
+std::shared_ptr<MainProcess> hh::get_main_ptr()
+{
+    if(!is_Main_Process_Exist)
+    {
+        main_ptr = std::move(decltype(main_ptr)(new MainProcess()));
+    }
+    return main_ptr;}
 
 MainProcess::MainProcess()
 {
