@@ -32,11 +32,7 @@ class PSX_File
 public:
 
     PSX_File(){}
-    template <class T>
-    PSX_File& operator << (const T&){return *this;}
-    template <class T>
-    PSX_File& operator >> (const T&){return *this;}
-    virtual ~PSX_File(){}
+     virtual ~PSX_File(){}
 
 
 
@@ -103,21 +99,6 @@ public:
 protected:
  int cure_descripter;
 };
-template <class T>
-std::shared_ptr<hh::PSX_File>& operator <<
-(std::shared_ptr<hh::PSX_File>& ptr,const T& obj)
-{
-    ptr->operator << (obj);
-    return ptr;
-}
-
-template <class T>
-std::shared_ptr<hh::PSX_File>& operator >>
-(std::shared_ptr<hh::PSX_File>& ptr,const T& obj)
-{
-    ptr->operator >> (obj);
-    return ptr;
-}
 
 
 template <class T>
@@ -127,4 +108,13 @@ std::shared_ptr<hh::Base_OFile_Stream>& operator <<
     (*ptr) << obj;
     return ptr;
 }
+
+template <class T>
+std::shared_ptr<hh::Base_IFile_Stream>& operator <<
+(std::shared_ptr<hh::Base_IFile_Stream>& ptr,const T& obj)
+{
+    (*ptr) >> obj;
+    return ptr;
+}
+
 }
