@@ -2,7 +2,7 @@
 #include <exception>
 #include <errno.h>
 
-namespace hell_and_haven {
+namespace hh {
 
 
 

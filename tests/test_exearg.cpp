@@ -6,7 +6,7 @@
 
 BOOST_AUTO_TEST_CASE(test_test)
 {
-    using namespace hell_and_haven::process_core;
+    using namespace hh;
 
 
     Exe_arg ar1;

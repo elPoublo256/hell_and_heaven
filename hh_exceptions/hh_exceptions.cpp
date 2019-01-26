@@ -1,6 +1,6 @@
 #include "hh_exceptions.h"
 
-using namespace hell_and_haven;
+using namespace hh;
 
 ErrnoException::ErrnoException()
 {

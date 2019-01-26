@@ -1,6 +1,6 @@
 #include "prosess.h"
 #include "../hh_exceptions/hh_exceptions.h"
-using namespace hell_and_haven::process_core;
+using namespace hh;
 
 char** Exe_arg::cstr_argv()
 {
@@ -25,6 +25,11 @@ Exe_arg::Exe_arg(int argc, char **argv)
     }
 }
 
+Base_Process::Base_Process(const int &in_fd, const int &out_fd) :
+    hh_out(out_fd), hh_in(in_fd)
+{
+
+}
 
 Fork_Process::Fork_Process(std::shared_ptr<Base_Process> parent_ptr)
 {
@@ -47,7 +52,7 @@ void Fork_Process::start(const Exe_arg &arg)
 
         if(pid == -1)
         {
-            throw hell_and_haven::ErrnoException();
+            throw hh::ErrnoException();
         }
 
 }
@@ -63,7 +68,7 @@ bool is_Main_Process_Exist = false;
 
 bool MainProcess::is_Main_Exist() { return is_Main_Process_Exist;}
 std::shared_ptr<MainProcess> main_ptr;
-std::shared_ptr<MainProcess> get_main_ptr() {return main_ptr;}
+std::shared_ptr<MainProcess> hh::get_main_ptr() {return main_ptr;}
 
 MainProcess::MainProcess()
 {

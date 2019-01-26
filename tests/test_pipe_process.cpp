@@ -2,11 +2,13 @@
 #include "../core_process/pipe_process.h"
 #include "../core_process/prosess.h"
 #include <iostream>
-/*using namespace hell_and_haven::process_core;
+using namespace hh::process_core;
+
 class PipeParent : public NoNamePipeProcess
 {
 public:
-    PipeParent() : NoNamePipeProcess(get_main_ptr()) {}
+
+
      int fake_main(const Exe_arg &arg) override
     {
         std::cout << "PARENT "<< __FUNCTION__ << std::endl;
@@ -14,13 +16,17 @@ public:
         {
             std::cout << s << std::endl;
         }
+        return 0;
     }
+
 };
 
 
 
 class PipeChild : public NoNamePipeProcess
 {
+public:
+
     int fake_main(const Exe_arg &arg) override
    {
        std::cout << "CHILDe" << __FUNCTION__ << std::endl;
@@ -28,12 +34,12 @@ class PipeChild : public NoNamePipeProcess
        {
            std::cout << s << std::endl;
        }
+       return 0;
    }
-};*/
+};
 int main()
 {
-    //PipeParent parent;
-   // auto p = make_piped_processes<PipeParent, PipeChild>();
+    PipeParent parent;
 
 
 }

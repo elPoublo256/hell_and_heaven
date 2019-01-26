@@ -3,7 +3,7 @@
 #include <boost/test/unit_test.hpp>
 #include "../core_process/prosess.h"
 #include "../core_files/file_stream.h"
-using namespace hell_and_haven::process_core;
+using namespace hh;
 
 int test_pre_main = 0;
 
@@ -23,7 +23,7 @@ BOOST_AUTO_TEST_CASE(two_processe)
         public:
             int fake_main(const Exe_arg &arg = Exe_arg()) override
             {
-              hell_and_haven::Base_OFile_Stream of("test_two_proc.dat");
+              hh::Base_OFile_Stream of("test_two_proc.dat");
 
               for(int i = 0; i < 5; i++)
               {
@@ -40,5 +40,5 @@ BOOST_AUTO_TEST_CASE(test_main_process)
     BOOST_CHECK_EQUAL(p, false);
 
 
-    //auto ptr = get_main_ptr(); //why undefined reference to get_main_ptr
+    auto ptr = hh::get_main_ptr(); //why undefined reference to get_main_ptr
 }

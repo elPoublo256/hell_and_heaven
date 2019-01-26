@@ -1,7 +1,7 @@
 #include "file_stream.h"
 #include <libgen.h>
 
-using namespace hell_and_haven;
+using namespace hh;
 void OpenFileError::set_error_what(const decltype(errno) &error_erno)
 {
     switch (error_erno) {
@@ -116,9 +116,16 @@ void PSX_File::set_filedcripter(const int& fdr)
     }
     _file_descriptor = fdr;
 }
+/*Base_IFile_Stream::Base_IFile_Stream(int file_descriptor)
+{
 
-Base_IFile_Stream::Base_IFile_Stream(const int& file_descriptor,
-                                     const int& pos)
+    set_filedcripter(file_descriptor);
+    lseek(file_descriptor, 0, SEEK_SET);
+
+}
+*/
+hh::Base_IFile_Stream::Base_IFile_Stream(const int &file_descriptor,
+                                     const int &pos)
 {
     set_filedcripter(file_descriptor);
     lseek(file_descriptor, pos, SEEK_SET);
@@ -135,7 +142,7 @@ Base_IFile_Stream::Base_IFile_Stream(const char *c_name)
 {
     set_filedcripter(open(c_name, O_RDONLY));
 }
-Base_OFile_Stream::Base_OFile_Stream(int file_descriptor)
+Base_OFile_Stream::Base_OFile_Stream(const int& file_descriptor)
 {
     set_filedcripter( file_descriptor);
 }
@@ -151,4 +158,9 @@ Base_OFile_Stream::Base_OFile_Stream(std::string && file_name, int flag)
     set_filedcripter(open(s.c_str(), O_RDWR | O_CREAT | flag, S_IRWXU ));
 }
 
-
+Base_IFile_Stream::Base_IFile_Stream(Base_IFile_Stream &&mv)
+{
+    close(mv.cure_descripter);
+    cure_descripter = std::move(mv.cure_descripter);
+    set_filedcripter(cure_descripter);
+}

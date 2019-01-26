@@ -16,8 +16,8 @@
 
 
 
-namespace hell_and_haven {
-namespace process_core {
+namespace hh {
+
 #define FINISHED_PID -3
 
 
@@ -52,6 +52,7 @@ class Exe_arg
 class Base_Process
 {
 public:
+    Base_Process(const int& in_fd = STDIN_FILENO,const int& out_fd = STDOUT_FILENO);
     virtual void start(const Exe_arg& arg) = 0;
     virtual void start(int argc, char** argv) {this->start(Exe_arg(argc, argv));}
 
@@ -59,7 +60,34 @@ public:
     virtual int fake_main(const Exe_arg &arg = Exe_arg()) = 0;
 std::list<pid_t> childrens_pids;
 
+protected:
+Base_IFile_Stream hh_in;
+Base_OFile_Stream hh_out;
+
 };
+
+
+//!
+//! \brief The MainProcess class
+//!this is abstract class of first process in full tree processes in program
+//! You can initialize only one object of realization of this class
+//! else Constructor of second object throw std::runtime_error
+
+class MainProcess : public Base_Process
+{
+public:
+static bool is_Main_Exist();
+protected:
+
+    MainProcess();
+    void start(const Exe_arg &arg) override final {this->fake_main(arg);}
+    int fake_main(const Exe_arg &arg) override{}
+
+
+};
+
+ std::shared_ptr<MainProcess> get_main_ptr();
+
 
 
 class Fork_Process : public Base_Process
@@ -69,7 +97,7 @@ public:
 virtual ~Fork_Process(){}
 
 /// construct object of Process
-Fork_Process(std::shared_ptr<Base_Process> parent_ptr = nullptr);
+Fork_Process(std::shared_ptr<Base_Process> parent_ptr = get_main_ptr());
 Fork_Process(const Fork_Process &copy) = delete;
 
 Fork_Process(Fork_Process && lv_copy) = delete;
@@ -87,27 +115,6 @@ private:
 std::shared_ptr<Base_Process> _parent_ptr;
 
 };
-//!
-//! \brief The MainProcess class
-//!this is abstract class of first process in full tree processes in program
-//! You can initialize only one object of realization of this class
-//! else Constructor of second object throw std::runtime_error
-class MainProcess : public Base_Process
-{
-public:
-static bool is_Main_Exist();
-protected:
-
-    MainProcess();
-    void start(const Exe_arg &arg) override final {this->fake_main(arg);}
-    int fake_main(const Exe_arg &arg) override{}
-private:
-
-
-};
-
- std::shared_ptr<MainProcess> get_main_ptr();
-
 
 
 //!
@@ -116,7 +123,7 @@ private:
 
 
 }
-}
+
 
 
 

@@ -4,7 +4,7 @@
 #include <unistd.h>
 #include "../core_files/file_stream.h"
 #include <list>
-using namespace hell_and_haven;
+using namespace hh;
 void test_base_filestream()
 {
     std::string filename("checkbasefilestream");
@@ -49,3 +49,20 @@ BOOST_AUTO_TEST_CASE(test_OpenError)
     }
 
 }
+
+BOOST_AUTO_TEST_CASE(test_BaseIO_from_fd)
+{
+    hh::Base_OFile_Stream out(STDOUT_FILENO);
+    out << "HELOW";
+}
+
+BOOST_AUTO_TEST_CASE(test_BaseIO_shared_ptr)
+{
+    std::shared_ptr<PSX_File> out_ptr =
+            std::shared_ptr<Base_OFile_Stream>(
+                (new Base_OFile_Stream(STDOUT_FILENO)));
+    out_ptr << "HELLOW FROM PTR" <<'\n' << "DOUBLE_LINE";
+    out_ptr << "QQQQQ";
+}
+
+
