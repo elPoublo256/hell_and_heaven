@@ -18,4 +18,6 @@ add_subdirectory(core_process)
 
 add_subdirectory(tests)
 
+add_subdirectory(examples)
+
 
