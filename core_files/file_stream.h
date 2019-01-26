@@ -101,20 +101,22 @@ protected:
 };
 
 
+
+}
+
 template <class T>
 std::shared_ptr<hh::Base_OFile_Stream>& operator <<
-(std::shared_ptr<hh::Base_OFile_Stream>& ptr,const T& obj)
+(std::shared_ptr<hh::Base_OFile_Stream>& ptr, T& obj)
 {
     (*ptr) << obj;
     return ptr;
 }
 
 template <class T>
-std::shared_ptr<hh::Base_IFile_Stream>& operator <<
-(std::shared_ptr<hh::Base_IFile_Stream>& ptr,const T& obj)
+std::shared_ptr<hh::Base_IFile_Stream>& operator >>
+(std::shared_ptr<hh::Base_IFile_Stream>& ptr, T& obj)
 {
     (*ptr) >> obj;
     return ptr;
 }
 
-}

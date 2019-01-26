@@ -106,7 +106,7 @@ void operator = (const Fork_Process &copy) = delete;
 void operator = (Fork_Process && rv_copy) = delete;
 /// this functions start process using  using pid_t fork() from C POSIX library
 /// and add children`s PID in list
-void start(const Exe_arg& arg) override;
+void start(const Exe_arg& arg = Exe_arg()) override;
 void start(int argc, char** argv) override ;
 
 /// get any signal that children process is finished

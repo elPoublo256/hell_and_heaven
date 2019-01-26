@@ -40,7 +40,8 @@ void ReadPipeProcess::start(const Exe_arg &arg)
     {
      close(no_its_pipe_fd);
      pipe_read = std::move(decltype(pipe_read)(new hh::Base_IFile_Stream(_pipe_fd)));
-     this->fake_main(arg);
+     exit(fake_main(arg));
+
     }
 
     if(pid == -1)
@@ -62,7 +63,7 @@ void WritePipeProcess::start(const Exe_arg &arg)
     {
      close(no_its_pipe_fd);
      pipe_write = std::move(decltype(pipe_write)(new hh::Base_OFile_Stream(_pipe_fd)));
-     this->fake_main(arg);
+     exit(fake_main(arg));
     }
 
     if(pid == -1)

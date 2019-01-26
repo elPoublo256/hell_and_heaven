@@ -27,7 +27,7 @@ class ReadPipeProcess : public hh::PipeProcessBase
 {
  public:
     ReadPipeProcess(std::shared_ptr<Base_Process> parent = get_main_ptr());
-    virtual void start(const Exe_arg &arg) override;
+    virtual void start(const Exe_arg &arg = Exe_arg()) override;
 protected:
     std::shared_ptr<hh::Base_IFile_Stream> pipe_read;
 
@@ -37,7 +37,7 @@ class WritePipeProcess : public hh::PipeProcessBase
 {
 public:
     WritePipeProcess(std::shared_ptr<Base_Process> parent = get_main_ptr());
-    virtual void start(const Exe_arg &arg) override;
+    virtual void start(const Exe_arg &arg = Exe_arg()) override;
 protected:
     std::shared_ptr<hh::Base_OFile_Stream> pipe_write;
 

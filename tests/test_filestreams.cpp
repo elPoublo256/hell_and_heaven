@@ -58,11 +58,9 @@ BOOST_AUTO_TEST_CASE(test_BaseIO_from_fd)
 
 BOOST_AUTO_TEST_CASE(test_BaseIO_shared_ptr)
 {
-    std::shared_ptr<PSX_File> out_ptr =
-            std::shared_ptr<Base_OFile_Stream>(
-                (new Base_OFile_Stream(STDOUT_FILENO)));
-    out_ptr << "HELLOW FROM PTR" <<'\n' << "DOUBLE_LINE";
-    out_ptr << "QQQQQ";
+ //std::shared_ptr<hh::Base_OFile_Stream> out_ptr(new Base_OFile_Stream(STDOUT_FILENO));
+ //   out_ptr << "HELLOW FROM PTR" <<'\n' << "DOUBLE_LINE";
+
 }
 
 
