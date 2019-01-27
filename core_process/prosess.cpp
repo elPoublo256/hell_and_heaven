@@ -1,5 +1,6 @@
 #include "prosess.h"
 #include "../hh_exceptions/hh_exceptions.h"
+#include <iostream>
 using namespace hh;
 
 char** Exe_arg::cstr_argv()
@@ -40,19 +41,27 @@ Fork_Process::Fork_Process(std::shared_ptr<Base_Process> parent_ptr)
 
 void Fork_Process::start(const Exe_arg &arg)
 {
-        auto pid = fork();
-        if(pid != 0 && pid != -1)
-        {
-            _parent_ptr->childrens_pids.push_back(pid);
-        }
-        if(pid == 0)
-        {
-         this->fake_main(arg);
-        }
-
-        if(pid == -1)
-        {
+        print_log() << __FUNCTION__<<" "<< std::endl;
+        int pid = fork();
+        switch (pid) {
+        case -1:
             throw hh::ErrnoException();
+            break;
+
+        case 0:
+        {
+            print_log() << "EMIT FAKE MAIN"<< std::endl;
+            int resalt = fake_main(arg);
+            print_log() << "finish with code "<<resalt<<std::endl;
+            exit(resalt);
+        }
+            break;
+
+        default:
+
+            print_log() << "add as shildren "<<pid << std::endl;
+            //_parent_ptr->childrens_pids.push_back(pid);
+            break;
         }
 
 }

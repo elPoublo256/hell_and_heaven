@@ -13,7 +13,7 @@
 #include <unordered_map>
 #include "../core_files/file_stream.h"
 #include <list>
-
+#include <iostream>
 
 
 namespace hh {
@@ -55,7 +55,7 @@ public:
     Base_Process(const int& in_fd = STDIN_FILENO,const int& out_fd = STDOUT_FILENO);
     virtual void start(const Exe_arg& arg) = 0;
     virtual void start(int argc, char** argv) {this->start(Exe_arg(argc, argv));}
-
+    inline decltype(std::cout)& print_log() {return std::cout << "PID "<<getpid()<<" ";}
     //!this is abstract function, that emit, when process strart
     virtual int fake_main(const Exe_arg &arg = Exe_arg()) = 0;
 std::list<pid_t> childrens_pids;

@@ -33,7 +33,7 @@ void ReadPipeProcess::start(const Exe_arg &arg)
     auto pid = fork();
     if(pid != 0 && pid != -1)
     {
-        _parent_ptr->childrens_pids.push_back(pid);
+        //_parent_ptr->childrens_pids.push_back(pid);
     }
 
     if(pid == 0)
@@ -56,7 +56,7 @@ void WritePipeProcess::start(const Exe_arg &arg)
     auto pid = fork();
     if(pid != 0 && pid != -1)
     {
-        _parent_ptr->childrens_pids.push_back(pid);
+     //   _parent_ptr->childrens_pids.push_back(pid);
     }
 
     if(pid == 0)

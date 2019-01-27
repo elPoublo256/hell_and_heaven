@@ -16,6 +16,7 @@ class PipeProcessBase : public hh::Fork_Process
   protected:
     PipeProcessBase(std::shared_ptr<Base_Process> parent = get_main_ptr());
 protected:
+
       mutable int _pipe_fd = -1;
       mutable int no_its_pipe_fd;
 
@@ -29,6 +30,7 @@ class ReadPipeProcess : public hh::PipeProcessBase
     ReadPipeProcess(std::shared_ptr<Base_Process> parent = get_main_ptr());
     virtual void start(const Exe_arg &arg = Exe_arg()) override;
 protected:
+
     std::shared_ptr<hh::Base_IFile_Stream> pipe_read;
 
 };
