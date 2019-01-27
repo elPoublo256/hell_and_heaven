@@ -57,17 +57,14 @@ class Base_IFile_Stream : public PSX_File
 public:
 template <class T>
 Base_IFile_Stream& operator >> (T& arg) {
-    int len = sizeof(T);
-    void* dest = &arg;
-    ssize_t ret = 0;
-    while (len != 0 && (ret = read(_file_descriptor, dest, len)) != 0)
+
+
+    auto ret = read(_file_descriptor, &arg, sizeof(T));
+    if(ret == -1)
     {
-        if(ret == -1)
-        {
-         throw OpenFileError(errno);
-        }
-        len -= ret;
+     throw OpenFileError(errno);
     }
+
 	return *this;
 }
 
