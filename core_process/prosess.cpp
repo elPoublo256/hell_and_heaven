@@ -50,6 +50,7 @@ void Fork_Process::start(const Exe_arg &arg)
 
         case 0:
         {
+            _pid = getpid();
             print_log() << "EMIT FAKE MAIN"<< std::endl;
             int resalt = fake_main(arg);
             print_log() << "finish with code "<<resalt<<std::endl;

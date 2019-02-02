@@ -63,6 +63,7 @@ std::list<pid_t> childrens_pids;
 protected:
 Base_IFile_Stream hh_in;
 Base_OFile_Stream hh_out;
+pid_t _pid;
 
 };
 
