@@ -14,7 +14,10 @@
 #include "../core_files/file_stream.h"
 #include <list>
 #include <iostream>
-
+//TODO make check create dump file
+//#ifdef WCOREDUMP
+//#define IS_CREATE_FILE_DUMP WCOREDUMP
+//#elif
 
 namespace hh {
 
