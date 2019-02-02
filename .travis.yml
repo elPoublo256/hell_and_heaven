@@ -12,5 +12,4 @@ install:
 env: COMPILER=g++-6
 script:
   - mkdir builds 
-  - cmake -DCMAKE_CXX_COMPILER=$COMPILER . && make all
-  - make test
+  - cmake -DCMAKE_CXX_COMPILER=$COMPILER . && make all && make test
