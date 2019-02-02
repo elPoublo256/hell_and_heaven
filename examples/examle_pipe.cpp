@@ -43,26 +43,30 @@ void example_c_pipe()
      auto pd = fork();
      if(pd == 0)
      {
-         close(fd_r);
+         //close(fd_r);
          for(int i = 0; i < 10; i++)
          {
+
              auto c = 10 + i;
              write(fd_w, &c, sizeof(int));
          }
-         //_exit(0);
+         exit(0);
      }
+
+     else {
      pd = fork();
          if(pd == 0)
          {
-             close(fd_w);
+             //close(fd_w);
              for(int i = 0; i < 10; i++)
              {
                  int c;
                  read(fd_w, &c, sizeof(int));
-                 std::cout << "GET "<<c<<" FROM PIPE"<<std::endl;
+                 std::cout <<"PID"<<getpid()<< " GET "<<c<<" FROM PIPE"<<std::endl;
              }
-             //_exit(0);
+             exit(0);
          }
+     }
 
 }
 
