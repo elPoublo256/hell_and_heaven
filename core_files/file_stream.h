@@ -8,6 +8,7 @@
 #include <unistd.h>
 #include <iostream>
 #include <memory>
+#include "psx_files.h"
 
 namespace hh {
 
@@ -27,20 +28,7 @@ private:
     void set_error_what(const decltype(errno) &error_erno);
 };
 
-class PSX_File
-{
-public:
 
-    PSX_File(){}
-     virtual ~PSX_File(){}
-
-
-
-protected:
-    void set_filedcripter(const int& fdr);
-    int _file_descriptor;
-
-};
 
 
 class Base_IFile_Stream : public PSX_File
