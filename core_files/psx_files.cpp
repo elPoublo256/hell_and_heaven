@@ -1,24 +1,63 @@
 #include "psx_files.h"
-#include <unistd.h>
+
+#include "../hh_exceptions/hh_exceptions.h"
 hh::PSX_File::PSX_File(const std::string &file_name, open_flag_t openflag)
 {
 
 }
 
 
-void hh::PSX_File::lseek_from_begin(const long &nub_bytes)
+void hh::PSX_File::_lseek(lseek_t flag, const long num_bytes)
 {
+    auto new_pos = lseek(_file_descriptor,num_bytes, flag);
+    if((new_pos - _curent_position) == num_bytes)
+    {
+        _curent_position = new_pos;
+    }
+    else
+    {
+        throw hh::ErrnoException();
+    }
 
 }
-
-void hh::PSX_File::lseek_from_qurent(const long &nub_bytes)
+void hh::PSX_File::lseek_from_begin(const long &num_bytes)
 {
-
+  if(num_bytes < 0)
+  {
+      throw(PSX_Fiel_Exc("num seek from begin less 0"));
+  }
+  else
+  {
+      _lseek(SEEK_SET,num_bytes);
+  }
 }
 
-void hh::PSX_File::lseek_from_end(const long &nub_bytes)
+void hh::PSX_File::lseek_from_qurent(const long &num_bytes)
 {
+  _lseek(SEEK_CUR, num_bytes);
+}
 
+void hh::PSX_File::lseek_from_end(const long &num_bytes)
+{
+ _lseek(SEEK_END, num_bytes);
+}
+
+void hh::PSX_File::psx_read(void *dest, const long num_bytes)
+{
+    auto res = read(_curent_position,dest,num_bytes);
+    if(res < 0)
+    {
+        throw hh::ErrnoException();
+    }
+}
+
+void hh::PSX_File::psx_write(void *dest, const long num_bytes)
+{
+    auto res = write(_curent_position,dest,num_bytes);
+    if(res < 0)
+    {
+        throw hh::ErrnoException();
+    }
 }
 
 void hh::copy_psx_file(const PSX_File &original, const PSX_File &copy, std::size_t size_bufer)
