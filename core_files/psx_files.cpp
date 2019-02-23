@@ -44,7 +44,7 @@ void hh::PSX_File::lseek_from_end(const long &num_bytes)
 
 void hh::PSX_File::psx_read(void *dest, const long num_bytes)
 {
-    auto res = read(_curent_position,dest,num_bytes);
+    auto res = read(_file_descriptor,dest,num_bytes);
     if(res < 0)
     {
         throw hh::ErrnoException();
@@ -53,13 +53,36 @@ void hh::PSX_File::psx_read(void *dest, const long num_bytes)
 
 void hh::PSX_File::psx_write(void *dest, const long num_bytes)
 {
-    auto res = write(_curent_position,dest,num_bytes);
+
+    auto res = write(_file_descriptor,dest,num_bytes);
     if(res < 0)
     {
         throw hh::ErrnoException();
     }
 }
 
+hh::PSX_File::~PSX_File()
+{
+    close(_file_descriptor);
+}
+
+void hh::PSX_File::reset_flag_open(const int &new_flag)
+{
+   int res = fcntl( _file_descriptor, F_SETFL, new_flag);
+   if(res != -1)
+   {
+       _open_flag = fcntl(_file_descriptor, F_GETFL);
+   }
+   else
+   {
+       throw hh::ErrnoException();
+   }
+}
+
+bool hh::PSX_File::try_resrt_flag_open(const int &new_flag)
+{
+    return (fcntl( _file_descriptor, F_SETFL, new_flag) != -1);
+}
 void hh::copy_psx_file(const PSX_File &original, const PSX_File &copy, std::size_t size_bufer)
 {
     if(size_bufer != 0)

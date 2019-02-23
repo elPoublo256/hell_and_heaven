@@ -29,7 +29,9 @@ public:
     virtual void lseek_from_end(const long& num_bytes);
     virtual void psx_read(void* dest, const long num_bytes);
     virtual void psx_write(void* dest, const long num_bytes);
-     virtual ~PSX_File(){}
+    void reset_flag_open(const int& new_flag);
+    bool try_resrt_flag_open(const int& new_flag);
+     virtual ~PSX_File();
 protected:
 
 
