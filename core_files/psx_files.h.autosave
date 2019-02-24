@@ -27,8 +27,21 @@ public:
     virtual void lseek_from_begin(const long& num_bytes);
     virtual void lseek_from_qurent(const long& num_bytes);
     virtual void lseek_from_end(const long& num_bytes);
+
     virtual void psx_read(void* dest, const long num_bytes);
     virtual void psx_write(void* dest, const long num_bytes);
+    virtual void psx_defragment_read(const iovec *iov, int count_iov);
+    virtual void psx_defragment_write(const iovec *iov, int count_iov);
+    virtual void psx_defragment_read(const std::vector<std::pair<std::size_t, void*> buffers);
+    virtual void psx_defragment_write(const std::vector<std::pair<std::size_t, void*> buffers);
+    
+    
+    void reset_flag_open(const int& new_flag);
+    bool try_resrt_flag_open(const int& new_flag);
+    
+    PSX_File&& make_duplicate();//using dup
+
+    
      virtual ~PSX_File();
 protected:
 

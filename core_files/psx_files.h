@@ -28,7 +28,10 @@ public:
     virtual void lseek_from_qurent(const long& num_bytes);
     virtual void lseek_from_end(const long& num_bytes);
     virtual void psx_read(void* dest, const long num_bytes);
+    PSX_File&& make_duplicate();//using dup
+
     virtual void psx_write(void* dest, const long num_bytes);
+
     void reset_flag_open(const int& new_flag);
     bool try_resrt_flag_open(const int& new_flag);
      virtual ~PSX_File();

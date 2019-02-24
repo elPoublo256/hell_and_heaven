@@ -83,6 +83,17 @@ bool hh::PSX_File::try_resrt_flag_open(const int &new_flag)
 {
     return (fcntl( _file_descriptor, F_SETFL, new_flag) != -1);
 }
+
+hh::PSX_File &&hh::PSX_File::make_duplicate()
+{
+
+    PSX_File duplcate;
+    duplcate._file_descriptor = dup(_file_descriptor);
+    duplcate._curent_position = _curent_position;
+    duplcate._open_flag = _open_flag;
+    return(std::move(duplcate));
+}
+
 void hh::copy_psx_file(const PSX_File &original, const PSX_File &copy, std::size_t size_bufer)
 {
     if(size_bufer != 0)
