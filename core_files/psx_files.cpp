@@ -28,9 +28,9 @@ void hh::PSX_File::psx_close()
 
 void hh::PSX_File::_lseek(lseek_t flag, const long num_bytes)
 {
-
     auto new_pos = lseek(_file_descriptor,num_bytes, flag);
     _curent_position = lseek(_file_descriptor, 0, SEEK_CUR);
+
 }
 void hh::PSX_File::lseek_from_begin(const long &num_bytes)
 {
@@ -99,6 +99,7 @@ void hh::PSX_File::psx_defragment_write(const iovec *iov, int count_iov)
 hh::PSX_File::~PSX_File()
 {
     close(_file_descriptor);
+
 }
 
 void hh::PSX_File::reset_flag_open(const int &new_flag)
@@ -148,6 +149,19 @@ void hh::copy_psx_file(const PSX_File &original, const PSX_File &copy, std::size
     else {
         throw hh::PSX_Fiel_Exc(std::string("Zero size bufer"));
     }
+}
+
+hh::PSX_Temprorary_File::PSX_Temprorary_File(std::string teplate_fn)
+{
+    teplate_fn = teplate_fn + std::string("XXXXXX");
+    _file_descriptor = mkstemp(const_cast<char*>(teplate_fn.data()));
+    _filename = teplate_fn;
+    _open_flag = O_EXCL;
+}
+
+hh::PSX_Temprorary_File::~PSX_Temprorary_File()
+{
+    unlink(_filename.data());
 }
 
 hh::PSX_Directory::PSX_Directory(const std::string &path) :  PSX_File(path, O_DIRECTORY)

@@ -21,7 +21,7 @@ namespace hh {
 #define permiss_t decltype(S_IRUSR)
 #define ALL_READ S_IRUSR | S_IRGRP | S_IROTH
 #define ALL_WRIGHT S_IWGRP | S_IWUSR | S_IWOTH
-
+#define ONLY_USER_READ_WRIGHT S_IRUSR | S_IWUSR
 //!
 //! \brief The PSX_File class
 //!this class provide low level interface for working with files
@@ -61,6 +61,7 @@ protected:
 friend void copy_psx_file(const PSX_File& origina, const PSX_File& copy,std::size_t size_bufer);
 
 protected:
+PSX_File(int fd) : _file_descriptor(fd) {}
     void set_filedcripter(const int& fdr);
     int _file_descriptor = -1;
     open_flag_t _open_flag;
@@ -68,6 +69,22 @@ protected:
 private:
    virtual void _lseek(lseek_t flag, const long num_bytes);
 
+};
+
+class PSX_Temprorary_File : public PSX_File
+{
+public:
+
+    PSX_Temprorary_File(std::string teplate_fn);
+    ~PSX_Temprorary_File();
+ protected:
+    std::string _filename;
+};
+
+class RAM_File : public PSX_File
+{
+public:
+    RAM_File(){}
 };
 
 void copy_psx_file(const PSX_File& origina, const PSX_File& copy, std::size_t size_bufer = 1024);
