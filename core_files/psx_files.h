@@ -52,7 +52,7 @@ public:
 
     PSX_File&& make_duplicate();//using dup
 
-
+     void psx_close();
      virtual ~PSX_File();
 protected:
 

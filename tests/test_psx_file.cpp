@@ -37,3 +37,33 @@ BOOST_AUTO_TEST_CASE(test_read_write)
 
 }
 
+BOOST_AUTO_TEST_CASE(test_lseeck)
+{
+    errno = 0;
+ std::string filename = "test_lseeck";
+ hh::PSX_File fl(filename,  O_RDWR | O_CREAT, ALL_READ | ALL_WRIGHT);
+ std::vector<int> vec{0,1,2,3,4,5,6,7,8,9};
+ BOOST_CHECK_EQUAL(vec.size(), 10);
+ fl.psx_write(vec.data(),vec.size() * sizeof(int));
+ int res_red;
+
+ for(int i = 0; i < 100; i++)
+ {
+     int pos = rand() % 10;
+     try
+     {
+     fl.lseek_from_begin(pos * sizeof(int));
+     fl.psx_read(&res_red, sizeof(int));
+     }
+     catch(hh::ErrnoException& err)
+     {
+         std::cerr<<err.what()<<" "<<errno<<std::endl;
+     }
+
+     BOOST_CHECK_EQUAL(res_red, vec[pos]);
+ }
+fl.psx_close();
+remove(filename.c_str());
+BOOST_CHECK_EQUAL(errno, 0);
+}
+

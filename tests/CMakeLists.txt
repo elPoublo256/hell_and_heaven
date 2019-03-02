@@ -1,7 +1,7 @@
 find_package(Boost COMPONENTS unit_test_framework REQUIRED)
 
-
-
+add_executable(test_psx_file test_psx_file.cpp)
+target_link_libraries(test_psx_file psx_files ${Boost_LIBRARIES} )
 #add_executable( run_test_process test_process.cpp)
 
 #add_executable( run_test_filestreams test_filestreams.cpp)

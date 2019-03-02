@@ -20,18 +20,17 @@ hh::PSX_File::PSX_File(const std::string &file_name, open_flag_t openflag, permi
         std::cerr <<" errno = "<<errno<<std::endl;
     }
 }
+
+void hh::PSX_File::psx_close()
+{
+    close(_file_descriptor);
+}
+
 void hh::PSX_File::_lseek(lseek_t flag, const long num_bytes)
 {
-    auto new_pos = lseek(_file_descriptor,num_bytes, flag);
-    if((new_pos - _curent_position) == num_bytes)
-    {
-        _curent_position = new_pos;
-    }
-    else
-    {
-        throw hh::ErrnoException();
-    }
 
+    auto new_pos = lseek(_file_descriptor,num_bytes, flag);
+    _curent_position = lseek(_file_descriptor, 0, SEEK_CUR);
 }
 void hh::PSX_File::lseek_from_begin(const long &num_bytes)
 {
@@ -62,6 +61,7 @@ void hh::PSX_File::psx_read(void *dest, const long num_bytes)
     {
         throw hh::ErrnoException();
     }
+    _curent_position += num_bytes;
 }
 
 void hh::PSX_File::psx_write(void *dest, const long num_bytes)
@@ -72,6 +72,7 @@ void hh::PSX_File::psx_write(void *dest, const long num_bytes)
     {
         throw hh::ErrnoException();
     }
+    _curent_position += num_bytes;
 }
 
 void hh::PSX_File::psx_defragment_read(const iovec *iov, int count_iov)
@@ -80,6 +81,10 @@ void hh::PSX_File::psx_defragment_read(const iovec *iov, int count_iov)
     if(res == -1)
     {
         throw hh::ErrnoException();
+    }
+    for(int i = 0;  i <count_iov; i++)
+    {
+        _curent_position += iov->iov_len;
     }
 }
 
