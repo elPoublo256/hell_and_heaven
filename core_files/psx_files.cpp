@@ -1,12 +1,25 @@
 #include "psx_files.h"
-
+#include <iostream>
 #include "../hh_exceptions/hh_exceptions.h"
 hh::PSX_File::PSX_File(const std::string &file_name, open_flag_t openflag)
 {
-
+  this->_file_descriptor = open(file_name.c_str(), openflag);
+  if(_file_descriptor < 0)
+  {
+      std::cerr <<" BAD FILE DISCRIPTOR "<<_file_descriptor<<std::endl;
+      std::cerr <<" errno = "<<errno<<std::endl;
+  }
 }
 
-
+hh::PSX_File::PSX_File(const std::string &file_name, open_flag_t openflag, permiss_t permiss)
+{
+    this->_file_descriptor = open(file_name.c_str(), openflag, permiss);
+    if(_file_descriptor < 0)
+    {
+        std::cerr <<" BAD FILE DISCRIPTOR "<<_file_descriptor<<std::endl;
+        std::cerr <<" errno = "<<errno<<std::endl;
+    }
+}
 void hh::PSX_File::_lseek(lseek_t flag, const long num_bytes)
 {
     auto new_pos = lseek(_file_descriptor,num_bytes, flag);
@@ -61,6 +74,23 @@ void hh::PSX_File::psx_write(void *dest, const long num_bytes)
     }
 }
 
+void hh::PSX_File::psx_defragment_read(const iovec *iov, int count_iov)
+{
+    auto res = readv(_file_descriptor, iov, count_iov);
+    if(res == -1)
+    {
+        throw hh::ErrnoException();
+    }
+}
+
+void hh::PSX_File::psx_defragment_write(const iovec *iov, int count_iov)
+{
+    auto res = writev(_file_descriptor,iov, count_iov);
+    if(res < 0)
+    {
+        throw hh::ErrnoException();
+    }
+}
 hh::PSX_File::~PSX_File()
 {
     close(_file_descriptor);
@@ -79,7 +109,7 @@ void hh::PSX_File::reset_flag_open(const int &new_flag)
    }
 }
 
-bool hh::PSX_File::try_resrt_flag_open(const int &new_flag)
+bool hh::PSX_File::try_resrt_flag_open(const int &new_flag) noexcept
 {
     return (fcntl( _file_descriptor, F_SETFL, new_flag) != -1);
 }

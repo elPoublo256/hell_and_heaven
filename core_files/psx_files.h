@@ -11,16 +11,29 @@
 #include <fcntl.h>
 #include <set>
 #include <unistd.h>
+#include <vector>
+#include <sys/uio.h>
 namespace hh {
-
+#define WRITE_ONLY O_WRONLY
+#define READ_ONLY O_RDONLY
 #define open_flag_t decltype(O_RDONLY)
 #define lseek_t decltype(SEEK_END)
+#define permiss_t decltype(S_IRUSR)
+#define ALL_READ S_IRUSR | S_IRGRP | S_IROTH
+#define ALL_WRIGHT S_IWGRP | S_IWUSR | S_IWOTH
+
+//!
+//! \brief The PSX_File class
+//!this class provide low level interface for working with files
+//! using system comands
 class PSX_File
 {
 public:
 
     PSX_File(){}
     PSX_File(const std::string& file_name, open_flag_t openflag);
+    PSX_File(const std::string& file_name, open_flag_t openflag,
+             permiss_t permiss);
     PSX_File(const PSX_File& copy) = delete;
     PSX_File(PSX_File && rv_copy);
     void operator =(const PSX_File& copy) = delete;
@@ -32,12 +45,10 @@ public:
     virtual void psx_write(void* dest, const long num_bytes);
     virtual void psx_defragment_read(const iovec *iov, int count_iov);
     virtual void psx_defragment_write(const iovec *iov, int count_iov);
-    virtual void psx_defragment_read(const std::vector<std::pair<std::size_t, void*> buffers);
-    virtual void psx_defragment_write(const std::vector<std::pair<std::size_t, void*> buffers);
 
 
     void reset_flag_open(const int& new_flag);
-    bool try_resrt_flag_open(const int& new_flag);
+    bool try_resrt_flag_open(const int& new_flag) noexcept;
 
     PSX_File&& make_duplicate();//using dup
 
