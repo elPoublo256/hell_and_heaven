@@ -13,6 +13,8 @@ hh::PSX_File::PSX_File(const std::string &file_name, open_flag_t openflag)
 
 hh::PSX_File::PSX_File(const std::string &file_name, open_flag_t openflag, permiss_t permiss)
 {
+    std::cout << "create file"<<file_name<<std::endl;
+
     this->_file_descriptor = open(file_name.c_str(), openflag, permiss);
     if(_file_descriptor < 0)
     {

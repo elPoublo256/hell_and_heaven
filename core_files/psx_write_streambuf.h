@@ -36,6 +36,7 @@ public:
                         std::size_t size_buf = DEFULT_BUF_SIZE) :
    __psx_file_ptr(new PSX_File(file_name, O_WRONLY | O_CREAT, permis))
    {
+       __bufer.resize(size_buf);
        Base::setp(__bufer.data(), __bufer.data() + __bufer.size());
        this->_M_out_cur = __bufer.data();
    }
@@ -65,11 +66,19 @@ protected:
         {
             std::cout << "pint:"<<a<<std::endl;
         }
+        errno = 0;
+        if(__psx_file_ptr)
+        {
         __psx_file_ptr->psx_write(__bufer.data(), __bufer.size() * sizeof(CharT));
         __bufer.resize(__bufer.size());
         this->setp(__bufer.data(), __bufer.data() + __bufer.size() );
-
-        return 0;
+        std::cout << errno <<std::endl;
+        return __c;
+        }
+        else
+        {
+            throw std::runtime_error("there are NO availeble ptr to PSX_File");
+        }
 
     }
 
@@ -95,6 +104,26 @@ virtual int pubsync()
     {
         std::cout << __FUNCTION__<<std::endl;
         return this ->sync();
+    }
+};
+
+
+
+
+
+
+
+template <class CharT,
+          int Num_Fragment,
+          class Traits = std::char_traits<CharT>,
+          class Allocator = std::allocator<CharT>
+          >
+class PSX_DefragWrite_Streambuff : public PSX_Write_Streambuff< CharT, Traits, Allocator>
+{
+public:
+    PSX_DefragWrite_Streambuff(std::shared_ptr<hh::PSX_File> file_ptr, std::size_t size_buf = DEFULT_BUF_SIZE):
+    PSX_Write_Streambuff< CharT, Traits, Allocator>(file_ptr, Num_Fragment * size_buf)
+    {
     }
 };
 

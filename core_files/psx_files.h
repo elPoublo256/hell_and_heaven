@@ -81,11 +81,6 @@ public:
     std::string _filename;
 };
 
-class RAM_File : public PSX_File
-{
-public:
-    RAM_File(){}
-};
 
 void copy_psx_file(const PSX_File& origina, const PSX_File& copy, std::size_t size_bufer = 1024);
 

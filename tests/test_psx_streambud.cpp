@@ -8,16 +8,18 @@
 
 BOOST_AUTO_TEST_CASE(test_create_write_buf)
 {
-    std::string file1 = "test_create_write_buf_f1";
-    std::string file2 = "f2";
+    std::string file1 = "test_create_write_buf_f1.txt";
+    std::string file2 = "test_create_write_buf_f2.txt";
     std::shared_ptr<hh::PSX_File> ptr1(new hh::PSX_File(file1, O_WRONLY | O_CREAT, ALL_READ | ALL_WRIGHT));
     hh::PSX_Write_Streambuff<char> buf1(ptr1);
     hh::PSX_Write_Streambuff<char> buf2(file2);
     std::basic_iostream<char> ofst1(&buf1);
+    std::basic_iostream<char> ofst2(&buf2);
     for(int i = 0; i < 10; i++)
     {
-        ofst1 << i<<std::endl;
+        ofst2 << i<<std::endl;
     }
+
 
 }
 
