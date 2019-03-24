@@ -15,7 +15,7 @@ add_subdirectory(hh_exceptions)
 
 add_subdirectory(core_files)
 
-#add_subdirectory(core_process)
+add_subdirectory(core_process)
 
 add_subdirectory(tests)
 

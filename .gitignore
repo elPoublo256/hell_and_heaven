@@ -1,3 +1,4 @@
+*.autosave
 CMakeFiles/
 core_files/CMakeFiles/
 core_files/psx_files.cpp.autosave
