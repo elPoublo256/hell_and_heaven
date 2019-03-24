@@ -12,7 +12,8 @@ examples/run_example_pipe
 hh_exceptions/CMakeFiles/hh_exception.dir/hh_exceptions.cpp.o
 tests/CMakeFiles/
 tests/checkbasefilestream
-
+*.make
+*CMakeFiles*
 build/*
 *CMakeCache.txt
 *CMakeLists.txt.user

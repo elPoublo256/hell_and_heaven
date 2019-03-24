@@ -5,6 +5,7 @@
 #include <fstream>
 #include <cstring>
 #include "psx_read_streambuf.h"
+#include "psx_write_streambuf.h"
 namespace hh {
 
 }

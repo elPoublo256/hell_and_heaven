@@ -3,29 +3,39 @@
 #include "../hh_exceptions/hh_exceptions.h"
 hh::PSX_File::PSX_File(const std::string &file_name, open_flag_t openflag)
 {
+  errno = 0;
   this->_file_descriptor = open(file_name.c_str(), openflag);
   if(_file_descriptor < 0)
   {
-      std::cerr <<" BAD FILE DISCRIPTOR "<<_file_descriptor<<std::endl;
-      std::cerr <<" errno = "<<errno<<std::endl;
+      if(errno != 0)
+      {
+          throw(hh::ErrnoException());
+      }
   }
 }
 
 hh::PSX_File::PSX_File(const std::string &file_name, open_flag_t openflag, permiss_t permiss)
 {
-    std::cout << "create file"<<file_name<<std::endl;
 
+    errno = 0;
     this->_file_descriptor = open(file_name.c_str(), openflag, permiss);
     if(_file_descriptor < 0)
     {
-        std::cerr <<" BAD FILE DISCRIPTOR "<<_file_descriptor<<std::endl;
-        std::cerr <<" errno = "<<errno<<std::endl;
+        if(errno != 0)
+        {
+            throw(hh::ErrnoException());
+        }
     }
 }
 
 void hh::PSX_File::psx_close()
 {
+    errno = 0;
     close(_file_descriptor);
+    if(errno != 0)
+    {
+        throw (hh::ErrnoException());
+    }
 }
 
 void hh::PSX_File::_lseek(lseek_t flag, const long num_bytes)

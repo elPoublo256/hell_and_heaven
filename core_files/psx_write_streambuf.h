@@ -6,7 +6,7 @@
 #include <cstring>
 #include <iostream>
 
-#define DEFULT_BUF_SIZE 3
+
 namespace hh {
 
 
@@ -33,7 +33,7 @@ public:
 
    PSX_Write_Streambuff(std::string file_name,
                         permiss_t permis = ALL_READ | ALL_WRIGHT,
-                        std::size_t size_buf = DEFULT_BUF_SIZE) :
+                        std::size_t size_buf = 3) :
    __psx_file_ptr(new PSX_File(file_name, O_WRONLY | O_CREAT, permis))
    {
        __bufer.resize(size_buf);
@@ -42,6 +42,7 @@ public:
    }
    ~PSX_Write_Streambuff()
    {
+
        this->sync();
    }
 
@@ -61,24 +62,20 @@ protected:
 
     virtual int_type overflow(int_type __c = Traits::eof())
     {
+        errno = 0;
         std::cout << __FUNCTION__<<" "<<__c<<std::endl;
         for(auto a : __bufer)
         {
             std::cout << "pint:"<<a<<std::endl;
         }
-        errno = 0;
-        if(__psx_file_ptr)
-        {
+
         __psx_file_ptr->psx_write(__bufer.data(), __bufer.size() * sizeof(CharT));
         __bufer.resize(__bufer.size());
         this->setp(__bufer.data(), __bufer.data() + __bufer.size() );
-        std::cout << errno <<std::endl;
+        std::cout <<"errno = "<< errno <<std::endl;
         return __c;
-        }
-        else
-        {
-            throw std::runtime_error("there are NO availeble ptr to PSX_File");
-        }
+
+
 
     }
 
@@ -88,12 +85,8 @@ virtual int sync()
         std::cout<<std::endl;
         std::cout<<__FUNCTION__<<std::endl;
         errno = 0;
-
-        for(auto a : __bufer)
-        {
-            std::cout << "s_pint:"<<a<<std::endl;
-        }
         __psx_file_ptr->psx_write(__bufer.data(), std::distance(__bufer.data(), this->_M_out_cur) * sizeof(CharT));
+
         __bufer.resize(__bufer.size());
         this->setp(__bufer.data(), __bufer.data() + __bufer.size());
 
