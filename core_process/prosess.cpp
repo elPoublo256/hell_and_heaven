@@ -1,4 +1,5 @@
 #include "prosess.h"
+/*
 #include "../hh_exceptions/hh_exceptions.h"
 #include <iostream>
 using namespace hh;
@@ -41,7 +42,7 @@ Fork_Process::Fork_Process(std::shared_ptr<Base_Process> parent_ptr)
 
 void Fork_Process::start(const Exe_arg &arg)
 {
-        print_log() << __FUNCTION__<<" "<< std::endl;
+        std::cout << __FUNCTION__<<" "<< std::endl;
         int pid = fork();
         switch (pid) {
         case -1:
@@ -98,4 +99,4 @@ MainProcess::MainProcess()
 }
 
 
-
+*/

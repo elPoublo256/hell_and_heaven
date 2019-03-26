@@ -1,19 +1,6 @@
 #pragma once
-#include<map>
-#include <unistd.h>
-#include <vector>
-#include <string>
-#include <functional>
-#include <iostream>
-#include <iterator>
-#include <cstdarg>
-#include <string.h>
-#include <memory>
-#include <signal.h>
-#include <unordered_map>
-#include "../core_files/file_stream.h"
-#include <list>
-#include <iostream>
+#include "base_process.h"
+#include "exe_arg.h"
 //TODO make check create dump file
 //#ifdef WCOREDUMP
 //#define IS_CREATE_FILE_DUMP WCOREDUMP
@@ -21,11 +8,11 @@
 
 namespace hh {
 
-#define FINISHED_PID -3
+//#define FINISHED_PID -3
 
 
 
-
+/*
 ///this class provide a set of arguments for process
 ///this class consist int argc and const char* argv[]
 ///which we use int main(int argc, const char* argv[])
@@ -52,6 +39,7 @@ class Exe_arg
  * \brief The Process class is abstract class of prosesses in UNIX-like systems
  *this is abstract class
  */
+/*
 class Base_Process
 {
 public:
@@ -126,7 +114,7 @@ std::shared_ptr<Base_Process> _parent_ptr;
 //! \brief The Exe_Process class
 //!this calss start process using execl
 
-
+*/
 }
 
 
