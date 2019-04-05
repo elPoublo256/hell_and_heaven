@@ -17,6 +17,8 @@ add_subdirectory(core_files)
 
 add_subdirectory(core_process)
 
+add_subdirectory(core_user)
+
 add_subdirectory(tests)
 
 add_subdirectory(examples)

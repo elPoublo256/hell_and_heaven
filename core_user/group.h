@@ -5,7 +5,7 @@
 #include <exception>
 namespace hh 
 {
-namespace user
+namespace userspace
 {
 	class Group
 	{

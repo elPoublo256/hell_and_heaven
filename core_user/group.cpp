@@ -4,7 +4,7 @@
 
 std::map<int,std::string> __map_gname_gid;
 
-hh::user::Group::Group(const std::string &group_name)
+hh::userspace::Group::Group(const std::string &group_name)
 {
     __is_valid =false;
     errno = 0;
@@ -16,7 +16,7 @@ hh::user::Group::Group(const std::string &group_name)
     }
 }
 
-hh::user::Group::Group(const int &gid)
+hh::userspace::Group::Group(const int &gid)
 {
     errno = 0;
     __is_valid = false;
@@ -31,7 +31,7 @@ hh::user::Group::Group(const int &gid)
 
 }
 
-hh::user::Group hh::user::Group::operator =(hh::user::Group&& rv_copy)
+hh::userspace::Group hh::userspace::Group::operator =(hh::userspace::Group&& rv_copy)
 {
 
     __group_ptr = std::move(rv_copy.__group_ptr);
@@ -39,7 +39,7 @@ hh::user::Group hh::user::Group::operator =(hh::user::Group&& rv_copy)
     return *this;
 }
 
-hh::user::Group hh::user::Group::operator =(const hh::user::Group& copy)
+hh::userspace::Group hh::userspace::Group::operator =(const hh::userspace::Group& copy)
 {
 
     __group_ptr = copy.__group_ptr;
