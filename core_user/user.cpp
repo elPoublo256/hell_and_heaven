@@ -40,3 +40,15 @@ bool hh::userspace::check_passward(const User &user, std::string &&passwd)
 {
     return false;
 }
+
+std::string hh::userspace::User::get_home_directory()
+{
+    return std::string(__pwd->pw_dir);
+}
+
+hh::userspace::Group hh::userspace::User::get_group()
+{
+    return hh::userspace::Group(__pwd->pw_gid);
+}
+
+

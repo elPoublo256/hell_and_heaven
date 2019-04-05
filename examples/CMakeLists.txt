@@ -5,3 +5,6 @@
 
 #add_executable(run_example_fork example_fork.cpp)
 #target_link_libraries(run_example_fork core_process)
+
+add_executable(example_user_psw example_user.cpp)
+target_link_libraries(example_user_psw core_user)

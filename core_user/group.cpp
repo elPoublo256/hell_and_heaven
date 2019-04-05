@@ -46,4 +46,12 @@ hh::userspace::Group hh::userspace::Group::operator =(const hh::userspace::Group
     __is_valid = copy.__is_valid;
     return *this;
 }
-
+std::list<std::string> hh::userspace::Group::get_members_names_list()
+{
+    std::list<std::string> res;
+    for(int i = 0; __group_ptr->gr_mem[i] != NULL; i++)
+    {
+        res.push_back(std::string(__group_ptr->gr_mem[i]));
+    }
+    return res;
+}

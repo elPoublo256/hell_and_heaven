@@ -1,6 +1,7 @@
 #pragma once
 #include <pwd.h>
 #include <string>
+#include "group.h"
 namespace hh
 {
 namespace userspace
@@ -19,6 +20,10 @@ namespace userspace
      User operator = (const User& copy);
      User operator = (User&& rv_copy);
      friend bool check_passward(const User& user, std::string&& passwd);
+     std::string get_home_directory();
+     hh::userspace::Group get_group();
+     inline auto get_passward(){return std::string(__pwd->pw_passwd);}
+     inline auto have_a_passward(){return (std::string{'x'} == get_passward());}
 
 
 

@@ -3,6 +3,7 @@
 #include <pwd.h>
 #include <grp.h>
 #include <exception>
+#include <list>
 namespace hh 
 {
 namespace userspace
@@ -29,10 +30,10 @@ namespace userspace
 			bool operator == (const std::string group_name);
             inline bool is_valid() {return __is_valid;}
 
-				
-
-            inline int get_gid(){return int(__group_ptr->gr_gid);}
-			std::string get_group_name();
+            inline auto get_group_name() {return std::string(__group_ptr->gr_name);}
+            std::list<std::string> get_members_names_list();
+            inline auto get_gid(){return __group_ptr->gr_gid;}
+            inline auto get_passward(){return std::string(__group_ptr->gr_passwd);}
 
 			
 
