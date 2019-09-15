@@ -4,9 +4,9 @@ extern char **environ;
 hh::process::Base_Process::Base_Process()
 {
   //----loud all environs to map -----//
-  load_map_eniron();
+  load_map_environ();
 }
-void hh::process::Base_Process::load_map_eniron() noexcept
+void hh::process::Base_Process::load_map_environ() noexcept
 {
     for(int i = 0; environ[i] != NULL; i++)
     {
@@ -22,7 +22,7 @@ void hh::process::Base_Process::load_map_eniron() noexcept
 void hh::process::Base_Process::prepare_before_start()
 {
     __environ_map.clear();
-    load_map_eniron();
+    load_map_environ();
 }
 
 

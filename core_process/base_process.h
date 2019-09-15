@@ -48,7 +48,7 @@ class Base_Process
     virtual void prepare_before_start();
     virtual void run(hh::Exe_arg &arg);
     virtual int main(int argv, char* argc[]) = 0;
-    void load_map_eniron() noexcept;
+    void load_map_environ() noexcept;
 
 };
 
