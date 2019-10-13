@@ -1,7 +1,9 @@
 #include "psx_files.h"
 #include <iostream>
 #include "../hh_exceptions/hh_exceptions.h"
-hh::PSX_File::PSX_File(const std::string &file_name, open_flag_t openflag)
+
+
+hh::psx_file::PSX_File::PSX_File(const std::string &file_name, open_flag_t openflag)
 {
   errno = 0;
   this->_file_descriptor = open(file_name.c_str(), openflag);
@@ -11,10 +13,11 @@ hh::PSX_File::PSX_File(const std::string &file_name, open_flag_t openflag)
       {
           throw(hh::ErrnoException());
       }
+      __filename = file_name;
   }
 }
 
-hh::PSX_File::PSX_File(const std::string &file_name, open_flag_t openflag, permiss_t permiss)
+hh::psx_file::PSX_File::PSX_File(const std::string &file_name, open_flag_t openflag, permiss_t permiss)
 {
 
     errno = 0;
@@ -25,10 +28,11 @@ hh::PSX_File::PSX_File(const std::string &file_name, open_flag_t openflag, permi
         {
             throw(hh::ErrnoException());
         }
+        __filename = file_name;
     }
 }
 
-void hh::PSX_File::psx_close()
+void hh:: psx_file::PSX_File::psx_close()
 {
     errno = 0;
     close(_file_descriptor);
@@ -38,13 +42,13 @@ void hh::PSX_File::psx_close()
     }
 }
 
-void hh::PSX_File::_lseek(lseek_t flag, const long num_bytes)
+void hh:: psx_file::PSX_File::_lseek(lseek_t flag, const long num_bytes)
 {
     auto new_pos = lseek(_file_descriptor,num_bytes, flag);
     _curent_position = lseek(_file_descriptor, 0, SEEK_CUR);
 
 }
-void hh::PSX_File::lseek_from_begin(const long &num_bytes)
+void hh:: psx_file::PSX_File::lseek_from_begin(const long &num_bytes)
 {
   if(num_bytes < 0)
   {
@@ -56,17 +60,17 @@ void hh::PSX_File::lseek_from_begin(const long &num_bytes)
   }
 }
 
-void hh::PSX_File::lseek_from_qurent(const long &num_bytes)
+void hh:: psx_file::PSX_File::lseek_from_qurent(const long &num_bytes)
 {
   _lseek(SEEK_CUR, num_bytes);
 }
 
-void hh::PSX_File::lseek_from_end(const long &num_bytes)
+void hh:: psx_file::PSX_File::lseek_from_end(const long &num_bytes)
 {
  _lseek(SEEK_END, num_bytes);
 }
 
-void hh::PSX_File::psx_read(void *dest, const long num_bytes)
+void hh:: psx_file::PSX_File::psx_read(void *dest, const long num_bytes)
 {
     auto res = read(_file_descriptor,dest,num_bytes);
     if(res < 0)
@@ -76,7 +80,7 @@ void hh::PSX_File::psx_read(void *dest, const long num_bytes)
     _curent_position += num_bytes;
 }
 
-void hh::PSX_File::psx_write(void *dest, const long num_bytes)
+void hh:: psx_file::PSX_File::psx_write(void *dest, const long num_bytes)
 {
 
     auto res = write(_file_descriptor,dest,num_bytes);
@@ -87,7 +91,7 @@ void hh::PSX_File::psx_write(void *dest, const long num_bytes)
     _curent_position += num_bytes;
 }
 
-void hh::PSX_File::psx_defragment_read(const iovec *iov, int count_iov)
+void hh:: psx_file::PSX_File::psx_defragment_read(const iovec *iov, int count_iov)
 {
     auto res = readv(_file_descriptor, iov, count_iov);
     if(res == -1)
@@ -100,7 +104,7 @@ void hh::PSX_File::psx_defragment_read(const iovec *iov, int count_iov)
     }
 }
 
-void hh::PSX_File::psx_defragment_write(const iovec *iov, int count_iov)
+void hh::psx_file::PSX_File::psx_defragment_write(const iovec *iov, int count_iov)
 {
     auto res = writev(_file_descriptor,iov, count_iov);
     if(res < 0)
@@ -108,13 +112,12 @@ void hh::PSX_File::psx_defragment_write(const iovec *iov, int count_iov)
         throw hh::ErrnoException();
     }
 }
-hh::PSX_File::~PSX_File()
+hh::psx_file::PSX_File::~PSX_File()
 {
-    close(_file_descriptor);
 
 }
 
-void hh::PSX_File::reset_flag_open(const int &new_flag)
+void hh::psx_file::PSX_File::reset_flag_open(const int &new_flag)
 {
    int res = fcntl( _file_descriptor, F_SETFL, new_flag);
    if(res != -1)
@@ -127,12 +130,12 @@ void hh::PSX_File::reset_flag_open(const int &new_flag)
    }
 }
 
-bool hh::PSX_File::try_resrt_flag_open(const int &new_flag) noexcept
+bool hh:: psx_file::PSX_File::try_resrt_flag_open(const int &new_flag) noexcept
 {
     return (fcntl( _file_descriptor, F_SETFL, new_flag) != -1);
 }
 
-hh::PSX_File &&hh::PSX_File::make_duplicate()
+hh::psx_file::PSX_File&& hh::psx_file::PSX_File::make_duplicate()
 {
 
     PSX_File duplcate;
@@ -142,7 +145,15 @@ hh::PSX_File &&hh::PSX_File::make_duplicate()
     return(std::move(duplcate));
 }
 
-void hh::copy_psx_file(const PSX_File &original, const PSX_File &copy, std::size_t size_bufer)
+void hh::psx_file::PSX_File::data_fsink()
+{
+    if(fdatasync(_file_descriptor) != 0)
+    {
+        throw hh::ErrnoException();
+    }
+}
+
+void hh::psx_file::copy_psx_file(const PSX_File &original, const PSX_File &copy, std::size_t size_bufer)
 {
     if(size_bufer != 0)
     {
@@ -152,18 +163,18 @@ void hh::copy_psx_file(const PSX_File &original, const PSX_File &copy, std::size
     {
      if(write(copy._file_descriptor, bufer, sreaded) == sreaded)
      {
-         throw hh::PSX_Fiel_Exc(std::string("fail copy file"));
+         throw hh::psx_file::PSX_Fiel_Exc(std::string("fail copy file"));
      }
     }
     free(bufer);
     return;
     }
     else {
-        throw hh::PSX_Fiel_Exc(std::string("Zero size bufer"));
+        throw hh::psx_file::PSX_Fiel_Exc(std::string("Zero size bufer"));
     }
 }
 
-hh::PSX_Temprorary_File::PSX_Temprorary_File(std::string teplate_fn)
+hh::psx_file::PSX_Temprorary_File::PSX_Temprorary_File(std::string teplate_fn)
 {
     teplate_fn = teplate_fn + std::string("XXXXXX");
     _file_descriptor = mkstemp(const_cast<char*>(teplate_fn.data()));
@@ -171,17 +182,10 @@ hh::PSX_Temprorary_File::PSX_Temprorary_File(std::string teplate_fn)
     _open_flag = O_EXCL;
 }
 
-hh::PSX_Temprorary_File::~PSX_Temprorary_File()
+hh::psx_file::PSX_Temprorary_File::~PSX_Temprorary_File()
 {
     unlink(_filename.data());
 }
 
-hh::PSX_Directory::PSX_Directory(const std::string &path) :  PSX_File(path, O_DIRECTORY)
-{
 
-}
 
-void hh::copy_psx_file(const PSX_Directory &origina, const PSX_Directory &copy, std::size_t size_bufer)
-{
-
-}

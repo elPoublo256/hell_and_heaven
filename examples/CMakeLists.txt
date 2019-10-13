@@ -8,3 +8,6 @@
 
 add_executable(example_user_psw example_user.cpp)
 target_link_libraries(example_user_psw core_user)
+
+add_executable(example_filesysteminfo example_filesysteminfo.cpp)
+target_link_libraries(example_filesysteminfo psx_filesystem)

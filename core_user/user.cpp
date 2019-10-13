@@ -16,8 +16,13 @@ hh::userspace::User::User(const int &user_id)
 hh::userspace::User::User(const std::string &user_name)
 {
     errno = 0;
+    std::string name = user_name;
+    if(*user_name.rbegin()!='\0')
+    {
+        name += "\0";
+    }
     __is_valid = false;
-    __pwd = getpwnam(user_name.c_str());
+    __pwd = getpwnam(name.c_str());
     if(errno != 0 && __pwd != NULL)
     {
         __is_valid = true;

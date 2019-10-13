@@ -14,7 +14,7 @@ BOOST_AUTO_TEST_CASE(test_read_write)
     errno = 0;
      try
     {
-    hh::PSX_File write_file(filename,  O_WRONLY | O_RDONLY | O_CREAT, ALL_READ);
+    hh::psx_file::PSX_File write_file(filename,  O_WRONLY | O_RDONLY | O_CREAT, ALL_READ);
     write_file.psx_write(vec.data(), vec.size() * sizeof(int));
     }
     catch(hh::ErrnoException& err)
@@ -23,7 +23,7 @@ BOOST_AUTO_TEST_CASE(test_read_write)
     }
 
     try{
-     hh::PSX_File rf(filename, O_RDONLY, S_IRUSR | S_IRGRP | S_IROTH );
+     hh::psx_file::PSX_File rf(filename, O_RDONLY, S_IRUSR | S_IRGRP | S_IROTH );
      std::vector<int> filebuf(size_buff);
      rf.psx_read(filebuf.data(), filebuf.size() * sizeof(int));
      BOOST_CHECK_EQUAL_COLLECTIONS(filebuf.begin(), filebuf.end(), vec.begin(), vec.end());
@@ -41,7 +41,7 @@ BOOST_AUTO_TEST_CASE(test_lseeck)
 {
     errno = 0;
  std::string filename = "test_lseeck";
- hh::PSX_File fl(filename,  O_RDWR | O_CREAT, ALL_READ | ALL_WRIGHT);
+ hh::psx_file::PSX_File fl(filename,  O_RDWR | O_CREAT, ALL_READ | ALL_WRIGHT);
  std::vector<int> vec{0,1,2,3,4,5,6,7,8,9};
  BOOST_CHECK_EQUAL(vec.size(), 10);
  fl.psx_write(vec.data(),vec.size() * sizeof(int));

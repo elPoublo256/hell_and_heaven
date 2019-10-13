@@ -14,6 +14,8 @@
 #include <vector>
 #include <sys/uio.h>
 namespace hh {
+namespace psx_file {
+
 #define WRITE_ONLY O_WRONLY
 #define READ_ONLY O_RDONLY
 #define open_flag_t decltype(O_RDONLY)
@@ -22,16 +24,34 @@ namespace hh {
 #define ALL_READ S_IRUSR | S_IRGRP | S_IROTH
 #define ALL_WRIGHT S_IWGRP | S_IWUSR | S_IWOTH
 #define ONLY_USER_READ_WRIGHT S_IRUSR | S_IWUSR
+
+class BasePSXFile
+{
+public:
+    BasePSXFile(const int& file_discriptor)
+    {
+        _file_descriptor = file_discriptor;
+    }
+    int get_file_discriptror() const {return _file_descriptor;}
+    virtual ~BasePSXFile(){close(_file_descriptor);}
+protected:
+    BasePSXFile(){}
+ int _file_descriptor = -1;
+
+
+
+};
+
 //!
 //! \brief The PSX_File class
 //!this class provide low level interface for working with files
 //! using system comands
-class PSX_File
+class PSX_File : public BasePSXFile
 {
 public:
 
     PSX_File(){}
-    PSX_File(const std::string& file_name, open_flag_t openflag);
+    PSX_File(const std::string& file_name, open_flag_t openflag = O_RDONLY);
     PSX_File(const std::string& file_name, open_flag_t openflag,
              permiss_t permiss);
     PSX_File(const PSX_File& copy) = delete;
@@ -45,6 +65,9 @@ public:
     virtual void psx_write(void* dest, const long num_bytes);
     virtual void psx_defragment_read(const iovec *iov, int count_iov);
     virtual void psx_defragment_write(const iovec *iov, int count_iov);
+    virtual void data_fsink();
+    void flash();
+    auto get_name(){return this->__filename;}
 
 
     void reset_flag_open(const int& new_flag);
@@ -61,13 +84,14 @@ protected:
 friend void copy_psx_file(const PSX_File& origina, const PSX_File& copy,std::size_t size_bufer);
 
 protected:
-PSX_File(int fd) : _file_descriptor(fd) {}
+PSX_File(int fd) : BasePSXFile(fd) {}
     void set_filedcripter(const int& fdr);
-    int _file_descriptor = -1;
+
     open_flag_t _open_flag;
     long _curent_position;
 private:
    virtual void _lseek(lseek_t flag, const long num_bytes);
+    std::string __filename;
 
 };
 
@@ -91,15 +115,5 @@ struct PSX_Fiel_Exc : public std::runtime_error
     PSX_Fiel_Exc(std::string wat) : runtime_error(wat){}
 };
 
-class PSX_Directory : public PSX_File
-{
-  public:
-    PSX_Directory(const std::string& path);
-
-private:
-    std::string _path;
-    std::set<std::string> files_names;
-    std::set<std::string> dir_names;
-};
-void copy_psx_file(const PSX_Directory &origina, const PSX_Directory &copy, std::size_t size_bufer = 1024);
+}
 }

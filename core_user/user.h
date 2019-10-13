@@ -24,6 +24,8 @@ namespace userspace
      hh::userspace::Group get_group();
      inline auto get_passward(){return std::string(__pwd->pw_passwd);}
      inline auto have_a_passward(){return (std::string{'x'} == get_passward());}
+     uid_t get_user_id() const {return __pwd->pw_uid;}
+     gid_t get_group_id() const {return __pwd->pw_gid;}
 
 
 
