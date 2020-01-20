@@ -4,7 +4,7 @@ project(hell_and_heaven)
 
 SET(CMAKE_CXX_STANDART 14)
 
-SET(COMPILE_OPTIONS -Wpedantic -Wall -Wextra -std=c++14)
+SET(COMPILE_OPTIONS -Wpedantic -Wall -Wextra -std=c++11)
 
 
 enable_testing()
@@ -18,6 +18,8 @@ add_subdirectory(core_files)
 add_subdirectory(core_process)
 
 add_subdirectory(core_user)
+
+add_subdirectory(core_info)
 
 add_subdirectory(tests)
 

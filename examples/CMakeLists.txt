@@ -6,8 +6,12 @@
 #add_executable(run_example_fork example_fork.cpp)
 #target_link_libraries(run_example_fork core_process)
 
+
 add_executable(example_user_psw example_user.cpp)
 target_link_libraries(example_user_psw core_user)
 
 add_executable(example_filesysteminfo example_filesysteminfo.cpp)
 target_link_libraries(example_filesysteminfo psx_filesystem)
+
+add_executable(inotify_example inotify_example.cpp)
+target_link_libraries(inotify_example psx_notify)
