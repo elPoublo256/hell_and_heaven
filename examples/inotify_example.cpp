@@ -28,6 +28,9 @@ int main()
     //t_ptr = __inotify.read_in_thread_backcall(f);
     remove("./test.txt");
     remove("./test2.txt");
+
+
+
     //t_ptr = std::shared_ptr<std::thread>();
     return 0;
 }

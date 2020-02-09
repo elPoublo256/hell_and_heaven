@@ -15,3 +15,6 @@ target_link_libraries(example_filesysteminfo psx_filesystem)
 
 add_executable(inotify_example inotify_example.cpp)
 target_link_libraries(inotify_example psx_notify)
+
+add_executable(example_signalhandler example_signalhandler.cpp)
+target_link_libraries(example_signalhandler psx_signals)
