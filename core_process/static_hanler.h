@@ -26,6 +26,7 @@ template <class SelfType,  typename ResType, typename... Args>
 class Smart_Functor
 {
     public:
+
     typedef StaticFunctor<SelfType,ResType,Args...> StatFunct;
     virtual void set_owner(SelfType* ptr) final
     {
@@ -33,6 +34,8 @@ class Smart_Functor
     }
 
     virtual ResType action(Args ...args){}
+
+    Smart_Functor(){set_owner((SelfType*) this);}
 
     auto get_static_action() {auto res = [](Args... args)->ResType
         {return StaticFunctor<SelfType,ResType,Args...>::action(args...);} ;return res;}

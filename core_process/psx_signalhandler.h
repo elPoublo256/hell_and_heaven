@@ -27,7 +27,7 @@ class BaseSignalHandler
     auto get_glib_sigaction_ptr() noexcept {return &__glibc_sigaction;}
     void set_mask_handler(const hh::core_process::SetSignals& mask) noexcept;
 
-    BaseSignalHandler set_as_handler(const int& signal_code);
+    virtual BaseSignalHandler set_as_handler(const int& signal_code);
     virtual ~BaseSignalHandler(){}
     SetSignals get_masck();
 
@@ -62,6 +62,7 @@ public:
 
 
 
+#define PUBLIC_VIRTUAL_SIGNAL_HANDLER(CLASS) public hh::core_process::BaseSignalHandler,  public hh::smart_functor::Smart_Functor<CLASS, void, int>
 
 
 
@@ -71,6 +72,8 @@ class VirtualSignalHandler : public BaseSignalHandler, public hh::smart_functor:
 public:
 //virtual void action(int a) override { return void();}
   VirtualSignalHandler(const int& flag = 0, const SetSignals& set = SetSignals());
+  BaseSignalHandler set_as_handler(const int &signal_code);
+  virtual ~VirtualSignalHandler(){}
 
 
 };

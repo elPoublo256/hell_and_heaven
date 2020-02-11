@@ -65,19 +65,19 @@ set_mask_handler(const  SetSignals &mask) noexcept
 }
 
 INITT_STATIC_OWNER(VirtualSignalHandler);
-//template<>
-//VirtualSignalHandler*
-//hh::smart_functor::StaticFunctor<VirtualSignalHandler, void, int>::owner_ptr = NULL;
+
 VirtualSignalHandler::VirtualSignalHandler(const int& flag, const SetSignals &set) :
     BaseSignalHandler(get_static_action(), flag, set)
 {
+   //StatFunct::StaticFunctor::set_owner(this);
+}
 
-    StatFunct::StaticFunctor::set_owner(this);
-    //SET_OWNER(VirtualSignalHandler, this, void int);
-    //this->set_owner(this);
+ BaseSignalHandler VirtualSignalHandler::set_as_handler(const int &signal_code)
+{
+
+    auto res = BaseSignalHandler::set_as_handler(signal_code);
+    return res;
 }
 
 
 
-// template<>
-//VirtualSignalHandler* VirtualSignalHandler::StatFunct::owner_ptr = NULL;
