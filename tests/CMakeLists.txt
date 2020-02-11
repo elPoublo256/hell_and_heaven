@@ -19,8 +19,14 @@ target_link_libraries(run_test_base_process ${Boost_LIBRARIES} core_process)
 
 #target_link_libraries(run_test_process  ${Boost_LIBRARIES} core_process)
 
+add_executable(test_setsignals test_setsignals.cpp)
+target_link_libraries(test_setsignals psx_signals ${Boost_LIBRARIES})
 
 
+add_executable(test_signal_handler test_signal_handler.cpp)
+target_link_libraries(test_signal_handler psx_signals ${Boost_LIBRARIES})
+
+add_test(Test_signal_Handler test_signal_handler)
 
 add_test(Test_filestreams run_test_filestreams)
 

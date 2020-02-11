@@ -1,7 +1,7 @@
 #pragma once
 #include "psx_signals.h"
 #include <functional>
-
+#include "static_hanler.h"
 #include <exception>
 
 namespace hh {
@@ -41,7 +41,7 @@ BaseSignalHandler get_curent_handler(const int& signal_code);
 
 class RAI_SignalHandler : public BaseSignalHandler
 {
-private:
+protected:
     BaseSignalHandler handler_before;
     int signal;
 public:
@@ -66,35 +66,13 @@ public:
 
 
 
-
-
-
-///this classes no usfall but i like this idea
-///this class is like a lambda [](...Args)->ResType{Handler h; return h.handl();}
-template <class Handler, typename ResType, typename... Args>
-class StaticHandler
-{
-   static ResType action(Args ...args){Handler h; return h.handl();}
-};
-
-
- #define VIRTUAL_SIGNAL_HANDLER typedef StaticHandler<selftype, void,int> static_handler;
-class VirtualSignalHandler : public BaseSignalHandler
+class VirtualSignalHandler : public BaseSignalHandler, public hh::smart_functor::Smart_Functor<VirtualSignalHandler, void, int>
 {
 public:
-    class Exception : public std::runtime_error
-    {
-        Exception(const std::string& s) : std::runtime_error(s){}
-    };
-    typedef VirtualSignalHandler selftype;
-    VIRTUAL_SIGNAL_HANDLER
-    virtual void handl(int signal){}
-    virtual ~VirtualSignalHandler();
+//virtual void action(int a) override { return void();}
+  VirtualSignalHandler(const int& flag = 0, const SetSignals& set = SetSignals());
 
-    VirtualSignalHandler(){}
-    //std::shared_ptr<selftype> static_handler::owner = std::make_shared<selftype>();
-protected:
-    VirtualSignalHandler(const int& flag, const SetSignals& set_signals);
+
 };
 
 

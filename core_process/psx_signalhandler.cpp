@@ -1,29 +1,31 @@
 #include "psx_signalhandler.h"
 #include "../hh_exceptions/hh_exceptions.h"
 
-hh::core_process::BaseSignalHandler::BaseSignalHandler(handler_t handl_function, int flag)
+using namespace hh::core_process;
+
+ BaseSignalHandler::BaseSignalHandler(handler_t handl_function, int flag)
 {
     __glibc_sigaction.sa_handler = handl_function;
     __glibc_sigaction.sa_flags = flag;
 
 }
-hh::core_process::BaseSignalHandler::BaseSignalHandler(const struct sigaction &glibc_action)
+ BaseSignalHandler::BaseSignalHandler(const struct sigaction &glibc_action)
 {
     __glibc_sigaction = glibc_action;
 }
 
-hh::core_process::BaseSignalHandler::BaseSignalHandler(const BaseSignalHandler &copy)
+ BaseSignalHandler::BaseSignalHandler(const BaseSignalHandler &copy)
 {
     __glibc_sigaction = copy.__glibc_sigaction;
 }
 
-hh::core_process::BaseSignalHandler::BaseSignalHandler(const BaseSignalHandler&& rv_copy)
+ BaseSignalHandler::BaseSignalHandler(const BaseSignalHandler&& rv_copy)
 {
     __glibc_sigaction = std::move(rv_copy.__glibc_sigaction);
 }
 
 
-hh::core_process::BaseSignalHandler::BaseSignalHandler(handler_t handl_function,
+ BaseSignalHandler::BaseSignalHandler(handler_t handl_function,
                                                        int flag,
                                                        const SetSignals &set)
 
@@ -36,13 +38,13 @@ hh::core_process::BaseSignalHandler::BaseSignalHandler(handler_t handl_function,
 
 
 
-void hh::core_process::BaseSignalHandler::
-set_mask_handler(const hh::core_process::SetSignals &mask) noexcept
+void  BaseSignalHandler::
+set_mask_handler(const  SetSignals &mask) noexcept
 {
     __glibc_sigaction.sa_mask = *(mask.get_c_sigset());
 }
 
-hh::core_process::BaseSignalHandler hh::core_process::BaseSignalHandler::set_as_handler(const int& signal_code)
+ BaseSignalHandler  BaseSignalHandler::set_as_handler(const int& signal_code)
 {
     struct sigaction res;
     if(sigaction(signal_code,&__glibc_sigaction,&res) != 0)
@@ -52,7 +54,7 @@ hh::core_process::BaseSignalHandler hh::core_process::BaseSignalHandler::set_as_
     return BaseSignalHandler(res);
 }
 
-hh::core_process::BaseSignalHandler hh::core_process::get_curent_handler(const int &signal_code)
+ BaseSignalHandler  get_curent_handler(const int &signal_code)
 {
     struct sigaction res;
     if(sigaction(signal_code,NULL,&res) != 0)
@@ -62,7 +64,20 @@ hh::core_process::BaseSignalHandler hh::core_process::get_curent_handler(const i
     return BaseSignalHandler(res);
 }
 
+INITT_STATIC_OWNER(VirtualSignalHandler);
+//template<>
+//VirtualSignalHandler*
+//hh::smart_functor::StaticFunctor<VirtualSignalHandler, void, int>::owner_ptr = NULL;
+VirtualSignalHandler::VirtualSignalHandler(const int& flag, const SetSignals &set) :
+    BaseSignalHandler(get_static_action(), flag, set)
+{
+
+    StatFunct::StaticFunctor::set_owner(this);
+    //SET_OWNER(VirtualSignalHandler, this, void int);
+    //this->set_owner(this);
+}
 
 
 
-
+// template<>
+//VirtualSignalHandler* VirtualSignalHandler::StatFunct::owner_ptr = NULL;
