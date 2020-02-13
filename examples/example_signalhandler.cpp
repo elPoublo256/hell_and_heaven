@@ -29,13 +29,13 @@ class Test2 : PUBLIC_VIRTUAL_SIGNAL_HANDLER(Test2)
 class InfoHandler : public hh::core_process::InfoVirtualSignalHandler
 {
 public:
-    virtual void action(int signal,
+    virtual void info_action(int signal,
                         const hh::core_process::SignalInfo& info,
                         const hh::core_process::UserContext& context)
     {
-
+        std::cout << "InfoHandler is wark"<<std::endl;
     }
-    InfoHandler(const int& s = 0) : hh::core_process::InfoVirtualSignalHandler(s){}
+    InfoHandler(const int& s = 0) : hh::core_process::InfoVirtualSignalHandler(s, hh::core_process::SetSignals(SA_SIGINFO)){}
 };
 
 void test_handler_psx1()
@@ -55,14 +55,14 @@ void test_handler_psx1()
 void test_handler_psx2()
 {
 
-    hh::core_process::BaseSignalHandler ih(
+  /*  hh::core_process::BaseSignalHandler ih(
                 [](int s, siginfo_t* inf, void* con)
     {std::cout << "InfoHandler is wark"<<std::endl;},
     0, hh::core_process::SetSignals());
-
-    //InfoHandler ih;
-    auto before = ih.set_as_handler(SIGCONT);
-    hh::core_process::send_signal_to_self(SIGCONT);
+*/
+    InfoHandler ih;
+    auto before = ih.set_as_handler(SIGINT);
+    hh::core_process::send_signal_to_self(SIGINT);
 
 }
 
@@ -72,6 +72,8 @@ INITT_STATIC_OWNER(Test2);
 
 int main()
 {
+    test_handler_psx1();
+
     test_handler_psx2();
 
     return 0;

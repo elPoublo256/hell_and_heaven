@@ -4,10 +4,10 @@
 INITT_STATIC_OWNER(hh::core_process::InfoVirtualSignalHandler);
 
 hh::core_process::InfoVirtualSignalHandler::
-InfoVirtualSignalHandler(const int &flag, const SetSignals &set)
-    //: BaseSignalHandler(get_static_action(), flag, set)
+InfoVirtualSignalHandler(const int &flag, const SetSignals &set) : BaseSignalHandler(get_static_action(), flag, set)
 
 {
-
+    set_owner(this);
+    //StatFunct::action()
 }
 #endif

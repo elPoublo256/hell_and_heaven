@@ -92,12 +92,13 @@ VirtualSignalHandler::VirtualSignalHandler(const int& flag, const SetSignals &se
 
 }
 
+/*
  BaseSignalHandler VirtualSignalHandler::set_as_handler(const int &signal_code)
 {
 
     auto res = BaseSignalHandler::set_as_handler(signal_code);
     return res;
 }
-
+*/
 
 

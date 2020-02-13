@@ -28,6 +28,7 @@ class BaseSignalHandler
 #if defined __USE_POSIX199309 || defined __USE_XOPEN_EXTENDED
 typedef decltype(sigaction::sa_sigaction) psx2_handler_t;
 BaseSignalHandler(psx2_handler_t handl_function, int flag = 0);
+///DO NOT FORGET SET SA_INFO for getting info of signal
 BaseSignalHandler(psx2_handler_t handl_function, int flag, const SetSignals& set);
 #endif
     BaseSignalHandler(const BaseSignalHandler& copy);
@@ -84,7 +85,7 @@ class VirtualSignalHandler : public BaseSignalHandler, public hh::smart_functor:
 public:
 //virtual void action(int a) override { return void();}
   VirtualSignalHandler(const int& flag = 0, const SetSignals& set = SetSignals());
-  BaseSignalHandler set_as_handler(const int &signal_code);
+  //BaseSignalHandler set_as_handler(const int &signal_code);
   virtual ~VirtualSignalHandler(){}
 
 

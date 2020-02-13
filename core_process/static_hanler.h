@@ -30,7 +30,7 @@ class Smart_Functor
     public:
 
     typedef StaticFunctor<SelfType,ResType,Args...> StatFunct;
-    virtual void set_owner(SelfType* ptr) final
+    virtual void set_owner(SelfType* ptr)
     {
         StaticFunctor<SelfType,ResType,Args...>::set_owner(ptr);
     }
