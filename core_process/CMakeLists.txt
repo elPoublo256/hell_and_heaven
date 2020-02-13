@@ -3,7 +3,9 @@ add_library(psx_signals
     psx_signals.h psx_signals.cpp
     psx_signalhandler.h psx_signalhandler.cpp
     static_hanler.h
+    psx_alterstack.h psx_alterstack.cpp
     #psx_setsignals.h  psx_setsignals.cpp
+    psx2_signal_info.h psx2_signal_info.cpp
     )
 target_link_libraries(psx_signals hh_exception)
 

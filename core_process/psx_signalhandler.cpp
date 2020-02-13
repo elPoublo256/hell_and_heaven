@@ -1,14 +1,43 @@
 #include "psx_signalhandler.h"
 #include "../hh_exceptions/hh_exceptions.h"
-
+#include "string.h"
 using namespace hh::core_process;
 
  BaseSignalHandler::BaseSignalHandler(handler_t handl_function, int flag)
 {
     __glibc_sigaction.sa_handler = handl_function;
     __glibc_sigaction.sa_flags = flag;
+    sigemptyset(&__glibc_sigaction.sa_mask);
 
 }
+
+ BaseSignalHandler::BaseSignalHandler(handler_t handl_function,
+                                                       int flag,
+                                                       const SetSignals &set)
+
+{
+    __glibc_sigaction.sa_handler = handl_function;
+    __glibc_sigaction.sa_flags = flag;
+    memcpy(&__glibc_sigaction.sa_mask,set.get_c_sigset(), sizeof(__glibc_sigaction.sa_mask));
+}
+
+#if defined __USE_POSIX199309 || defined __USE_XOPEN_EXTENDED
+ BaseSignalHandler::BaseSignalHandler(psx2_handler_t handl_function, int flag)
+ {
+     __glibc_sigaction.sa_sigaction = handl_function;
+     __glibc_sigaction.sa_flags = flag;
+     sigemptyset(&__glibc_sigaction.sa_mask);
+ }
+
+ BaseSignalHandler::BaseSignalHandler(psx2_handler_t handl_function, int flag, const SetSignals &set)
+ {
+     __glibc_sigaction.sa_sigaction = handl_function;
+     __glibc_sigaction.sa_flags = flag;
+     memcpy(&__glibc_sigaction.sa_mask,set.get_c_sigset(), sizeof(__glibc_sigaction.sa_mask));
+ }
+
+#endif
+
  BaseSignalHandler::BaseSignalHandler(const struct sigaction &glibc_action)
 {
     __glibc_sigaction = glibc_action;
@@ -25,15 +54,6 @@ using namespace hh::core_process;
 }
 
 
- BaseSignalHandler::BaseSignalHandler(handler_t handl_function,
-                                                       int flag,
-                                                       const SetSignals &set)
-
-{
-    __glibc_sigaction.sa_handler = handl_function;
-    __glibc_sigaction.sa_flags = flag;
-    __glibc_sigaction.sa_mask = *(set.get_c_sigset());
-}
 
 
 
@@ -69,7 +89,7 @@ INITT_STATIC_OWNER(VirtualSignalHandler);
 VirtualSignalHandler::VirtualSignalHandler(const int& flag, const SetSignals &set) :
     BaseSignalHandler(get_static_action(), flag, set)
 {
-   //StatFunct::StaticFunctor::set_owner(this);
+
 }
 
  BaseSignalHandler VirtualSignalHandler::set_as_handler(const int &signal_code)

@@ -2,7 +2,9 @@
 #include <memory>
 #include <functional>
 namespace hh {
+namespace core_process {
 
+}
 
 namespace smart_functor {
 
@@ -43,6 +45,8 @@ class Smart_Functor
 };
 }
 }
+
+
 
 #define INITT_STATIC_OWNER(CLASS) template<> CLASS* CLASS::StatFunct::owner_ptr = NULL
 

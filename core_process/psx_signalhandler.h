@@ -3,22 +3,33 @@
 #include <functional>
 #include "static_hanler.h"
 #include <exception>
-
+#include "psx_alterstack.h"
 namespace hh {
 namespace core_process {
 
 
-template <class HandlerType>
-void static_action(int s){HandlerType h;}
+
+
 
 
 class BaseSignalHandler
 {
   public:
-    typedef decltype(sigaction::sa_handler) handler_t;
+
+        typedef decltype(sigaction::sa_handler) handler_t;
+
+
+
     BaseSignalHandler(){}
+
     BaseSignalHandler(const struct sigaction& glibc_action);
     BaseSignalHandler(handler_t handl_function, int flag = 0);
+
+#if defined __USE_POSIX199309 || defined __USE_XOPEN_EXTENDED
+typedef decltype(sigaction::sa_sigaction) psx2_handler_t;
+BaseSignalHandler(psx2_handler_t handl_function, int flag = 0);
+BaseSignalHandler(psx2_handler_t handl_function, int flag, const SetSignals& set);
+#endif
     BaseSignalHandler(const BaseSignalHandler& copy);
     BaseSignalHandler(const BaseSignalHandler&& rv_copy);
     BaseSignalHandler(handler_t handl_function, int flag, const SetSignals& set);
@@ -62,6 +73,7 @@ public:
 
 
 
+
 #define PUBLIC_VIRTUAL_SIGNAL_HANDLER(CLASS) public hh::core_process::BaseSignalHandler,  public hh::smart_functor::Smart_Functor<CLASS, void, int>
 
 
@@ -77,6 +89,15 @@ public:
 
 
 };
+
+
+
+
+
+
+
+
+
 
 
 
