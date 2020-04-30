@@ -35,10 +35,28 @@ public hh::smart_functor::Smart_Functor<SelfType, void, int, siginfo_t*, void*>
 
 };
 
-#define PUBLIC_INFO_VIRTUAL_SIGNAL_HANDLER(CLASS) public hh::core_process::BaseSignalHandler,public hh::smart_functor::Smart_Functor<CLASS, void, int>
+
+class PSX2_BaseSignalHandler : public PSX1_BaseSignalHandler
+{
+  public:
+    PSX2_BaseSignalHandler(){}
+    PSX2_BaseSignalHandler(psx2_handler_t handl_function, int flag = 0) : PSX1_BaseSignalHandler(handl_function,flag){}
+    PSX2_BaseSignalHandler(const PSX1_BaseSignalHandler& copy) = delete;
+    PSX2_BaseSignalHandler(const PSX1_BaseSignalHandler&& rv_copy) : PSX1_BaseSignalHandler(rv_copy){}
+    PSX2_BaseSignalHandler(handler_t handl_function, int flag, const SetSignals& set) = delete;
+    PSX2_BaseSignalHandler(void(*info_handler)(int, const SignalInfo&, const UserContext&),
+                           int flag, const SetSignals& s);
 
 
-class InfoVirtualSignalHandler : public BaseSignalHandler, public SignalInfoFunctor<InfoVirtualSignalHandler>
+
+
+};
+
+
+#define PUBLIC_INFO_VIRTUAL_SIGNAL_HANDLER(CLASS) public hh::core_process::PSX2_BaseSignalHandler,public hh::smart_functor::Smart_Functor<CLASS, void, int>
+
+
+class InfoVirtualSignalHandler : public PSX2_BaseSignalHandler, public SignalInfoFunctor<InfoVirtualSignalHandler>
 {
 public:
     virtual void info_action(int signal,

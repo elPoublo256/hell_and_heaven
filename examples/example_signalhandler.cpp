@@ -19,7 +19,7 @@ public:
 class Test2 : PUBLIC_VIRTUAL_SIGNAL_HANDLER(Test2)
 {
     public:
-    Test2() : BaseSignalHandler(Smart_Functor::get_static_action(),0,hh::core_process::SetSignals()) {}
+    Test2() : PSX1_BaseSignalHandler(Smart_Functor::get_static_action(),0,hh::core_process::SetSignals()) {}
     void action(int s) override {std::cout << "Test2 is wark"<<std::endl;}
 };
 
