@@ -15,7 +15,7 @@ class ErrnoException : public std::exception
     const char* what();
 protected:
     int _errno = errno;
-    auto get_error_code(){return _errno;}
+    int get_error_code(){return _errno;}
 
 };
 

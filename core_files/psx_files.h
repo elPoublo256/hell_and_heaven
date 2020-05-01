@@ -18,9 +18,12 @@ namespace psx_file {
 
 #define WRITE_ONLY O_WRONLY
 #define READ_ONLY O_RDONLY
-#define open_flag_t decltype(O_RDONLY)
-#define lseek_t decltype(SEEK_END)
-#define permiss_t decltype(S_IRUSR)
+//#define open_flag_t decltype(O_RDONLY)
+#define open_flag_t int
+//#define lseek_t decltype(SEEK_END)
+#define lseek_t int
+//#define permiss_t decltype(S_IRUSR)
+#define permiss_t  int
 #define ALL_READ S_IRUSR | S_IRGRP | S_IROTH
 #define ALL_WRIGHT S_IWGRP | S_IWUSR | S_IWOTH
 #define ONLY_USER_READ_WRIGHT S_IRUSR | S_IWUSR
@@ -55,7 +58,7 @@ public:
     PSX_File(const std::string& file_name, open_flag_t openflag,
              permiss_t permiss);
     PSX_File(const PSX_File& copy) = delete;
-    PSX_File(PSX_File && rv_copy);
+    PSX_File(PSX_File &&rv_copy);
     void operator =(const PSX_File& copy) = delete;
     virtual void lseek_from_begin(const long& num_bytes);
     virtual void lseek_from_qurent(const long& num_bytes);
