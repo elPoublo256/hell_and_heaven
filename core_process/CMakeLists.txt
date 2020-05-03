@@ -18,6 +18,7 @@ add_library(core_process prosess.cpp prosess.h
 	base_process.h 
         base_process.cpp
     psx_exit_process_handler.h psx_exit_process_handler.cpp
+processes_controller.h processes_controller.cpp
 )
 target_link_libraries(core_process hh_exception psx_files vir_mem)
 

@@ -21,3 +21,7 @@ target_link_libraries(example_signalhandler psx_signals)
 
 add_executable(example_exit_handler example_exithandler.cpp)
 target_link_libraries(example_exit_handler core_process)
+
+add_executable(example_run_programm example_run_programm.cpp)
+target_link_libraries(example_run_programm core_process)
+
