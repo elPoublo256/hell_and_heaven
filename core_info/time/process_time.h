@@ -13,9 +13,16 @@ typedef typename clock_t  processer_ticks_t;
 class ProcessTime : public tms
 {
 public:
+    ProcessTime(){}
+    /* TODO
+     * ProcessTime(const ProcessTime& copy);
+    ProcessTime(ProcessTime&& rv_copy);
+    ProcessTime(const tms& c_tms);*/
 
 
 };
+
+
 
 
 }
