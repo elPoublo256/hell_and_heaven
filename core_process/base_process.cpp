@@ -23,8 +23,9 @@ void hh::process::Base_Process::load_map_environ() noexcept
 
 void hh::process::Base_Process::prepare_before_start()
 {
-    //__environ_map.clear();
-    //load_map_environ();
+    load_all_id();
+    __environ_map.clear();
+    load_map_environ();
 }
 
 

@@ -63,7 +63,7 @@ public:
      */
     Process_Controllers(){}
     virtual ~Process_Controllers(){}
-    //virtual void vir_hh_fork(const hh::process::Base_Process& process);
+    virtual void run_process(hh::process::Base_Process& process);
     //static void fork(const hh::process::Base_Process& process);
 
     /*!

@@ -89,12 +89,13 @@ friend void copy_psx_file(const PSX_File& origina, const PSX_File& copy,std::siz
 protected:
 PSX_File(int fd) : BasePSXFile(fd) {}
     void set_filedcripter(const int& fdr);
+    std::string __filename;
 
     open_flag_t _open_flag;
     long _curent_position;
 private:
    virtual void _lseek(lseek_t flag, const long num_bytes);
-    std::string __filename;
+
 
 };
 

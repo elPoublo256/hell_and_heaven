@@ -2,6 +2,25 @@
 #include <string.h>
 using namespace hh::process;
 
+void Process_Controllers::run_process(Base_Process &process)
+{
+    process.prepare_before_start();
+    auto new_pid = fork();
+    if(new_pid == 0)
+    {
+        process.prepare_before_start();
+        process.action();
+    }
+    else if(new_pid > 0)
+    {
+        process.id.pocess_id = new_pid;
+    }
+    else if(new_pid < 0)
+    {
+        throw Process_Controllers_Error("error run process");
+    }
+}
+
 WaitStatus Process_Controllers::whait_process(const Base_Process &process, const int &options_whait)
 {
     WaitStatus res;
