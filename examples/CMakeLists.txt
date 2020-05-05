@@ -18,3 +18,10 @@ target_link_libraries(inotify_example psx_notify)
 
 add_executable(example_signalhandler example_signalhandler.cpp)
 target_link_libraries(example_signalhandler psx_signals)
+
+add_executable(example_exit_handler example_exithandler.cpp)
+target_link_libraries(example_exit_handler core_process)
+
+add_executable(example_run_programm example_run_programm.cpp)
+target_link_libraries(example_run_programm core_process)
+

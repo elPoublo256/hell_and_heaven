@@ -3,7 +3,7 @@
 #include <iostream>
 using namespace hh;
 
-char** Exe_arg::cstr_argv()
+char** Exe_arg::cstr_argv() const
 {
     int _argc = argc();
     char** res = new char*[_argc];

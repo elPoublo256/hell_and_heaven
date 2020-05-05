@@ -3,7 +3,7 @@ add_library(psx_signals
     psx_signals.h psx_signals.cpp
     psx_signalhandler.h psx_signalhandler.cpp
     static_hanler.h
-    psx_alterstack.h psx_alterstack.cpp
+    #psx_alterstack.h psx_alterstack.cpp
     #psx_setsignals.h  psx_setsignals.cpp
     psx2_signal_info.h psx2_signal_info.cpp
     )
@@ -16,7 +16,11 @@ add_library(core_process prosess.cpp prosess.h
 	exe_arg.h
 	exe_arg.cpp
 	base_process.h 
-	base_process.cpp)
+        base_process.cpp
+    psx_exit_process_handler.h psx_exit_process_handler.cpp
+processes_controller.h processes_controller.cpp
+accouting_process.h accouting_process.cpp
+)
 target_link_libraries(core_process hh_exception psx_files vir_mem)
 
 

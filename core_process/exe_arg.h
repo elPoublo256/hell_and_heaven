@@ -35,7 +35,7 @@ class Exe_arg
     Exe_arg(){}
 
 		std::vector<std::string> argv_;
-        int argc(){return argv_.size() + 1;}
+        int argc() const {return argv_.size() + 1;}
         Exe_arg(int argc, ...)
         {
             va_list ap;
@@ -44,8 +44,9 @@ class Exe_arg
                 argv_.push_back(va_arg(ap,std::string));
             va_end(ap); //without va_end behavior undefined
         }
-		char** cstr_argv();
+        char** cstr_argv() const;
         Exe_arg(int argc, char** argv);
+
 
 };
 

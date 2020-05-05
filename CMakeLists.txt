@@ -1,10 +1,9 @@
 cmake_minimum_required(VERSION 2.8.3)
-
 project(hell_and_heaven)
 
 SET(CMAKE_CXX_STANDART 14)
-
-SET(COMPILE_OPTIONS -Wpedantic -Wall -Wextra -std=c++11)
+SET(CMAKE_CXX_FLAGS "-std=c++14")
+SET(COMPILE_OPTIONS -Wpedantic -Wall -Wextra -std=c++14)
 
 
 enable_testing()

@@ -27,7 +27,7 @@ namespace process {
 class Base_Process
 {
   public:
-
+    friend class Process_Controllers;
     struct Process_ID
     {
         int pocess_id;
@@ -124,8 +124,7 @@ class Base_Process
      * \brief prepare_before_start
      * run before exucate method run(hh::Exe_arg &arg)
      */
-    virtual void prepare_before_start(){}
-    /*!
+    virtual void prepare_before_start();
 
     /*!
      * \brief load_all_id - load IDs of curent process in Process_ID id using C-POSIX functions
@@ -134,14 +133,9 @@ class Base_Process
 
 
     void load_map_environ() noexcept;
-    /*!
-     * \brief main - main function of curent process wich will run in this process
-     * Developer should override this method in developing process-class
-     * \param argv - number of parameters like in all main() functions in C\C++ programs
-     * \param argc - array of parameters like in all main() functions in C\C++ programs
-     * \return
-     */
-    virtual int main(int argv, char* argc[]) = 0;
+
+    virtual void action() = 0;
+
 
 
 };
