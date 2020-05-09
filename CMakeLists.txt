@@ -20,6 +20,8 @@ add_subdirectory(core_user)
 
 add_subdirectory(core_info)
 
+add_subdirectory(core_thread)
+
 add_subdirectory(tests)
 
 add_subdirectory(examples)
