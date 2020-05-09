@@ -25,3 +25,5 @@ target_link_libraries(example_exit_handler core_process)
 add_executable(example_run_programm example_run_programm.cpp)
 target_link_libraries(example_run_programm core_process)
 
+add_executable(example_acct example_acct.cpp)
+target_link_libraries(example_acct core_process)

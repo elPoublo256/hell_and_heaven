@@ -138,6 +138,10 @@ public:
                                      const Exe_arg& arg,
                                      const std::map<std::string, std::string> &environ);
 
+    //TODO make set methods run processes using vfork()
+
+    //TODO make set methods run processes using clone()
+
 
 
 

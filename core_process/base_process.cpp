@@ -8,6 +8,9 @@ hh::process::Base_Process::Base_Process()
   load_all_id();
 
 }
+
+hh::process::Base_Process::~Base_Process(){}
+
 void hh::process::Base_Process::load_map_environ() noexcept
 {
     for(int i = 0; environ[i] != NULL; i++)

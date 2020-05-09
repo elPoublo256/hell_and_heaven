@@ -3,7 +3,7 @@ project(hell_and_heaven)
 
 SET(CMAKE_CXX_STANDART 14)
 SET(CMAKE_CXX_FLAGS "-std=c++14")
-SET(COMPILE_OPTIONS -Wpedantic -Wall -Wextra -std=c++14)
+SET(COMPILE_OPTIONS -Wpedantic -Wall -Wextra -std=c++14 -ftext-numeric-literals)
 
 
 enable_testing()

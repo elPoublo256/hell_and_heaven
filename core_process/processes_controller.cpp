@@ -10,6 +10,7 @@ void Process_Controllers::run_process(Base_Process &process)
     {
         process.prepare_before_start();
         process.action();
+        exit(0);
     }
     else if(new_pid > 0)
     {
@@ -34,7 +35,7 @@ WaitStatus Process_Controllers::whait_process(const Base_Process &process, const
     return res;
 }
 
-WaitStatus Process_Controllers::whait_process(const pid_t &pid, const int &options_whait)
+WaitStatus Process_Controllers::whait_process(const pid_t &pid, const int &options_whait = WNOHANG)
 {
     WaitStatus res;
     auto pidd = pid;

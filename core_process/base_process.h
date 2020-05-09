@@ -40,11 +40,10 @@ class Base_Process
 
     Base_Process();
     virtual ~Base_Process();
-
     typedef std::map<std::string,std::string>::iterator envir_iter_t;
     typedef std::map<std::string,std::string>::const_iterator c_envir_iter_t;
 
-    virtual void start(hh::Exe_arg &arg);
+
 
     /*!
      * \brief susv3_get_environ
@@ -93,6 +92,8 @@ class Base_Process
         return is_effectvie ?  id.group_id_effect :  id.group_id_real;
     }
 
+    inline auto get_Process_ID(){return id.pocess_id;}
+
     ///if is_effectvie - return effectife Group ID, else real Group ID
     inline auto get_User_id(const bool& is_effectvie = true) const
     {
@@ -120,10 +121,7 @@ class Base_Process
 
  protected:
 
-    /*!
-     * \brief prepare_before_start
-     * run before exucate method run(hh::Exe_arg &arg)
-     */
+   \
     virtual void prepare_before_start();
 
     /*!
