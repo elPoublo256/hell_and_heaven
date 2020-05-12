@@ -27,3 +27,6 @@ target_link_libraries(example_run_programm core_process)
 
 add_executable(example_acct example_acct.cpp)
 target_link_libraries(example_acct core_process)
+
+add_executable(example_psx_thread example_psx_thread.cpp)
+target_link_libraries(example_psx_thread psx_thread)

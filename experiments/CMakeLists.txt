@@ -1,0 +1,1 @@
+add_executable(varedict_param_to_pointer varedict_param_to_pointer.cpp)
