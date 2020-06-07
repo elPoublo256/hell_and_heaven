@@ -5,11 +5,8 @@ using namespace hh::threads;
 Base_PSX_Thread::Base_PSX_Thread()
 {
     _c_thread = NULL;
-    auto res = pthread_attr_init(_c_atr);
-    if(res != 0)
-    {
-        throw PSX_Thread_Errno_Error();
-    }
+    _c_atr = NULL;
+    __function = [](void* arg)->void*{return NULL;};
 
 }
 
@@ -17,15 +14,10 @@ Base_PSX_Thread::Base_PSX_Thread(std::function<void *(void *)> function)
 {
     _c_thread = NULL;
     __function = function;
+    _c_atr = NULL;
 }
-/*
-Base_PSX_Thread::Base_PSX_Thread(pthread_attr_t *atr, void *(*function)(void *))
-{
-    _c_thread = NULL;
-    __function = function;
-    _c_atr = atr;
-}
-*/
+
+
 Base_PSX_Thread::~Base_PSX_Thread()
 {
     if(_c_thread != NULL)
@@ -58,7 +50,7 @@ bool Base_PSX_Thread::operator ==(const Base_PSX_Thread& other)
     return res  != 0;
 }
 
-void Base_PSX_Thread::join(void *res)
+void Base_PSX_Thread::join_ptr_res(void *res)
 {
   if(_c_thread == NULL)
   {

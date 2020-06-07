@@ -6,6 +6,7 @@ int foo(int a, int b)
 {
 
     std::cout<< "a="<<a<<" b="<<b<<std::endl;
+    return a + b;
 }
 
 static void* bar(void* ar)
@@ -30,16 +31,17 @@ public:
 
 int main()
 {
-   // hh::threads::Base_PSX_Thread bt(bar);
-   // bt.run(NULL);
-   // bt.join_no_res();
+    hh::threads::Base_PSX_Thread bt(bar);
+    bt.run(NULL);
+    bt.join_no_res();
     hh::threads::Base_PSX_Thread btt(A<int>::bar);
     btt.run(NULL);
     btt.join_no_res();
 
     hh::threads::PSX_Thread<int,int,int> t(foo);
-    t.run(5,9);
-    //t.join_no_res();
+    t.run_with_args(5,9);
+    int res_t = t.join();
+    std::cout<<"res_t="<<res_t<<std::endl;
 
 
     return 0;

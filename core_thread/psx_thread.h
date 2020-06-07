@@ -51,7 +51,7 @@ class Base_PSX_Thread
      */
     void run(void* arg);
 
-    void join(void* res);
+    void join_ptr_res(void* res);
     void join_no_res();
 
     /*!
@@ -75,6 +75,7 @@ static void* __f_for_t(void* arg)
 
    ptr_thread->__res = ptr_thread->__function(arg);
     return NULL;}
+pthread_t get_c_thread(){return *_c_thread;}
 
 
 protected:
@@ -94,21 +95,22 @@ protected:
 
 
 template <class Res, class ...Args>
-class PSX_Thread// : public Base_PSX_Thread
+class PSX_Thread : public Base_PSX_Thread
 {
 public:
 
     typedef std::function<Res(Args...)> functor;
-    void run(Args... args)
+    void run_with_args(Args... args)
     {
         __call_f = std::bind(_functor,args...);
-        Base_PSX_Thread t(PSX_Thread::_main_function);
-        t.run(this);
-        t.join_no_res();
+
+        run(this);
+        //t.join_no_res();
         //Base_PSX_Thread::run(this);
         //this->_main_function(this);
     }
-    PSX_Thread(auto func)// : Base_PSX_Thread(PSX_Thread<Res,Args...>::_main_function)
+    Res join(){join_no_res(); return _obj_res;}
+    PSX_Thread(auto func) : Base_PSX_Thread(PSX_Thread<Res,Args...>::_main_function)
     {_functor = func;}
 
     ~PSX_Thread()
