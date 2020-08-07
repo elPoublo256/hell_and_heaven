@@ -6,7 +6,7 @@
 #include <list>
 namespace hh 
 {
-namespace userspace
+namespace core_user
 {
 	class Group
 	{

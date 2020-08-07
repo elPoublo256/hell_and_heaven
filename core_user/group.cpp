@@ -4,7 +4,7 @@
 
 std::map<int,std::string> __map_gname_gid;
 
-hh::userspace::Group::Group(const std::string &group_name)
+hh::core_user::Group::Group(const std::string &group_name)
 {
     __is_valid =false;
     errno = 0;
@@ -16,7 +16,7 @@ hh::userspace::Group::Group(const std::string &group_name)
     }
 }
 
-hh::userspace::Group::Group(const int &gid)
+hh::core_user::Group::Group(const int &gid)
 {
     errno = 0;
     __is_valid = false;
@@ -31,7 +31,7 @@ hh::userspace::Group::Group(const int &gid)
 
 }
 
-hh::userspace::Group hh::userspace::Group::operator =(hh::userspace::Group&& rv_copy)
+hh::core_user::Group hh::core_user::Group::operator =(hh::core_user::Group&& rv_copy)
 {
 
     __group_ptr = std::move(rv_copy.__group_ptr);
@@ -39,14 +39,14 @@ hh::userspace::Group hh::userspace::Group::operator =(hh::userspace::Group&& rv_
     return *this;
 }
 
-hh::userspace::Group hh::userspace::Group::operator =(const hh::userspace::Group& copy)
+hh::core_user::Group hh::core_user::Group::operator =(const hh::core_user::Group& copy)
 {
 
     __group_ptr = copy.__group_ptr;
     __is_valid = copy.__is_valid;
     return *this;
 }
-std::list<std::string> hh::userspace::Group::get_members_names_list()
+std::list<std::string> hh::core_user::Group::get_members_names_list()
 {
     std::list<std::string> res;
     for(int i = 0; __group_ptr->gr_mem[i] != NULL; i++)

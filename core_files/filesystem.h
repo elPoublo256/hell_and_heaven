@@ -76,12 +76,12 @@ inline void set_owner(const hh::psx_file::BasePSXFile& file,
     set_owner(file.get_file_discriptror(), user_id, group_id);
 }
 
-inline void set_owner(const int& fd,const hh::userspace::User& user)
+inline void set_owner(const int& fd,const hh::core_user::User& user)
 {
     set_owner(fd, user.get_user_id(), user.get_group_id());
 }
 
-inline void set_owner(const psx_file::BasePSXFile &file, const hh::userspace::User& user)
+inline void set_owner(const psx_file::BasePSXFile &file, const hh::core_user::User& user)
 {
     set_owner(file, user.get_user_id(), user.get_group_id());
 }

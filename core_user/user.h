@@ -4,7 +4,7 @@
 #include "group.h"
 namespace hh
 {
-namespace userspace
+namespace core_user
 {
  class User
  {
@@ -21,7 +21,7 @@ namespace userspace
      User operator = (User&& rv_copy);
      friend bool check_passward(const User& user, std::string&& passwd);
      std::string get_home_directory();
-     hh::userspace::Group get_group();
+     hh::core_user::Group get_group();
      inline auto get_passward(){return std::string(__pwd->pw_passwd);}
      inline auto have_a_passward(){return (std::string{'x'} == get_passward());}
      uid_t get_user_id() const {return __pwd->pw_uid;}
