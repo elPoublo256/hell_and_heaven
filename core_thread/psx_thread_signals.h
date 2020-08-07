@@ -12,7 +12,7 @@ namespace threads {
  * \throw PSX_Thread_Errno_Error when pthread_kill return error code
  * \throw PSX_Thread_Error when thread has not runned (pthread_t _c_thread == NULL)
  */
-void send_signal(const PSX_Thread& pthread, int signal);
+void send_signal(const Base_PSX_Thread& pthread, int signal);
 
 /*!
  * \brief set_signal_mask
@@ -23,7 +23,7 @@ void send_signal(const PSX_Thread& pthread, int signal);
  * \return last signal mask
  */
 core_process::SetSignals
-set_signal_mask(const PSX_Thread& pthread, const core_process::SetSignals& set_signals);
+set_signal_mask(const Base_PSX_Thread& pthread, const core_process::SetSignals& set_signals);
 
 
 }

@@ -75,7 +75,7 @@ static void* __f_for_t(void* arg)
 
    ptr_thread->__res = ptr_thread->__function(arg);
     return NULL;}
-pthread_t get_c_thread(){return *_c_thread;}
+inline pthread_t get_c_thread() const {return *_c_thread;}
 
 
 protected:

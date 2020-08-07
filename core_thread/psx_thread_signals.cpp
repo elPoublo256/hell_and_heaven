@@ -1,7 +1,7 @@
 #include "psx_thread_signals.h"
 using namespace hh::threads;
 
-void send_signal(const PSX_Thread &pthread, int signal)
+void send_signal(const Base_PSX_Thread &pthread, int signal)
 {
     if(pthread_kill(pthread.get_c_thread(), signal) != 0)
     {
