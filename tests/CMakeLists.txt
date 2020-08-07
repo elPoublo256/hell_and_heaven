@@ -26,6 +26,9 @@ target_link_libraries(test_setsignals psx_signals ${Boost_LIBRARIES})
 add_executable(test_signal_handler test_signal_handler.cpp)
 target_link_libraries(test_signal_handler psx_signals ${Boost_LIBRARIES})
 
+add_executable(test_logininfo test_logininfo.cpp)
+target_link_libraries(test_logininfo core_login ${Boost_LIBRARIES})
+
 add_test(Test_signal_Handler test_signal_handler)
 
 add_test(Test_filestreams run_test_filestreams)

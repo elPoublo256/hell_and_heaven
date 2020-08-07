@@ -6,7 +6,7 @@ int main()
 {
 	std::string username(getenv("LOGNAME"));
 	std::cout << "username is "<<username<<std::endl;
-    hh::userspace::User user(username);
+    hh::core_user::User user(username);
     auto dir = user.get_home_directory();
     std::cout<<"user home directory is " << dir <<std::endl;
     std::cout<<"user groupname is "<<user.get_group().get_group_name()<<std::endl;

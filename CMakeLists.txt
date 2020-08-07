@@ -22,6 +22,8 @@ add_subdirectory(core_info)
 
 add_subdirectory(core_thread)
 
+add_subdirectory(core_syslog)
+
 add_subdirectory(tests)
 
 add_subdirectory(examples)

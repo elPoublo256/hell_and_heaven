@@ -30,3 +30,9 @@ target_link_libraries(example_acct core_process)
 
 add_executable(example_psx_thread example_psx_thread.cpp)
 target_link_libraries(example_psx_thread psx_thread)
+
+add_executable(example_psx_syslog example_psx_syslog.cpp)
+target_link_libraries(example_psx_syslog psx_syslog)
+
+add_executable(example_logininfo example_logininfo.cpp)
+target_link_libraries(example_logininfo core_login)
