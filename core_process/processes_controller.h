@@ -61,8 +61,8 @@ public:
      * and set pid in this object of process-class
      * \param process - object of process-class
      */
-    Process_Controllers(){}
-    virtual ~Process_Controllers(){}
+    //Process_Controllers(){}
+    //virtual ~Process_Controllers(){}
     virtual void run_process(hh::process::Base_Process& process);
     //static void fork(const hh::process::Base_Process& process);
 

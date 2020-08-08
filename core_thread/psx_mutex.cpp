@@ -24,7 +24,7 @@ PSX_Mutex::~PSX_Mutex()
 {
     if(__atr){
     auto res = pthread_mutexattr_destroy(__atr);
-    if(res) throw "ERROR DESTROY PTHREAD_MUTEX";
+    if(res){ throw "ERROR DESTROY PTHREAD_MUTEX";}
     }
 }
 

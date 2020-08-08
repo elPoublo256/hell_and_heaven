@@ -31,6 +31,7 @@ namespace psx_file {
 class BasePSXFile
 {
 public:
+
     BasePSXFile(const int& file_discriptor)
     {
         _file_descriptor = file_discriptor;
@@ -43,6 +44,22 @@ protected:
 
 
 
+};
+
+class BaseReadFile: public BasePSXFile
+{
+public:
+    BaseReadFile(){}
+    BaseReadFile(const int& fd) : BasePSXFile(fd){}
+    virtual void psx_read(void* dest, const long num_bytes);
+};
+class BaseWriteFile: public BasePSXFile
+{
+public:
+
+    BaseWriteFile(){}
+   BaseWriteFile(const int& fd) : BasePSXFile(fd){}
+   virtual void psx_write(void* dest, const long num_bytes);
 };
 
 //!

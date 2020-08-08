@@ -71,6 +71,15 @@ void hh:: psx_file::PSX_File::lseek_from_end(const long &num_bytes)
  _lseek(SEEK_END, num_bytes);
 }
 
+void hh:: psx_file::BaseReadFile::psx_read(void *dest, const long num_bytes)
+{
+    auto res = read(_file_descriptor,dest,num_bytes);
+    if(res < 0)
+    {
+        throw hh::ErrnoException();
+    }
+    //_curent_position += num_bytes;
+}
 void hh:: psx_file::PSX_File::psx_read(void *dest, const long num_bytes)
 {
     auto res = read(_file_descriptor,dest,num_bytes);
@@ -80,6 +89,18 @@ void hh:: psx_file::PSX_File::psx_read(void *dest, const long num_bytes)
     }
     _curent_position += num_bytes;
 }
+
+void hh:: psx_file::BaseWriteFile::psx_write(void *dest, const long num_bytes)
+{
+
+    auto res = write(_file_descriptor,dest,num_bytes);
+    if(res < 0)
+    {
+        throw hh::ErrnoException();
+    }
+
+}
+
 
 void hh:: psx_file::PSX_File::psx_write(void *dest, const long num_bytes)
 {

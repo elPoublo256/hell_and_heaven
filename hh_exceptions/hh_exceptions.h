@@ -1,5 +1,5 @@
 #pragma once
-#include <exception>
+#include <stdexcept>
 #include <errno.h>
 
 namespace hh {
@@ -8,12 +8,10 @@ namespace hh {
 
 
 
-class ErrnoException : public std::exception
+class ErrnoException : public std::runtime_error
 {
   public:
     ErrnoException();
-    const char* what();
-protected:
     int _errno = errno;
     int get_error_code(){return _errno;}
 
