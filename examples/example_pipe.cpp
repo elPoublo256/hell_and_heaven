@@ -5,10 +5,42 @@
 #include <iostream>
 
 #define BUF_SIZE 5
-
-int main()
+hh::core_ipc::Base_Pipe b_pipe;
+class ProcessA : public hh::process::Base_Process
 {
-    hh::core_ipc::Base_Pipe b_pipe;
+public:
+    virtual void action() override
+    {
+        hh::core_ipc::ReadPipe r_pipe(b_pipe);
+        char c;
+        for(int i = 0; i < BUF_SIZE +1; i++)
+        {
+            r_pipe.psx_read(&c,1);
+            std::cout << "pid = "<<getpid()<<" get c="<<c<<std::endl;
+        }
+
+    }
+};
+
+class ProcessB : public hh::process::Base_Process
+{
+    virtual void action() override
+    {
+        std::cout << "pid="<<getpid()<<" writer"<<std::endl;
+        char arr[BUF_SIZE];
+        for(int i = 0; i < BUF_SIZE; i++)
+        {
+            arr[i] = 'a' + i;
+            std::cout << "pid = "<<getpid()<<":arr["<<i<<"]="<<arr[i]<<std::endl;
+        }
+        hh::core_ipc::WritePipe w_pipe(b_pipe);
+        w_pipe.psx_write((char*)arr,5);
+        std::cout << "end write pipe"<<std::endl;
+    }
+};
+
+void old_versiob()
+{
     auto pid = fork();
     if(pid == 0)
     {
@@ -37,5 +69,20 @@ int main()
        hh::process::Process_Controllers cont;
        cont.whait_children();
     }
+}
+
+int main()
+{
+    ProcessA a;
+    ProcessB b;
+    hh::process::Process_Controllers cont;
+    cont.run_process(a);
+    cont.run_process(b);
+    cont.whait_process(a,WNOHANG);
+    cont.whait_process(b,WNOHANG);
+
+
+
+
 
 }
