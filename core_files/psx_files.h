@@ -91,7 +91,7 @@ public:
 
 
     void reset_flag_open(const int& new_flag);
-    bool try_resrt_flag_open(const int& new_flag) noexcept;
+    bool try_resert_flag_open(const int& new_flag) noexcept;
 
     PSX_File&& make_duplicate();//using dup
 

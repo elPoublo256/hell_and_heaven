@@ -38,6 +38,7 @@ public:
 
 class FileAtributInfo : public stat
 {
+public:
     FileAtributInfo(){}
     FileAtributInfo(const int& file_discripotr);
     FileAtributInfo(const std::string& path);

@@ -152,7 +152,7 @@ void hh::psx_file::PSX_File::reset_flag_open(const int &new_flag)
    }
 }
 
-bool hh:: psx_file::PSX_File::try_resrt_flag_open(const int &new_flag) noexcept
+bool hh:: psx_file::PSX_File::try_resert_flag_open(const int &new_flag) noexcept
 {
     return (fcntl( _file_descriptor, F_SETFL, new_flag) != -1);
 }
