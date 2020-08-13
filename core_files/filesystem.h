@@ -44,22 +44,22 @@ class FileAtributInfo : public stat
     FileAtributInfo(const hh::psx_file::BasePSXFile& psx_file);
     //--------------------------------------
     //geting file_atribut
-    auto get_device_id(){return st_dev;}
-    auto get_indecs_discriptor(){return st_ino;}
-    auto get_mode_file(){return st_mode;}
+   inline auto get_device_id(){return st_dev;}
+    inline auto get_indecs_discriptor(){return st_ino;}
+    inline auto get_mode_file(){return st_mode;}
     ///num hard(soliod) reference to this file
-    auto get_num_hard_link(){return st_nlink;}
-    auto get_user_id(){return st_uid;}
-    auto get_group_id(){return st_gid;}
-    auto get_specific_devaice_id(){return st_rdev;}
-    auto get_file_size(){return st_size;}
-    auto get_blocksize_for_ffylesistem(){return st_blksize;}
-    auto get_number_512B_blocks(){return st_blocks;}
+    inline auto get_num_hard_link(){return st_nlink;}
+    inline auto get_user_id(){return st_uid;}
+    inline auto get_group_id(){return st_gid;}
+    inline auto get_specific_devaice_id(){return st_rdev;}
+    inline auto get_file_size(){return st_size;}
+    inline auto get_blocksize_for_ffylesistem(){return st_blksize;}
+    inline auto get_number_512B_blocks(){return st_blocks;}
     //TODO разобраться с типом
-    auto get_time_last_acces(){return st_atime;}
-    auto get_time_last_madification(){return st_mtime;}
-    auto get_time_last_status_changed(){return st_ctim;}
-    auto get_SUSv3_type_file(){return (st_mode & S_IFMT);}
+    inline auto get_time_last_acces(){return st_atime;}
+    inline auto get_time_last_madification(){return st_mtime;}
+    inline auto get_time_last_status_changed(){return st_ctim;}
+    inline auto get_SUSv3_type_file(){return (st_mode & S_IFMT);}
 
 
 };
