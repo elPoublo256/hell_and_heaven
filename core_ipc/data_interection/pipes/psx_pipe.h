@@ -1,6 +1,7 @@
 #pragma once
 #include "../../../core_files/psx_files.h"
 #include "../../../hh_exceptions/hh_exceptions.h"
+#include "../psx_base_message_sequenc.h"
 namespace hh {
 namespace core_ipc {
 
@@ -59,6 +60,8 @@ public:
     WritePipe(const Base_Pipe& piarpipe);
     //WritePipe(const int pair_fd[2]);
 };
+
+
 
 }
 

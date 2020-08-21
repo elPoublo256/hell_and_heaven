@@ -1,3 +1,5 @@
 add_subdirectory(pipes)
+add_subdirectory(possix_ipc)
+add_library(base_message psx_base_message_sequenc.h psx_base_message_sequenc.cpp)
 #add_library(pipe_process pipe_process.h pipe_process.cpp)
 #target_link_libraries(pipe_process core_process)
