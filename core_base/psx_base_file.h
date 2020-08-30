@@ -26,7 +26,7 @@ class BaseReader
 public:
     BaseReader(){}
     virtual int psx_read(void* dest, const std::size_t &len){}
-    virtual hh::PSX_Base_Bufer&& psx_read(const std::size_t& len);
+     hh::PSX_Base_Bufer&& psx_read(const std::size_t& len);
 };
 
 class BaseWriter
@@ -34,7 +34,7 @@ class BaseWriter
 public:
     BaseWriter(){}
     virtual int psx_write(const void* src, const std::size_t& len){}
-    virtual std::size_t psx_write(const hh::PSX_Base_Bufer& buf);
+    std::size_t psx_write(const hh::PSX_Base_Bufer& buf);
 
 };
 
@@ -125,6 +125,7 @@ public:
     BaseFDReader(BaseFDReader&& rv) : Base_FD_Open(std::move(rv)){}
     BaseFDReader(const BaseFDReader& copy) = delete;
     virtual int psx_read(void *dest, const std::size_t &len) override;
+    PSX_Base_Bufer&& psx_read(const std::size_t& len) {return std::move(BaseReader::psx_read(len));}
 };
 
 class BaseFDWriter : public Base_FD_Open, public BaseWriter
