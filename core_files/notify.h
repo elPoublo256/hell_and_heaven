@@ -10,6 +10,7 @@
 #include <thread>
 #include <future>
 #include <functional>
+#include "../core_base/psx_base_file.h"
 namespace hh {
 namespace filesystem {
 
@@ -53,7 +54,7 @@ ALL_EVENTS	= (IN_ACCESS | IN_MODIFY | IN_ATTRIB | IN_CLOSE_WRITE
 };
 class INotifyWatcher;
 class INotifyEvent ;
-class INotify : public hh::psx_file::BasePSXFile
+class INotify : public hh::BaseFD<int>
 {
 public:
     INotify();
@@ -64,7 +65,8 @@ public:
      * @return - discriptor of watching
      */
     int add_watcher(const std::string& fialename, unsigned int masck);
-    auto get_num_whatchers(){return __map_watchers_file_descriptor.size();}
+    auto get_num_whatchers(){return __map_watchers_fd.size();}
+    //int psx_open(const char *name, int open_flag);
     //void remove_watcher(const std::string& fialename);
 
 
@@ -83,7 +85,7 @@ public:
         return std::async(f,this);
     }
 
-
+//TODO no only std::thread
     template <class  Function>
     std::shared_ptr<std::thread> read_in_thread_backcall(Function func)
     {
@@ -113,7 +115,7 @@ public:
 
 private:
 
-    std::map<int, INotifyWatcher> __map_watchers_file_descriptor;
+    std::map<int, INotifyWatcher> __map_watchers_fd;
     std::size_t __max_len_filename_in_event = 256;
 
 public:

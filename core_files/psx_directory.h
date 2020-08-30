@@ -5,11 +5,11 @@
 #include <dirent.h>
 #include "psx_files.h"
 namespace hh {
-namespace psx_file {
+namespace core_files {
 
 
-
-class PSX_Directory : public BasePSXFile
+/*
+class PSX_Directory : public Base_FS_File
 {
 public:
     PSX_Directory(const std::string& file_name, open_flag_t openflag = O_RDONLY);
@@ -32,7 +32,7 @@ protected:
 };
 
 
-
+*/
 }
 
 }

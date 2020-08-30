@@ -24,20 +24,25 @@ public:
  * \brief The BaseMesageSender class is a base class for all
  * who can recv like POSSIX-Message-Sequence(as sender)
  */
+
+template<class T, typename sizeT = int>
 class BaseRecever
 {
 public:
-    virtual std::size_t recv_message(const void* mess_ptr, const std::size_t& len) = 0;
+    //virtual  recv_message(const void* mess_ptr, const std::size_t& len) = 0;
+protected:
+    virtual  sizeT psx_send(void* mess ) = 0;
+
 
 };
 
-template <class T>
-struct Message : public PSX_TBaseBufer<T>  {};
+//template <class T>
+//struct Message : public PSX_TBaseBufer<T>  {};
 
 
 
 
-template <class T>
+/*template <class T>
 class BaseMessageSender : public BaseSender
 {
 public:
@@ -47,8 +52,9 @@ public:
         BaseSender::send_message(mess.__ptr,mess.__len);
     }
 };
+*/
 
-
+/*
 template <class T>
 class BaseMessageRecever : public BaseRecever
 {
@@ -60,7 +66,7 @@ public:
         return res;
     }
 };
-
+*/
 
 }
 }

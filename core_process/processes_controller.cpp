@@ -114,8 +114,8 @@ void Process_Controllers::run_program_in_this_process(const std::string &file_na
 
 }
 
-
-void Process_Controllers::run_program_in_this_process(const hh::psx_file::BasePSXFile &file,
+/*
+void Process_Controllers::run_program_in_this_process(const hh::core_files::Base_FS_File &file,
                                                       const Exe_arg &arg,
                                                       const std::map<std::string, std::string>& environ)
 {
@@ -132,3 +132,4 @@ void Process_Controllers::run_program_in_this_process(const hh::psx_file::BasePS
         throw Process_Controllers_Error(std::string("ERROR fexecve"));
     }
 }
+*/

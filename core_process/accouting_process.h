@@ -19,7 +19,8 @@ public:
 
 };
 
-class AccoutingInfoFile : public hh::psx_file::PSX_File
+
+class AccoutingInfoFile : public hh::core_files::Base_FS_File
 {
 public:
     /*!

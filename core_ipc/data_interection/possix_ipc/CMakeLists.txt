@@ -1,2 +1,2 @@
-add_library(possix_possix_message_sequence possix_message_sequence.h possix_message_sequence.cpp)
-
+#add_library(possix_possix_message_sequence possix_message_sequence.h possix_message_sequence.cpp)
+#target_link_libraries()

@@ -31,3 +31,5 @@ add_subdirectory(examples)
 add_subdirectory(experiments)
 
 add_subdirectory(core_ipc)
+
+add_subdirectory(core_base)

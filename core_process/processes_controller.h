@@ -134,9 +134,9 @@ public:
      * \param arg - arguments of main function in hh-stile. Do not forgot add name file here as first arg
      * \param environ - - new envirements of process seted in map<Key,Value>
      */
-    void run_program_in_this_process(const hh::psx_file::BasePSXFile& file,
-                                     const Exe_arg& arg,
-                                     const std::map<std::string, std::string> &environ);
+    //void run_program_in_this_process(const hh::core_files::Base_FS_File& file,
+    //                                 const Exe_arg& arg,
+    //                                 const std::map<std::string, std::string> &environ);
 
     //TODO make set methods run processes using vfork()
 

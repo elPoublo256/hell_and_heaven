@@ -13,8 +13,14 @@
 #include <unistd.h>
 #include <vector>
 #include <sys/uio.h>
+#include "../core_base/psx_base_file.h"
+#include "../hh_exceptions/hh_exceptions.h"
+
+
+
+#include <iostream>
 namespace hh {
-namespace psx_file {
+namespace core_files {
 
 #define WRITE_ONLY O_WRONLY
 #define READ_ONLY O_RDONLY
@@ -27,114 +33,79 @@ namespace psx_file {
 #define ALL_READ S_IRUSR | S_IRGRP | S_IROTH
 #define ALL_WRIGHT S_IWGRP | S_IWUSR | S_IWOTH
 #define ONLY_USER_READ_WRIGHT S_IRUSR | S_IWUSR
-
-class BasePSXFile
+class FS_File_Error : public hh::BaseFDErrorFile
 {
 public:
-
-    BasePSXFile(const int& file_discriptor)
-    {
-        _file_descriptor = file_discriptor;
-    }
-    int get_file_discriptror() const {return _file_descriptor;}
-    virtual ~BasePSXFile(){close(_file_descriptor);}
-protected:
-    BasePSXFile(){}
- int _file_descriptor = -1;
+    FS_File_Error(const char* what) : hh::BaseFDErrorFile(what){}
+};
 
 
+
+
+class Read_FS_File : public BaseFDReader
+{
+public:
+    Read_FS_File(){}
+    Read_FS_File(const int& fd) : BaseFDReader(fd){}
+    Read_FS_File(const Read_FS_File& copy) = delete;
+    Read_FS_File(Read_FS_File&& rv);
+    Read_FS_File(const char* name, int flag_open = 0, const mode_t& mod = 0);
+
+    virtual ~Read_FS_File(){}
 
 };
 
-class BaseReadFile: public BasePSXFile
+class Write_FS_File : public BaseFDWriter
 {
 public:
-    BaseReadFile(){}
-    BaseReadFile(const int& fd) : BasePSXFile(fd){}
-    virtual void psx_read(void* dest, const long num_bytes);
-};
-class BaseWriteFile: public BasePSXFile
-{
-public:
+    Write_FS_File(){}
+    Write_FS_File(const int& fd) : BaseFDWriter(fd){}
+    Write_FS_File(const Write_FS_File& copy) = delete;
+    Write_FS_File(Write_FS_File&& rv);
+    Write_FS_File(const char* name, int flag_open = O_CREAT, const mode_t& mod = 0777);
 
-    BaseWriteFile(){}
-   BaseWriteFile(const int& fd) : BasePSXFile(fd){}
-   virtual void psx_write(void* dest, const long num_bytes);
 };
 
-//!
-//! \brief The PSX_File class
-//!this class provide low level interface for working with files
-//! using system comands
-class PSX_File : public BasePSXFile
+class ReadWrite_FS_File : public BaseFDReaderWriter
 {
 public:
+    ReadWrite_FS_File(){}
+    ReadWrite_FS_File(const int& fd) : BaseFDReaderWriter(fd){}
+    ReadWrite_FS_File(const ReadWrite_FS_File& copy) = delete;
+    ReadWrite_FS_File(ReadWrite_FS_File&& rv);
+    ReadWrite_FS_File(const char* name, int flag_open = O_CREAT, const mode_t& mod = 0777);
+    virtual ~ReadWrite_FS_File(){}
+};
 
-    PSX_File(){}
-    PSX_File(const std::string& file_name, open_flag_t openflag = O_RDONLY);
-    PSX_File(const std::string& file_name, open_flag_t openflag,
-             permiss_t permiss);
-    PSX_File(const PSX_File& copy) = delete;
-    PSX_File(PSX_File &&rv_copy);
-    void operator =(const PSX_File& copy) = delete;
-    virtual void lseek_from_begin(const long& num_bytes);
-    virtual void lseek_from_qurent(const long& num_bytes);
-    virtual void lseek_from_end(const long& num_bytes);
+class FS_File_Fubric : public hh::FubricReadWriteFiles
+{
+public:
+    FS_File_Fubric(const char* name = "./", int flag = O_CREAT,
+                   const mode_t& open_mode = ALL_READ | ALL_WRIGHT);
 
-    virtual void psx_read(void* dest, const long num_bytes);
-    virtual void psx_write(void* dest, const long num_bytes);
-    virtual void psx_defragment_read(const iovec *iov, int count_iov);
-    virtual void psx_defragment_write(const iovec *iov, int count_iov);
-    virtual void data_fsink();
-    void flash();
-    auto get_name(){return this->__filename;}
+    Read_FS_File&& create_read_fs_file(const char* name);
+    Write_FS_File&& create_write_fs_file(const char* name);
+    ReadWrite_FS_File&& create_readwrite_fs_file(const char* name);
 
-
-    void reset_flag_open(const int& new_flag);
-    bool try_resert_flag_open(const int& new_flag) noexcept;
-
-    PSX_File&& make_duplicate();//using dup
-
-     void psx_close();
-     virtual ~PSX_File();
-protected:
+    read_f_ptr get_read() override;
+    write_f_ptr get_write() override;
+    rdwr_f_ptr get_readwrite() override;
+    virtual ~FS_File_Fubric(){}
 
 
-
-friend void copy_psx_file(const PSX_File& origina, const PSX_File& copy,std::size_t size_bufer);
-
-protected:
-PSX_File(int fd) : BasePSXFile(fd) {}
-    void set_filedcripter(const int& fdr);
-    std::string __filename;
-
-    open_flag_t _open_flag;
-    long _curent_position;
 private:
-   virtual void _lseek(lseek_t flag, const long num_bytes);
+    int __addation_flag;
+    mode_t __mode_open;
+    std::string __name;
+
 
 
 };
 
-class PSX_Temprorary_File : public PSX_File
-{
-public:
-
-    PSX_Temprorary_File(std::string teplate_fn);
-    ~PSX_Temprorary_File();
- protected:
-    std::string _filename;
-};
-
-
-void copy_psx_file(const PSX_File& origina, const PSX_File& copy, std::size_t size_bufer = 1024);
 
 
 
-struct PSX_Fiel_Exc : public std::runtime_error
-{
-    PSX_Fiel_Exc(std::string wat) : runtime_error(wat){}
-};
+
 
 }
 }

@@ -16,7 +16,7 @@ public:
         for(int i = 0; i < BUF_SIZE +1; i++)
         {
             r_pipe.psx_read(&c,1);
-            std::cout << "pid = "<<getpid()<<" get c="<<c<<std::endl;
+            std::cout << "pid A = "<<getpid()<<" get c="<<c<<std::endl;
         }
 
     }
@@ -26,12 +26,12 @@ class ProcessB : public hh::process::Base_Process
 {
     virtual void action() override
     {
-        std::cout << "pid="<<getpid()<<" writer"<<std::endl;
+        std::cout << "pid B ="<<getpid()<<" writer"<<std::endl;
         char arr[BUF_SIZE];
         for(int i = 0; i < BUF_SIZE; i++)
         {
             arr[i] = 'a' + i;
-            std::cout << "pid = "<<getpid()<<":arr["<<i<<"]="<<arr[i]<<std::endl;
+            std::cout << "pid B = "<<getpid()<<":arr["<<i<<"]="<<arr[i]<<std::endl;
         }
         hh::core_ipc::WritePipe w_pipe(b_pipe);
         w_pipe.psx_write((char*)arr,5);

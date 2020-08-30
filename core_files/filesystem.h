@@ -4,17 +4,19 @@
 #include <utime.h>
 #include "../core_user/user.h"
 #include "psx_directory.h"
+/*
 namespace hh {
 namespace filesystem {
 
 class FileSystemInfo : public statvfs
 {
 public:
+
     FileSystemInfo(){}
     FileSystemInfo(const int& file_discripotr);
     FileSystemInfo(const std::string& path);
-    FileSystemInfo(const hh::psx_file::PSX_File& psx_file);
-    FileSystemInfo(const psx_file::PSX_Directory& psx_dir);
+    //FileSystemInfo(const hh::core_files::Base_FS_File& core_files);
+    FileSystemInfo(const core_files::PSX_Directory& psx_dir);
     std::size_t size_file_system_block(){return f_bsize;}
     std::size_t size_fundamental_block(){return f_frsize;}
     auto num_blocks_in_fylesystem(){return f_blocks;}
@@ -42,7 +44,7 @@ public:
     FileAtributInfo(){}
     FileAtributInfo(const int& file_discripotr);
     FileAtributInfo(const std::string& path);
-    FileAtributInfo(const hh::psx_file::BasePSXFile& psx_file);
+    FileAtributInfo(const hh::core_files::Base_FS_File& core_files);
     //--------------------------------------
     //geting file_atribut
    inline auto get_device_id(){return st_dev;}
@@ -70,7 +72,7 @@ void reset_atribut_time(const std::string filename,
 
 void set_owner(const int& fd, const uid_t& user_id, const gid_t& group_id);
 
-inline void set_owner(const hh::psx_file::BasePSXFile& file,
+inline void set_owner(const hh::core_files::Base_FS_File& file,
                                 const uid_t& user_id,
                                 const gid_t& group_id)
 {
@@ -82,7 +84,7 @@ inline void set_owner(const int& fd,const hh::core_user::User& user)
     set_owner(fd, user.get_user_id(), user.get_group_id());
 }
 
-inline void set_owner(const psx_file::BasePSXFile &file, const hh::core_user::User& user)
+inline void set_owner(const core_files::Base_FS_File &file, const hh::core_user::User& user)
 {
     set_owner(file, user.get_user_id(), user.get_group_id());
 }
@@ -90,9 +92,11 @@ inline void set_owner(const psx_file::BasePSXFile &file, const hh::core_user::Us
 
 void change_mode(const int& fd, const __mode_t& mode);
 
-void change_mode(const hh::psx_file::BasePSXFile& file, __mode_t);
+void change_mode(const hh::core_files::Base_FS_File& file, __mode_t);
 
 
 
 }
 }
+
+*/

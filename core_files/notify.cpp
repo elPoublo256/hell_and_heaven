@@ -3,11 +3,10 @@
 
 
 
-
-hh::filesystem::INotify::INotify()
+hh::filesystem::INotify::INotify() : BaseFD<int>()
 {
-    _file_descriptor = inotify_init();
-    if(_file_descriptor == -1)
+    __fd = inotify_init();
+    if(__fd == -1)
     {
         throw ErrnoException();
     }
@@ -17,7 +16,7 @@ hh::filesystem::INotify::INotify()
 int hh::filesystem::INotify::add_watcher(const std::string &fialename,
                                      unsigned int masck)
 {
- int whatcher_fd = inotify_add_watch(this->_file_descriptor,
+ int whatcher_fd = inotify_add_watch(this->__fd,
                                      fialename.c_str(), masck);
  if(whatcher_fd < 0)
  {
@@ -25,7 +24,7 @@ int hh::filesystem::INotify::add_watcher(const std::string &fialename,
  }
  else
  {
-     __map_watchers_file_descriptor.insert(std::pair<int, INotifyWatcher>
+     __map_watchers_fd.insert(std::pair<int, INotifyWatcher>
      {whatcher_fd, INotifyWatcher(whatcher_fd, masck)
                                            });
 
@@ -37,13 +36,13 @@ int hh::filesystem::INotify::add_watcher(const std::string &fialename,
 std::list<inotify_event> hh::filesystem::INotify::read_events()
 {
 
-    auto n = __map_watchers_file_descriptor.size();
+    auto n = __map_watchers_fd.size();
     std::size_t max_size_ev = __max_len_filename_in_event +
             sizeof(inotify_event) + 1;
     std::vector<unsigned char> buf;
     buf.resize(n * max_size_ev);
 
-    auto s = read(_file_descriptor,buf.data(),buf.size());
+    auto s = read(__fd,buf.data(),buf.size());
 
     if(s < 0)
     {
@@ -84,7 +83,7 @@ hh::filesystem::INotifyWatcher::INotifyWatcher(const INotify &notify,
 
 void hh::filesystem::INotify::remove_whatcher(const int &watcher_descriptor)
 {
-    if(inotify_rm_watch(this->_file_descriptor, watcher_descriptor) == -1)
+    if(inotify_rm_watch(this->__fd, watcher_descriptor) == -1)
     {
         throw ErrnoException();
     }

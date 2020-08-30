@@ -24,8 +24,8 @@ int main()
     of2.close();
 
 
-    //t_ptr->join();
-    //t_ptr = __inotify.read_in_thread_backcall(f);
+    t_ptr->join();
+    t_ptr = __inotify.read_in_thread_backcall(f);
     remove("./test.txt");
     remove("./test2.txt");
 

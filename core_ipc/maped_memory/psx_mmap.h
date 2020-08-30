@@ -3,17 +3,18 @@
 #include <cstring>
 #include "../../core_files/filesystem.h"
 #include "../../hh_exceptions/hh_exceptions.h"
-#include "../psx_base_buffer.h"
+#include "../../core_base/psx_base_buffer.h"
 #include <memory>
 namespace hh {
 namespace core_ipc {
 enum MMapOpenFlg{
     ONLI_READ = PROT_READ,
     ONLI_WRITE = PROT_WRITE,
+    ONLY_EXUCATE =PROT_EXEC
 
 };
 
-constexpr int RW_Flag = PROT_READ | PROT_WRITE;
+//constexpr int RW_Flag = PROT_READ | PROT_WRITE;
 
 enum MMapProtection
 {
@@ -24,18 +25,39 @@ enum MMapProtection
 
 class Base_MappedMemeoryError : public hh::ErrnoException
 {
+public:
+    Base_MappedMemeoryError() : hh::ErrnoException(){}
 
 };
 
 
 
-template <int Flag, int Protection, class T>
-class PSX_Base_MappedMemeory : public hh::core_ipc::PSX_Base_Bufer
+template <int Flag, int Protection>
+class PSX_Base_MappedMemeory :  public hh::PSX_Base_Bufer
 {
 protected :
     PSX_Base_MappedMemeory(){}
+    void delete_mem() override
+    {
+        munmap(__ptr,__len);
+    }
+
+    void *alloc_mem_ptr(const std::size_t &l) override
+    {
+        void* ptr = mmap(__ptr, l, Protection, Flag, __fd, __offset);
+        if(ptr == MAP_FAILED)
+        {
+            throw Base_MappedMemeoryError();
+        }
+
+    }
+
+
 
 private:
+    int __fd;
+    std::size_t& __offset;
+
 
 
   public:
@@ -48,9 +70,10 @@ private:
         {
             throw Base_MappedMemeoryError();
         }
+
     }
 
-    PSX_Base_MappedMemeory(const hh::psx_file::BasePSXFile& file,
+    PSX_Base_MappedMemeory(const hh::core_files::Base_FS_File& file,
                            const std::size_t& len,// = hh::filesystem::FileAtributInfo(file).get_file_size(),
                            void* addr = NULL, const std::size_t& offset = 0)
     {
@@ -69,7 +92,7 @@ private:
         }
     }
 
-    void* get_real_ptr() const {return __ptr;}
+
 };
 
 
@@ -82,14 +105,6 @@ class PSX_Base_MappedMemeoryAllocator  : public std::allocator<T>, public PSX_Ba
 }
 */
 
-template <class T, int Flag = PROT_READ | PROT_WRITE>
-class Shared_NoFile_MMap : public PSX_Base_MappedMemeory<Flag,MAP_ANONYMOUS | MAP_SHARED,T>
-{
-public:
-    Shared_NoFile_MMap(const std::size_t len) : PSX_Base_MappedMemeory<Flag,MAP_ANONYMOUS | MAP_SHARED,T>
-                           (-1,len,NULL,0) {}
-
-};
 
 
 }

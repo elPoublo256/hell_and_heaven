@@ -10,11 +10,11 @@
 add_executable(example_user_psw example_user.cpp)
 target_link_libraries(example_user_psw core_user)
 
-add_executable(example_filesysteminfo example_filesysteminfo.cpp)
-target_link_libraries(example_filesysteminfo psx_filesystem)
+#add_executable(example_filesysteminfo example_filesysteminfo.cpp)
+#target_link_libraries(example_filesysteminfo psx_filesystem)
 
-add_executable(inotify_example inotify_example.cpp)
-target_link_libraries(inotify_example psx_notify)
+#add_executable(inotify_example inotify_example.cpp)
+#target_link_libraries(inotify_example psx_notify)
 
 add_executable(example_signalhandler example_signalhandler.cpp)
 target_link_libraries(example_signalhandler psx_signals)
@@ -25,8 +25,8 @@ target_link_libraries(example_exit_handler core_process)
 add_executable(example_run_programm example_run_programm.cpp)
 target_link_libraries(example_run_programm core_process)
 
-add_executable(example_acct example_acct.cpp)
-target_link_libraries(example_acct core_process)
+#add_executable(example_acct example_acct.cpp)
+#target_link_libraries(example_acct core_process)
 
 add_executable(example_psx_thread example_psx_thread.cpp)
 target_link_libraries(example_psx_thread psx_thread)
@@ -37,7 +37,7 @@ target_link_libraries(example_psx_syslog psx_syslog)
 add_executable(example_logininfo example_logininfo.cpp)
 target_link_libraries(example_logininfo core_login)
 
-add_executable(example_pipe example_pipe.cpp)
-target_link_libraries(example_pipe psx_pipe core_process)
+#add_executable(example_pipe example_pipe.cpp)
+#target_link_libraries(example_pipe psx_pipe core_process)
 
-add_executable(example_mmap example_mmap.cpp)
+#add_executable(example_mmap example_mmap.cpp)

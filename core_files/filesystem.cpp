@@ -8,14 +8,14 @@ hh::filesystem::FileSystemInfo::FileSystemInfo(const int &file_discripotr)
      throw hh::ErrnoException();
  }
 }
-hh::filesystem::FileSystemInfo::FileSystemInfo(const hh::psx_file::PSX_File &psx_file)
+hh::filesystem::FileSystemInfo::FileSystemInfo(const hh::core_files::Base_FS_File &Base_FS_File)
 {
-    if(fstatvfs(psx_file.get_file_discriptror(), this) == -1)
+    if(fstatvfs(Base_FS_File.get_file_discriptror(), this) == -1)
     {
         throw hh::ErrnoException();
     }
 }
-hh::filesystem::FileSystemInfo::FileSystemInfo(const hh::psx_file::PSX_Directory &psx_dir)
+hh::filesystem::FileSystemInfo::FileSystemInfo(const hh::core_files::PSX_Directory &psx_dir)
 {
     if(fstatvfs(psx_dir.get_file_discriptror(), this) == -1)
     {
@@ -27,8 +27,8 @@ hh::filesystem::FileSystemInfo::FileSystemInfo(const std::string &path)
 {
     //TODO
     //i get undefined reference to statvfs::statvfs(char*, statvfs*)
-    hh::psx_file::PSX_File f(path);
-    fstatvfs(f.get_file_discriptror(), this);
+    //hh::core_files::Base_FS_File f(path);
+    //fstatvfs(f.get_file_discriptror(), this);
 
 }
 
@@ -47,9 +47,9 @@ hh::filesystem::FileAtributInfo::FileAtributInfo(const std::string &path)
     }
 }
 
-hh::filesystem::FileAtributInfo::FileAtributInfo(const psx_file::BasePSXFile &psx_file)
+hh::filesystem::FileAtributInfo::FileAtributInfo(const hh::core_files::Base_FS_File &file)
 {
-    if(fstat(psx_file.get_file_discriptror(),this) == -1)
+    if(fstat(file.get_file_discriptror(),this) == -1)
     {
         throw hh::ErrnoException();
     }
