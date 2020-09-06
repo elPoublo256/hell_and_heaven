@@ -21,28 +21,27 @@ private:
 };
 
 
+
+
 /*!
  * \brief The ReadPipe class for reading from pipe
  */
-class  ReadPipe : public BaseFD<int>, public BaseReader
+class  ReadPipe : public BaseFDReader
 {
 public:
-     ReadPipe(const int& fd_read);
-     int psx_read(void *dest, const std::size_t &len);
-     //ReadPipe(const int pair_fd[2]);
-
+    ReadPipe(const int& fd_read) : BaseFDReader(fd_read){}
 
 };
 
-class WritePipe : public BaseFD<int>, public BaseWriter
+class WritePipe : public BaseFDWriter
 {
 public:
-    WritePipe(const int& fd_wirite);
-    int psx_write(const void *src, const std::size_t &len) override;
-    //WritePipe(const int pair_fd[2]);
+    WritePipe(const int& fd_wr) : BaseFDWriter(fd_wr) {}
 };
 
-class Base_Pipe : public hh::FubricReadFiles, hh::FubricWriteFiles
+
+
+class Base_Pipe : public FubricReadFiles , public FubricWriteFiles
 {
 public:
 
@@ -51,6 +50,8 @@ public:
     Base_Pipe(const Base_Pipe& copy) = delete;
     inline auto get_read_fd() const {return __pairpipe[0];}
     inline auto get_write_fd() const {return __pairpipe[1];}
+    virtual read_f_ptr get_read() {return __read_pipe_ptr;}
+    virtual write_f_ptr get_write() {return __write_pipe_ptr;}
 
 
 
@@ -58,6 +59,9 @@ public:
 //    Base_Pipe(const int& flag);
 #endif
 private:
+    std::shared_ptr<ReadPipe> __read_pipe_ptr;
+    std::shared_ptr<WritePipe>__write_pipe_ptr;
+
     //bool __is_opened_read;
     int __pairpipe[2];
 };
@@ -67,13 +71,5 @@ private:
 
 
 
-
-
-
-
-
-
-
 }
-
 }

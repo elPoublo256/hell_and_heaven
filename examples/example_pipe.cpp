@@ -5,20 +5,20 @@
 #include <iostream>
 
 #define BUF_SIZE 5
-hh::core_ipc::Base_Pipe b_pipe;
+hh::core_ipc::Base_Pipe* b_pipe;
 class ProcessA : public hh::process::Base_Process
 {
 public:
     virtual void action() override
     {
-        hh::core_ipc::ReadPipe r_pipe(b_pipe);
-        char c;
-        for(int i = 0; i < BUF_SIZE +1; i++)
+        auto write_ptr = b_pipe->get_write();
+        for(int i = 0; i < 10; i++)
         {
-            r_pipe.psx_read(&c,1);
-            std::cout << "pid A = "<<getpid()<<" get c="<<c<<std::endl;
-        }
+            write_ptr->psx_write(&i,sizeof(int));
+            std::cout<<"pid = "<<getpid()<<" write "<<i<<std::endl;
+            sleep(1);
 
+        }
     }
 };
 
@@ -26,16 +26,16 @@ class ProcessB : public hh::process::Base_Process
 {
     virtual void action() override
     {
-        std::cout << "pid B ="<<getpid()<<" writer"<<std::endl;
-        char arr[BUF_SIZE];
-        for(int i = 0; i < BUF_SIZE; i++)
+        auto read_ptr = b_pipe->get_read();
+
+        for(int i = 0; i < 10; i++)
         {
-            arr[i] = 'a' + i;
-            std::cout << "pid B = "<<getpid()<<":arr["<<i<<"]="<<arr[i]<<std::endl;
+            int m;
+            read_ptr->psx_read(&m, sizeof(int));
+            std::cout<<"pid = "<<getpid()<<" read "<<m<<std::endl;
+            sleep(1);
         }
-        hh::core_ipc::WritePipe w_pipe(b_pipe);
-        w_pipe.psx_write((char*)arr,5);
-        std::cout << "end write pipe"<<std::endl;
+
     }
 };
 
@@ -43,10 +43,13 @@ class ProcessB : public hh::process::Base_Process
 
 int main()
 {
+    b_pipe = new hh::core_ipc::Base_Pipe();
+    std::cout<<"read fd = "<<b_pipe->get_read_fd()<<" write fd = "<<b_pipe->get_write_fd()<<std::endl;
     ProcessA a;
     ProcessB b;
     hh::process::Process_Controllers cont;
     cont.run_process(a);
+    sleep(1);
     cont.run_process(b);
     cont.whait_process(a,WNOHANG);
     cont.whait_process(b,WNOHANG);

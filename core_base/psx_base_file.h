@@ -11,7 +11,7 @@ class BaseFD
 {
 public:
     BaseFD(){}
-    BaseFD(const FD&){}
+    BaseFD(const FD& fd){ __fd = fd;}
     virtual void copy(const FD& copy_fd) {__fd = copy_fd;}
     FD get_file_discriptror() const {return __fd;}
 protected:
@@ -25,8 +25,8 @@ class BaseReader
 {
 public:
     BaseReader(){}
-    virtual int psx_read(void* dest, const std::size_t &len){}
-     hh::PSX_Base_Bufer&& psx_read(const std::size_t& len);
+    virtual int psx_read(void* dest, const std::size_t &len){return 0;}
+    virtual hh::PSX_Base_Bufer psx_read(const std::size_t& len);
 };
 
 class BaseWriter
@@ -34,7 +34,7 @@ class BaseWriter
 public:
     BaseWriter(){}
     virtual int psx_write(const void* src, const std::size_t& len){}
-    std::size_t psx_write(const hh::PSX_Base_Bufer& buf);
+    virtual std::size_t psx_write(const hh::PSX_Base_Bufer& buf);
 
 };
 
@@ -46,6 +46,7 @@ template <typename FD>
 class BaseOpen : public BaseFD<FD>
 {
 public:
+    BaseOpen(const FD& fd) : BaseFD<FD>(fd){}
     BaseOpen(const BaseFD<FD>& fd){this->__fd = fd.get_file_discriptror();}
     BaseOpen(const BaseOpen& copy) = delete;
     BaseOpen(BaseOpen&& rv){this->__fd = rv.__fd;}
@@ -90,7 +91,7 @@ typedef std::shared_ptr<BaseReadWrite> rdwr_f_ptr;
 class FubricReadWriteFiles : public FubricReadFiles, FubricWriteFiles
 {
 public:
-    FubricReadWriteFiles() : FubricReadFiles(), FubricWriteFiles(){}
+    FubricReadWriteFiles(){}
     virtual ~FubricReadWriteFiles(){}
     virtual rdwr_f_ptr get_readwrite() = 0;
 
@@ -124,8 +125,10 @@ public:
     BaseFDReader(const int& fd) : Base_FD_Open(fd){}
     BaseFDReader(BaseFDReader&& rv) : Base_FD_Open(std::move(rv)){}
     BaseFDReader(const BaseFDReader& copy) = delete;
-    virtual int psx_read(void *dest, const std::size_t &len) override;
-    PSX_Base_Bufer&& psx_read(const std::size_t& len) {return std::move(BaseReader::psx_read(len));}
+    int psx_read(void *dest, const std::size_t &len) override;
+    virtual PSX_Base_Bufer psx_read(const std::size_t& size){return std::move(BaseReader::psx_read(size));}
+
+
 };
 
 class BaseFDWriter : public Base_FD_Open, public BaseWriter
@@ -136,7 +139,7 @@ public:
     BaseFDWriter(BaseFDWriter&& rv) : Base_FD_Open(std::move(rv)){}
     BaseFDWriter(const BaseFDWriter& copy) = delete;
 
-    virtual int psx_write(const void *src, const std::size_t &len);
+    virtual int psx_write(const void *src, const std::size_t &len) override;
 };
 
 
@@ -148,8 +151,9 @@ public:
     BaseFDReaderWriter(BaseFDWriter&& rv) : Base_FD_Open(std::move(rv)){}
     BaseFDReaderWriter(const BaseFDWriter& copy) = delete;
 
-     virtual int psx_write(const void *src, const std::size_t &len);
-     virtual int psx_read(void *dest, const std::size_t &len);
+     virtual int psx_write(const void *src, const std::size_t &len) override;
+     virtual int psx_read(void *dest, const std::size_t &len) override;
+    //virtual PSX_Base_Bufer&& psx_read(const std::size_t& size){return std::move(BaseReader::psx_read(size));}
 
 
 };
