@@ -1,10 +1,10 @@
 #pragma once
 #include <sys/mman.h>
 #include <cstring>
-#include "../../core_files/filesystem.h"
 #include "../../hh_exceptions/hh_exceptions.h"
 #include "../../core_base/psx_base_buffer.h"
-#include <memory>
+#include "../../core_base/psx_base_file.h"
+#include <sys/mman.h>
 namespace hh {
 namespace core_ipc {
 enum MMapOpenFlg{
@@ -26,7 +26,9 @@ enum MMapProtection
 class Base_MappedMemeoryError : public hh::ErrnoException
 {
 public:
-    Base_MappedMemeoryError() : hh::ErrnoException(){}
+    inline Base_MappedMemeoryError() : hh::ErrnoException(){}
+    inline Base_MappedMemeoryError(const char* str) : hh::ErrnoException(str){}
+
 
 };
 
@@ -52,12 +54,10 @@ protected :
 
     }
 
-
-
 private:
-    int __fd;
-    std::size_t& __offset;
 
+    std::size_t __offset;
+    int __fd;
 
 
   public:
@@ -68,28 +68,27 @@ private:
         __ptr = mmap(addr, len, Protection, Flag, fd, offset);
         if(__ptr == MAP_FAILED)
         {
-            throw Base_MappedMemeoryError();
+            throw Base_MappedMemeoryError("error mmap");
         }
 
     }
 
-    PSX_Base_MappedMemeory(const hh::core_files::Base_FS_File& file,
-                           const std::size_t& len,// = hh::filesystem::FileAtributInfo(file).get_file_size(),
-                           void* addr = NULL, const std::size_t& offset = 0)
+    PSX_Base_MappedMemeory(const hh::BaseOpen<int>&  file,
+                           const std::size_t& len,// TODO = hh::filesystem::FileAtributInfo(file).get_file_size(),
+                           void* addr = NULL, std::size_t offset = 0)
     {
         errno = 0;
+
 
         __ptr = mmap(addr, len, Protection, Flag, file.get_file_discriptror(), offset);
         if(__ptr == MAP_FAILED)
         {
-            throw Base_MappedMemeoryError();
+            throw Base_MappedMemeoryError("error mmap");
         }
     }
 
     ~PSX_Base_MappedMemeory()
     {
-        if(munmap(__ptr,__len)){//TODO what to do if return NO-ZERO
-        }
     }
 
 

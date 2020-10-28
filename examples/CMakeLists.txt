@@ -40,4 +40,5 @@ target_link_libraries(example_logininfo core_login)
 add_executable(example_pipe example_pipe.cpp)
 target_link_libraries(example_pipe psx_pipe core_process)
 
-#add_executable(example_mmap example_mmap.cpp)
+add_executable(example_mmap example_mmap.cpp)
+target_link_libraries(example_mmap psx_files)

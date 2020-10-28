@@ -46,10 +46,9 @@ protected:
     ///delete alacated memory. defaut free()
     /// call in distructor
     virtual void delete_mem();
-private:
+     void* __ptr;
     void set_ptr(void* p) const {auto p_ptr = const_cast<void**>(&__ptr); *p_ptr=NULL;}
     void* get_p() const{ return __ptr;}
-    void* __ptr;
     std::size_t __len;
 
 };
