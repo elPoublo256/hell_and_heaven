@@ -19,7 +19,9 @@ public:
             sleep(1);
 
         }
+        exit(0);
     }
+
 };
 
 class ProcessB : public hh::process::Base_Process
@@ -31,10 +33,12 @@ class ProcessB : public hh::process::Base_Process
         for(int i = 0; i < 10; i++)
         {
             int m;
+            sleep(1);
             read_ptr->psx_read(&m, sizeof(int));
             std::cout<<"pid = "<<getpid()<<" read "<<m<<std::endl;
-            sleep(1);
+
         }
+        exit(0);
 
     }
 };
@@ -51,8 +55,10 @@ int main()
     cont.run_process(a);
     sleep(1);
     cont.run_process(b);
-    cont.whait_process(a,WNOHANG);
-    cont.whait_process(b,WNOHANG);
+   // cont.whait_process(a,WUNTRACED);
+
+    cont.whait_process(b,WUNTRACED);
+   // delete b_pipe;
 
 
 
