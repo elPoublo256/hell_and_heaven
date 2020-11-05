@@ -56,15 +56,29 @@ hh::PSX_Base_Bufer &hh::PSX_Base_Bufer::operator =(const hh::PSX_Base_Bufer& cop
 
 void hh::PSX_Base_Bufer::resize(const std::size_t &len)
 {
+    //actiotly whe can and avarage size bufer
     if(len > __len)
     {
         throw std::out_of_range("error resize buser");
     }
+    /* SIGSEGV;
     else
     {
         free(__ptr + len);
         __len = len;
     }
+    */
+    /* create new pointer
+    __len = len;
+    auto new_ptr = malloc(__len);
+    memcpy(__ptr,new_ptr,__len);
+    free(__ptr);
+    __ptr = new_ptr;
+    */
+    __len = len;
+    __ptr = realloc(__ptr,__len);
+
+
 }
 
 hh::PSX_Base_Bufer &hh::PSX_Base_Bufer::operator =(hh::PSX_Base_Bufer&& rv_copy)

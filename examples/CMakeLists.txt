@@ -42,3 +42,6 @@ target_link_libraries(example_pipe psx_pipe core_process)
 
 add_executable(example_mmap example_mmap.cpp)
 target_link_libraries(example_mmap psx_files)
+
+add_executable(example_udp example_sockets/example_udp.cpp)
+target_link_libraries(example_udp psx_base_socket core_process)

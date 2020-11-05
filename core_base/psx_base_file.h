@@ -102,10 +102,10 @@ public:
 class Base_FD_Open : public BaseOpen<int>
 {
 public:
-    Base_FD_Open(){}
+    inline Base_FD_Open(){}
     Base_FD_Open(const int& fd) : BaseOpen<int>(fd){}
     Base_FD_Open(const Base_FD_Open& copy) = delete;
-    Base_FD_Open(Base_FD_Open&& rv) : BaseOpen<int>(std::move(rv)){}
+    inline Base_FD_Open(Base_FD_Open&& rv) : BaseOpen<int>(std::move(rv)){}
     virtual void psx_close();
     virtual ~Base_FD_Open(){psx_close();}
 };

@@ -35,7 +35,7 @@ public:
     virtual bool is_valid();
     PSX_Base_Bufer& operator = (const PSX_Base_Bufer& copy);
     PSX_Base_Bufer& operator = (PSX_Base_Bufer&& rv_copy);
-    void resize(const std::size_t& len);
+    virtual void resize(const std::size_t& len);
 protected:
     ///return pointer allocated memory. malloc in defualt
     /// call in PSX_Base_Bufer(std::size_t& size)
