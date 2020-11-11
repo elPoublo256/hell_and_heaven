@@ -149,7 +149,7 @@ public:
     BaseFDReaderWriter(){}
     BaseFDReaderWriter(const int& fd) : Base_FD_Open(fd){}
     BaseFDReaderWriter(BaseFDWriter&& rv) : Base_FD_Open(std::move(rv)){}
-    BaseFDReaderWriter(const BaseFDWriter& copy) = delete;
+    BaseFDReaderWriter(const BaseFDWriter& copy) = delete; 
 
      virtual int psx_write(const void *src, const std::size_t &len) override;
      virtual int psx_read(void *dest, const std::size_t &len) override;

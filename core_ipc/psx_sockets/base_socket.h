@@ -43,6 +43,7 @@ public:
 
 
 
+
 };
 
 template <sa_family_t Domain, int Proto = 0>
@@ -125,11 +126,9 @@ class BaseSocketConnection
 {
 public:
     BaseSocketConnection(){}
-    virtual int psx_send(const void* data, const std::size_t& len, const int& flag){return 0;}
-    virtual int psx_recv(void* desat, const std::size_t& len, const int& flag){return 0;}
+    virtual int psx_send(const void* data, const std::size_t& len, const int& flag) = 0;
+    virtual int psx_recv(void* desat, const std::size_t& len, const int& flag) = 0;
     virtual ~BaseSocketConnection(){}
-
-
 
 };
 

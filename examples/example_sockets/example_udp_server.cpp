@@ -28,6 +28,7 @@ public:
           auto res_send = con->psx_send(mess.data(), mess.size(),0); //sock.psx_send_to(mess.data(),mess.size(),adr_b,0);
           std::cout << "send to b "<<res_send<<'b'<<std::endl;
 
+
         }
     }
 
