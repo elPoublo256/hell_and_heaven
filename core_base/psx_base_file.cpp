@@ -27,7 +27,7 @@ void hh::Base_FD_Open::psx_close()
     close(__fd);
 }
 
-int hh::BaseFDReader::psx_read(void *dest, const std::size_t &len)
+std::size_t hh::BaseFDReader::psx_read(void *dest, const std::size_t &len)
 {
 
     int res = read(__fd,dest,len);
@@ -37,7 +37,7 @@ int hh::BaseFDReader::psx_read(void *dest, const std::size_t &len)
      ss<<"error read from fd="<<__fd;
         throw hh::BaseFDErrorFile(ss.str().c_str());
     }
-    return res;
+    return std::size_t(res);
 }
 
 
@@ -56,14 +56,14 @@ int hh::BaseFDWriter::psx_write(const void *src, const std::size_t &len)
 
 
 
-int hh::BaseFDReaderWriter::psx_read(void *dest, const std::size_t &len)
+std::size_t hh::BaseFDReaderWriter::psx_read(void *dest, const std::size_t &len)
 {
     int res = read(__fd,dest,len);
     if(res < 0)
     {
         throw hh::BaseFDErrorFile("error read");
     }
-    return res;
+    return std::size_t(res);
 }
 
 int hh::BaseFDReaderWriter::psx_write(const void *src, const std::size_t &len)
