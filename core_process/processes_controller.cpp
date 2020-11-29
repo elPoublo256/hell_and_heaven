@@ -62,7 +62,7 @@ WaitStatus Process_Controllers::whait_children()
     return res;
 }
 
-char** Process_Controllers::c_strigs_environ_from_map(const std::map<std::__cxx11::string, std::__cxx11::string> &e_map)
+char** Process_Controllers::c_strigs_environ_from_map(const std::map<std::string, std::string> &e_map)
 {
     auto size = e_map.size();
     char** res = (char**)malloc((size + 1) * sizeof(char*));

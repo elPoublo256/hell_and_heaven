@@ -8,7 +8,9 @@
 namespace hh {
 namespace core_ipc {
 namespace psx_socket {
-
+/*!
+ * \brief The PSX_Socket_Error class - Error in warking with socket
+ */
 class PSX_Socket_Error : public hh::ErrnoException
 {
 public:
@@ -17,17 +19,28 @@ public:
 };
 
 
+/*!
+ * \brief The PSX_Base_Socket class <sa_family_t Domain,int Type  ,int Proto = 0>
+ * wich create a hh::BaseFDReaderWriter with file-descripaor as result 'int socket(Domain,Type,Proto)
+ */
 template <sa_family_t Domain,int Type  ,int Proto = 0>
 class PSX_Base_Socket : public hh::BaseFDReaderWriter
 {
 public:
     typedef Adress<Domain> psx_adress_t;
+    /*!
+     * \brief PSX_Base_Socket
+     * create a hh::BaseFDReaderWriter with file-descripaor as result 'int socket(Domain,Type,Proto)
+     * \throw PSX_Socket_Error if result of 'int socket(Domain,Type,Proto)' return -1
+     */
     PSX_Base_Socket(){this->__fd = socket(Domain,Type, Proto);
                       if(__fd <= 0)
                       {
                           throw PSX_Socket_Error("error create socket");
                       }}
     virtual ~PSX_Base_Socket(){}
+
+    ///bind curenet socket to adress setat in C-style
     virtual void psx_bind(sockaddr* addres,const socklen_t& len )
     {
         if(bind(this->__fd,addres,len) != 0)
@@ -36,6 +49,7 @@ public:
         }
     }
 
+    ///bind curent socket to adress seted in HH-style
     virtual void psx_bind(const psx_adress_t& adress)
     {
         psx_bind(adress.get_sockaddr(), adress.get_len());
@@ -45,6 +59,11 @@ public:
 
 
 };
+
+/*!
+* \brief The PSX_DataGramSocketBase class
+* base calss of datagramm sockets
+        */
 
 template <sa_family_t Domain, int Proto = 0>
 class PSX_DataGramSocketBase : public PSX_Base_Socket<Domain,SOCK_DGRAM, Proto>
